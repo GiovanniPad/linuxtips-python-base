@@ -79,3 +79,19 @@ Comandos Python a partir do terminal
 <hr>
 
 - **REPL** -> Read Eval Print Loop.
+
+### Introdução ao git e seu primeiro script Python
+
+- **Script** -> é um arquivo de comandos encadeados independente.
+- **Sintaxe** -> ordem e regras que as palavras e os comandos devem ser escritos.
+
+**Comentários** -> são ignorados pelo interpretador. Alguns comentários colocados na frente do código podem ser interpretados por algumas ferramentas.
+
+- **Shebang** -> característica do sistema Unix/Linux, é um comentário especial, sempre presente na primeira linha do script, ele serve para identificar qual é o interpretador e a versão do Python que vai ser usada para executar o script.
+  - `which python` -> caminho do Python
+
+Um ambiente é um "local" que está preparado para executar o script ou programa Python, que possui acesso ao interpretador e ele tem acesso a informações específicas do ambiente/sistema.
+
+Um ambiente é formado de um shell e as variáveis de ambiente, a maioria dos programas são desenvolvidos orientados a ambiente.
+
+Ao utilizar o SHEBANG apontando para o ambiente, todas as variáveis de ambiente serão fornecidas para o Python. Ao especificar o Python no SHEBANG não será necessário especificar o Python ao executar, pode escrever apenas `./arquivo.py`.
