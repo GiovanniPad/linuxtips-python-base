@@ -117,3 +117,32 @@ Existe outra maneira de cortar uma string, quebrando a string a partir de um car
 - `unset variavel` -> apaga uma variável de ambiente.
 - `export variavel` -> altera o valor de uma variável de ambiente.
 - `LANG=pt_BR python3 hello.py` -> exporta uma variável de ambiente diretamente ao executar um script Python, sobrescrevendo o valor padrão do sistema operacional.
+
+### Tipos de Instruções: Expressions, Statements, Assignment
+
+- **Expressão/Expression** -> instrução que espera um valor de retorno. Ex: `1+1`.
+- **Declaração/Statement** -> instrução que prepara o interpretador para uma determinada tarefa mas não retorna valor. Ex: `if, else, def, for`.
+- **Atribuição/Assignment** -> instrução que pega o retorno de uma expressão e processa o seu valor com intuito de armazenar. Ex: `soma = 40 + 2, soma += 3, soma -= 3`.
+
+**Protocolos** -> o que o objeto é capaz de fazer.
+
+O interpretador executa a linha sempre da esquerda para direita.
+
+Precedência de operadores aritméticos (PEMDAS)
+
+1. Parênteses.
+2. Exponenciação e Raízes.
+3. Multiplicação
+4. Divisão.
+5. Adição.
+6. Subtração.
+
+Precedência de operadores do Python
+
+- 7(alto): exponenciação `**`.
+- 6: multiplicação `*`.
+- 5: adição `+,-`.
+- 4: relacional `==,!=,<=,>=,>,<`.
+- 3: lógico `not`.
+- 2: lógico `and`.
+- 1(baixo): lógico `or`.
