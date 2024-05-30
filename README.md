@@ -95,3 +95,25 @@ Um ambiente é um "local" que está preparado para executar o script ou programa
 Um ambiente é formado de um shell e as variáveis de ambiente, a maioria dos programas são desenvolvidos orientados a ambiente.
 
 Ao utilizar o SHEBANG apontando para o ambiente, todas as variáveis de ambiente serão fornecidas para o Python. Ao especificar o Python no SHEBANG não será necessário especificar o Python ao executar, pode escrever apenas `./arquivo.py`.
+
+### Criando um programa que lê variáveis de ambiente
+
+- É recomendável seguir um guia de estilo para escrever códigos Python. O pep8.
+- Para terminal é legal manter 80 colunas de caracteres por linha. Utilizar apenas até a coluna 79, quebrando para a linha de baixo.
+- Também é necessário colocar no script/programa são os metadados, que são informações que necessariamente não fazem parte do programa, mas podem serem usadas para informações adicionais. Normalmente são adicionais após o comentário de bloco de explicação do script no início do programa.
+
+`__` -> underline duplos podem ser chamado de Dunder.
+
+O Python executa todo o conteúdo do arquivo mesmo não estando dentro de uma função `main()`.
+
+- Usar snake case ao escrever nomes de variáveis, mas também existe o padrão Pascal Case.
+- **Built-in** -> funções, bibliotecas ou ferramentas já implementadas no Python.
+- **Biblioteca padrão** -> não está incluso no Python, precisa ser importada, mas já instalada junto com o pacote do Python.
+
+**Fatiamento** -> forma de cortar um texto, exemplo: `string[:5]`, no exemplo, só é retornada os 5 primeiros caracteres da string.
+
+Existe outra maneira de cortar uma string, quebrando a string a partir de um caractere, usando a função `split(caractere)`.
+
+- `unset variavel` -> apaga uma variável de ambiente.
+- `export variavel` -> altera o valor de uma variável de ambiente.
+- `LANG=pt_BR python3 hello.py` -> exporta uma variável de ambiente diretamente ao executar um script Python, sobrescrevendo o valor padrão do sistema operacional.
