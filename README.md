@@ -56,3 +56,26 @@ O CPython possui um ecossistema em torno dele, tudo em torno da linguagem Python
 - APyB -> Fundação Python Brasil.
 - Pacotes e ferramentas -> programas Pythons que podem ser reutilizados. E ferramentas para instalar bibliotecas, etc.
 - PyPI -> Python Package Index.
+
+### Instalação do Python e preparação do ambiente
+
+- Replit
+- Gitpod
+- Micro
+- Terminator
+
+Comandos Python a partir do terminal
+
+- `python -c "1"` -> não retorna nada, pois não foi instruído como utilizar o número 1, ele entende mas ele não sabe o que fazer, é um valor literal.
+- `python -c "print(1)"` -> ele imprime o número 1, pois o interpretador foi instruído a fazer essa ação.
+- `python -c "print('giovanni'.upper())"` -> imprime "GIOVANNI" pois a função `upper()` coloca todos os caracteres em maiúsculo.
+- `python -m site` -> executa um módulo do Python já pré-definido. Mostra como o Python que está sendo utilizado que está instalado.
+- `python -m turtledemo` -> interface gráfica feita em tk com exemplos de jogos e animações
+- `python -V` -> mostra a versão do Python.
+- `python -VV` -> mostra a versão e a data da última compilação do Python.
+- `python --help` -> ajuda do Python.
+- `python` -> terminal interativo do Python, é o interpretador padrão. Sempre mostra o output.
+
+<hr>
+
+- **REPL** -> Read Eval Print Loop.
