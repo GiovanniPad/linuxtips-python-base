@@ -146,3 +146,11 @@ Precedência de operadores do Python
 - 3: lógico `not`.
 - 2: lógico `and`.
 - 1(baixo): lógico `or`.
+
+### Blocos de código e identação
+
+- Python não usa chaves para delimitar os blocos de código, ele usa 4 espaços em branco de identação(recuo) obrigatório.
+- Os dois pontos (:) indica que a partir começa um bloco de código.
+- Existem blocos condicionais e blocos de repetição.
+- Para cada bloco de código aninhado, soma-se 4 espaços em branco, aumentando o recuo.
+- É recomendável não passar de 3 a 4 níveis de identação.
