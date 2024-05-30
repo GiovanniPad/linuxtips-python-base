@@ -154,3 +154,21 @@ Precedência de operadores do Python
 - Existem blocos condicionais e blocos de repetição.
 - Para cada bloco de código aninhado, soma-se 4 espaços em branco, aumentando o recuo.
 - É recomendável não passar de 3 a 4 níveis de identação.
+
+### Ambientes virtuais e a ferramenta iPython
+
+- O ambiente é aonde o programa/script vai ser executado.
+- Para garantir que o programa/script rode corretamente e igualmente em todos os computadores se faz necessário a criação de um ambiente virtual.
+
+É uma boa prática é criar um ambiente virtual do Python para todo projeto, evitando que danifique o sistema operacional, por conta de conflitos, separando todo o ambiente do projeto do ambiente real do computador.
+
+- `python3 -m venv nome_do_ambiente` -> comando para criar um ambiente virtual utilizando a versão 3 do Python, uma conversão para nome de um ambiente é `.venv`, pois arquivos/pastas que utilizam "." antes do nome normalmente são ocultos e não aparecem no sistema de arquivo do SO.
+- `source .venv/bin/activate` -> comando para ativar o ambiente virtual no Linux.
+
+Não há necessidade de mandar a pasta do ambiente virtual para o repositório git.
+
+- `python3 -m pip` -> módulo do Python destinado a instalação de pacotes.
+- `python3 -m pip install ipython` -> instala a biblioteca iPython, um interpretador interativo melhorado de Python.
+- `python3 -m pip install --upgrade pip` -> atualiza o pip para a última versão, recomendado sempre executar ao criar um novo ambiente virtual.
+
+Ao usar `%time` no iPython antes de qualquer código, é mostrado o tempo de execução utilizado, além dos recursos computacionais.
