@@ -172,3 +172,77 @@ Não há necessidade de mandar a pasta do ambiente virtual para o repositório g
 - `python3 -m pip install --upgrade pip` -> atualiza o pip para a última versão, recomendado sempre executar ao criar um novo ambiente virtual.
 
 Ao usar `%time` no iPython antes de qualquer código, é mostrado o tempo de execução utilizado, além dos recursos computacionais.
+
+## Dia 2 - Tipos de Dados e Protocolos
+
+### A importância dos tipos de dados e o tipo inteiro
+
+- Ao realizar uma operação de atribuição, o interpretador do Python realiza uma operação de inferência de tipo, para saber a maneira e o local correto de armazenar a informação na memória.
+
+Tipo de dado também pode ser chamado de classe de dado ou categoria de dado.
+
+O interpretador do Python converte um número inteiro para uma sequência de bits para armazená-los na memória.
+
+- `bin(numero_inteiro)` -> retorna o valor em binário de qualquer número inteiro. Tudo que começa com `0b` no Python indica um número binário.
+
+Na memória do computador, o identificador(nome da variável) está apontando para uma sequência de bits. Ao solicitar um dado da memória, o Python o converte para o contexto da aplicação, isso é realizado através do tipo de dado.
+
+No caso de letras ou strings, cada letra é convertida para um número inteiro, depois converte novamente para binário e então é armazenado o valor binário na memória.
+
+**Exemplo**
+
+Como é realizado o armazenamento da operação de atribuição `numero = 65`.
+
+- Em seguida, o interpretador vai identificar, através da inferência de tipos, qual o tipo daquele dado, neste caso, um inteiro(int).
+- Depois, o interpretador cria um "envelope" e atribui a um espaço na memória RAM, numa posição qualquer.
+- E dentro desse "envelope" o Python armazena o número inteiro "65" convertido para binário, que é "1000001".
+- Finaliza colocando nesse "envelope" uma etiqueta contendo o nome da variável em questão, no caso "numero".
+
+Ao solicitar essa variável `numero`, o interpretador Python vai buscar na memória o local que possui o identificador "numero" e ao ver que aquele valor é do tipo inteiro, o interpretador vai converter o número binário para um número inteiro e por fim, exibir na tela(output).
+
+<hr>
+
+- `id(variavel)` -> retorna o número, que é a posição em que se encontra aquela variável na memória RAM. Esses valores são aleatórios e não sequenciais.
+- `type(variavel)` -> retorna qual o tipo do valor armazenado em uma variável qualquer.
+
+Um objeto é um conjunto composto por um endereço de memória, um tipo, um valor e um identificador(nome da variável). Todo objeto possui as mesmas características.
+
+Dado é o valor armazenado na memória, e é através do tipo de dado que esse dado é transformado em uma informação para ser compreendida.
+
+Os tipos de dados são divididos em duas categorias: primários e compostos
+
+#### Tipos de dados primários(Scalar Types)
+
+- São tipos de dados que servem para representar apenas um único valor.
+
+Um desses tipos de dado é o Tipo Inteiro(Integer), que é uma classe definida no código fonte do Python que juntamente do valor traz todo o comportamento específico dessa classe.
+
+Não é necessário explicitamente dizer ao Python qual o tipo de objeto a guardar na memória, pois o interpretador faz isso dinamicamente.
+
+- `int(valor)` -> força o tipo de um determinado valor para inteiro.
+- `dir(tipo_de_dado)` -> retorna uma lista contendo todos os métodos e protocolos de um determinado tipo de dado, eles determinam quais operações que aquele objeto pode realizar.
+
+**Métodos públicos**
+
+- Qualquer método que não possui dunder, são chamados de métodos públicos.
+
+**Protocolos**
+
+- Já os protocolos(métodos que possuem dunder), determinam as operações e ações que o tipo de dado pode realizar, normalmente, não são utilizados. Tudo no Python vai funcionar através desses protocolos, que são vários.
+- Existem protocolos que exigem apenas um método dunder, enquanto há protocolos que exigem mais de um método dunder para funcionar.
+
+**Exemplos**
+
+***Método Dunder Add***
+
+Quando um objeto implementa o método `__add__()`, ele implementa o protocolo addible, significa que o objeto é capaz de receber adição de outros números.
+
+- `numero + 1` = `numero.__add__(1)`
+
+***Método Dunder Eq***
+
+Implementa o método `__eq__()`, que implementa o protocolo equal, significa que o objeto pode realizar operações de comparações.
+
+- `numero == 65` = `numero.__eq__(65)`
+
+<hr>
