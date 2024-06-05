@@ -245,4 +245,45 @@ Implementa o método `__eq__()`, que implementa o protocolo equal, significa que
 
 - `numero == 65` = `numero.__eq__(65)`
 
-<hr>
+### Tipos Float, Bool, NoneType
+
+Os tipos Float, Bool, NoneType são tipos primitivos.
+
+**Tipo Float**
+
+- É um número que além do número inteiro, possui uma parte fracionada, Float de ponto flutuante. Representa frações.
+- É a presença de um ponto no número que faz com o Python trate como Float.
+- Podem ser negativos ou positivos.
+
+```python
+valor = 2.0
+type(valor) # float
+valor.is_integer() # true
+
+valor = 2
+type(valor) # int
+```
+
+- Para representar valores monetários, o ideal é utilizar o tipo Decimal (ou Currency). Pois a precisão do tipo Decimal é maior do que a do tipo Float.
+
+**Tipo Boolean**
+
+- Pode ter apenas o valor True (Verdade) ou o valor False (Falso).
+- Representado pelo nome `bool`.
+- O número 0 é igual a False e o número 1 é igual a True.
+- Expressões lógicas sempre retornam um booleano.
+- O `if` só funciona com valores booleanos.
+- Texto vazio é considerado como o valor 0 (False).
+- Para o interpretador do Python todo valor numérico, diferente de 0, é True.
+
+**Tipo NoneType**
+
+- Apenas possui uma opção de valor, `None`, que significa nulo ou ausência de valor.
+- No Python, todo objeto (variável) deve ser inicializado, sempre contendo um valor.
+- Pode ser usado para inicializar uma variável que ainda não se sabe o valor, posteriormente, essa variável pode ter seu valor mudado.
+
+**Singleton** -> objetos que podem ser criados uma única vez durante toda a execução do código.
+
+Toda variável None terá a mesma posição na memória, independente da quantidade de variáveis com o valor `None` atribuído.
+
+- Em alguns casos, funções irão retornar um valor `None`. Isso ocorre pois toda função, por ser uma expressão, deve retornar um valor.
