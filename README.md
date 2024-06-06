@@ -287,3 +287,68 @@ type(valor) # int
 Toda variável None terá a mesma posição na memória, independente da quantidade de variáveis com o valor `None` atribuído.
 
 - Em alguns casos, funções irão retornar um valor `None`. Isso ocorre pois toda função, por ser uma expressão, deve retornar um valor.
+
+### Textos, Caracteres, Encoding e Strings
+
+- Tipos de dados que fica entre os tipos primário e os tipos compostos.
+
+**String**
+
+- Representa uma cadeia de caracteres.
+- Objeto representado pela classe `str`.
+- Criado usando aspas duplas ou aspas simples.
+
+Textos com mais de um caractere são chamados de Bytearrays ou String. Cada caractere no texto é convertido para um byte e armazenado na memória, formando uma cadeia de bytes.
+
+**Tabela ASCII**
+
+- O interpretador do Python usa uma tabela padrão ASCII para converter um número inteiro em um caractere específico.
+- Limitada, pois só possui os caracteres americanos.
+- Por limitação de memória possui apenas 127 valores (caracteres).
+- Os primeiros 33 caracteres são chamados de caracteres de controle.
+
+**Tabela Unicode**
+
+- Uma tabela única extendida que possuem muitos caracteres, além de emojis. Melhoria da Tabela ASCII.
+- O interpretador do Python já converte automaticamente qualquer valor hexadecimal da Tabela Unicode ao usar a função `print()`.
+- É um consórcio mundial de várias empresas.
+
+**UTF-8**
+
+- Tabela Unicode que em cada posição consegue armazenar 8 bits.
+- Existem alguns caracteres da Tabela Unicode que ocupam mais de 8 bits.
+
+**Serialização**
+
+Conversão de um objeto Unicode em uma representação em texto em hexadecimal. Ideal utilizar para trafegar pela rede ou armazenar caracteres Unicode em servidores ou banco de dados que não suportam Unicode.
+
+- `variavel.encode("utf-8")` -> converte para uma string que tem uma sequência hexadecimal que representa um caractere especial da Unicode.
+- `variavel.decode("utf-8")` -> converte da sequência hexadecimal para o caractere especial da Unicode.
+- `bytes(variavel, "utf-8")` -> retorna a representação em bytes do valor de uma variável, o segundo parâmetro informa qual a tabela que o interpretador vai utilizar para buscar esses valores.
+- `string[numero]` -> fatiamento, fatia a string em várias formas. Também é possivel selecionar um intervalo de caracteres da string, usando `[inicio:fim]`.
+- `len(variavel)` -> retorna o número de itens dentro de um objeto que pode armazenar outros objetos, pode ser usado em uma string para retornar a quantidade de caracteres.
+
+É possível concatenar apenas textos usando o caractere `+`, exemplo: `"Giovanni" + "Padilha"`.
+
+Também é possível multiplicar textos, `"Giovanni" * 2` = `"GiovanniGiovanni"`.
+
+Strings são percorríveis, podendo percorrer cada caractere como se a string fosse uma lista contendo caracteres.
+
+- `next(variavel_iteravel)` -> retorna o próximo objeto de um objeto iterável.
+- `string.upper()` -> retorna toda a string em maiúsculo.
+- `string.lower()` -> retorna toda a string em minúsculo.
+- `string.capitalize()` -> coloca a primeira letra da primeira palavra da string em maiúsculo.
+- `string.title()` -> coloca a primeira letra de todas as palavras da string em maiúsculo.
+- `string.split(caractere)` -> separa a string em uma lista, cortando com base em um caractere especificado.
+- `string.startswith(caractere)` -> verifica se a string começa com o caractere especificado, retornando True ou False.
+
+Esses métodos podem ser usados em cadeia. Por exemplo: `string.upper().split()`.
+
+Strings podem ser comparadas, de acordo com o valor daquele caractere na tabela Unicode ou ASCII.
+
+- `sorted(string)` -> retorna uma lista de caracteres em ordem alfabética.
+- `reversed(string)` -> retorna um objeto do tipo reversed (pode ser convertido para uma lista) com os caracteres começando do fim.
+
+Os dois métodos acima apenas funcionam pois o objeto `str` implementa o protocolo dunder `__eq__`.
+
+As strings estão entre os objetos primários e compostos pois, uma string armazena semânticamente um único valor, porém internamente, o Python grava uma sequência de caracteres a partir dessa string.
