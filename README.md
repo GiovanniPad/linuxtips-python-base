@@ -352,3 +352,75 @@ Strings podem ser comparadas, de acordo com o valor daquele caractere na tabela 
 Os dois métodos acima apenas funcionam pois o objeto `str` implementa o protocolo dunder `__eq__`.
 
 As strings estão entre os objetos primários e compostos pois, uma string armazena semânticamente um único valor, porém internamente, o Python grava uma sequência de caracteres a partir dessa string.
+
+### Formatação de Textos
+
+#### Concatenação
+
+- É possível concatenar várias strings, ex: `'Giovanni' + 'Padilha' = 'Giovanni Padilha'`.
+- O operador `+` apenas concatena string com string, para concatenar outros tipos de dados com strigs se utiliza o operador `,`, ou então converter a variável para string usando `str()`. Isso ocorre pois o Python é de tipagem forte.
+
+#### Interpolação
+
+- Define a mensagem (string) antes, criando um template.
+- Nesse template, terá os placeholders que é o local que vai ser substituído na string por um valor de uma variável. Esses placeholders são definidos usando o operador de `%` seguido de uma letra, ex: `%s`.
+  - `%s` indica um placeholder para strings.
+  - `%d` indica um placeholder para integers. Para indicar a quantidade de dígitos `%03d`.
+  - `%f` indica um placeholder para floats. Para indicar quantas casas decimais mostrar `%.2f`.
+
+Para substituir esses placeholders por valores de variáveis utiliza: `template % (variavel_1, variavel_2, ...)`.
+
+Útil para usar na biblioteca `logging`.
+
+**Parâmetros Nomeados**
+
+- Atribui um nome para o placeholder, usado em textos muito grande.
+- Sintaxe: `%(nome)s`
+
+Para atribuir valores a esses placeholders se usa um dicionário `template % {'nome':'Giovanni', chave: valor, ...}`.
+
+#### String Format
+
+- Método `str.format()`.
+- New style, forma mais recente de formatar textos no Python3.
+- Em vez de utilizar `%`, utiliza `{}`.
+- Para formatar segue o mesmo padrão da Interpolação, a diferença é que vem `:` antes da especificação.
+
+Útil para mensagens longas, como e-mails.
+
+*Exemplo*
+
+```python
+msg = "Olá, {} você é o player n {:03d} e você tem {:.2f} pontos"
+
+msg.format("Giovanni", 2, 987.3)
+```
+
+**Extras**
+
+- Centraliza textos `{:^10}.format("Giovanni")`, o número 10 é o tamanho do espaço, centraliza em 10 caracteres.
+- Alinha a esquerda `{:<10}.format("Giovanni")`.
+- Alinha a direita `{:>10}.format("Giovanni")`.
+- Preenche os espaços em branco com um caractere especificado `{:#^10}.format("Giovanni")`, preenche com `#`.
+- Corta uma string `{:^10.3}.format("Giovanni")`, usando em valores floats imprime uma representação abreviada.
+
+**Chaves Nomeadas**
+
+- Atribui nome as chaves, ex: `{pontos:.2f}`.
+
+Substituindo os placeholders nomeados `str.format(nome_variavel=valor, ...)`
+
+#### f-strings
+
+- A partir do Python3, nova sintaxe de aplicar `str.format`.
+- Sintaxe simplificada: `f"Olá, {nome}"`
+- Obrigatório aplicar um nome para os placeholders. E cade placeholder se refere a uma variável existente, se não existir a variável, retorna erro.
+
+Uso geral, qualquer tipo de mensagem.
+
+#### Emojis
+
+Há duas formas de imprimir emojis no Python.
+
+- A primeira forma é através do código unicode do emoji. Utiliza `\U000` antes do código do emoji.
+- A segunda forma é substituir o `\U` pelo nome do emoji usando `\N{nome_emoji}`.
