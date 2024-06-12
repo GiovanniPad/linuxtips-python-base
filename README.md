@@ -468,3 +468,23 @@ x, y, z = pontos
 - Para ignorar valores, basta usar o operador `*_` no local da variável em questão.
 - Também podem ser desempacotados o primeiro valor e o último elemento, ex: `primeiro, *_, ultimo = valores`.
 - `len(objeto)` -> retorna o tamanho apenas de sequências materializadas.
+
+### Listas
+
+- Objeto "padrão" no Python para sequências.
+- Podem ser comparadas com arrays ou vetores, com diferenças!
+- Uma lista é declarada usando `[]` (preferível) ou `list()`.
+- Pode ser criada vazia, pois é um objeto mutável, pode ser alterada após ser criada.
+- Todas as operações com Tuplas também é possível fazer com uma Lista.
+- É permitido somar Listas uma com a outra. E o resultado dessa soma é uma outra Lista com a junção dos objetos das duas Listas.
+
+<hr>
+
+- `list.append(valor)` -> adiciona um objeto ao final de uma lista.
+- `list.insert(posicao, valor)` -> adiciona um objeto em uma posição (índice) específico.
+- `list.remove(valor)` -> remove o primeiro valor encontrado na lista, mesmo que haja dois valores iguais.
+- `list.extend(list)` -> extende uma Lista com outra Lista, sem criar um objeto novo. Funciona igual com o operador `+=`.
+- `list.count(valor)` -> retorna quantas vezes aparece um valor dentro de uma lista.
+- `list.pop()` -> remove o último valor da lista.
+
+Possível usar `in` em Listas, retornando True se achar ou False se não encontrar, ex: `valor in list`. Em alguns objetos ele é lento!
