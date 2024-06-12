@@ -424,3 +424,47 @@ Há duas formas de imprimir emojis no Python.
 
 - A primeira forma é através do código unicode do emoji. Utiliza `\U000` antes do código do emoji.
 - A segunda forma é substituir o `\U` pelo nome do emoji usando `\N{nome_emoji}`.
+
+### Tipos de Dados Compostos e Tuplas
+
+- Capaz de armazenar (como um contâiner) mais de um único valor, até mesmo diferentes tipos de dados.
+
+#### Sequência
+
+- Um único objeto na memória, que possui um nome.
+- Dentro desse objeto sequência, terá posições que vão referenciar aos objetos contidos dentro desse contâiner. Cada objeto dentro de um contâiner vai ser armazenado na memória separadamente, da mesma forma que uma variável individual, tendo sua posição, tipo de dado e valor.
+
+#### Tuplas (Tuple)
+
+- Cria uma sequência de objetos heterogêneos.
+- Cada objeto é separado por vírgulo, e os objetos como um todo são armazenados dentro de uma Tupla.
+
+<hr>
+
+- `tuple.count(valor)` -> retorna a quantidade de vezes que um determinado valor é encontrado dentro de uma Tupla.
+
+A Tupla pode ser subscrita, ex: acessando o último valor da tupla `tuple[-1]`. As Tuplas são acessados pelo índice, começando por 0, ao usar índices negativos o acesso é feito do inverso. É o fatiamento, ex: `tuple[indice_inicial:indice_final]`
+
+- Também pode ser iterada.
+- É opcional o uso de parênteses ao realizar a atribuição, apenas as vírgulas são obrigatórios, é a partir delas que vai ser inferido o tipo de dado Tuple.
+- A Tupla é imutável, a partir de sua criação, ela não pode ser alterada.
+
+**Desempacotamento de Tupla**
+
+- Desempacota uma Tupla em várias variáveis separadas, ao mesmo tempo.
+
+*Ex:*
+
+```python
+pontos = 2, 1, 99
+
+x, y, z = pontos
+
+# x = 2
+# y = 1
+# z = 99
+```
+
+- Para ignorar valores, basta usar o operador `*_` no local da variável em questão.
+- Também podem ser desempacotados o primeiro valor e o último elemento, ex: `primeiro, *_, ultimo = valores`.
+- `len(objeto)` -> retorna o tamanho apenas de sequências materializadas.
