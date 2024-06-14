@@ -638,3 +638,31 @@ conjunto_a.symmetric_difference(conjunto_b)
 - Quando uma busca precisa iterar sobre todos os valores de uma coleção, a complexidade dessa busca é O(n) Big O. Este é o caso do protocolo Contains `in` das Listas e Tuplas.
 
 No caso de buscas usando Sets, a operação de busca é de complexidade O(1) ou constante, pois ele possui uma Hash Table, onde cada elemento possui um hash único que aponta para a posição de cada objeto na memória.
+
+### Dicionários
+
+- É um super tipo de dado, características parecidas com a "união" do Set com a Lista.
+- Implementa Hash Table e permite ser iterado.
+- O Dicionário guarda duas informações para cada posição. Cada posição tem uma chave, que aponta para um valor.
+- Não precisa de um índice para buscar por um valor, através da chave é possível saber aonde se encontra tal dado, independente da posição.
+- As buscas para valores de chaves no Dicionário é de complexidade O(1). Agora as buscas por valores vão ter menos performance, será necessário criar um algoritmo de busca de árvore invertida.
+
+Sintaxe para criar `{chave:valor}` ou `dict()`
+
+- A chave e o valor podem ser todo tipo de objeto compatível com Hash Table.
+- Não permitem chaves duplicadas.
+- São mutáveis.
+
+<hr>
+
+- `dict[key] = value` -> adiciona um novo conjunto de chave/valor no dicionário. Também é usado para alterar um campo.
+- `del dict[key]` -> remove um campo do dicionário através da chave.
+- `dict[key]` -> acessa o valor a partir de uma chave.
+- `dict.keys()` -> retorna uma lista contendo apenas as chaves.
+- `dict.values()` -> retorna uma lista contendo apenas os valores.
+- `dict.items()` -> retorna todos os campos chave e valor como Tuplas.
+- `dict.update(another_dict)` -> junta um dicionário em outro. Também é possível juntar dois dicionários em um novo usando desempacotamento `{**dict_1, **dict_2}`.
+
+Um único `*` desempacota sequências que contém um único elemento em cada posiçao, enquanto dois `**` desempacota dois elementos para cada posição, usado em Dicionários.
+
+- `dict.get(key)` -> busca uma chave no dicionário, se não existir não retorna nada, se existir retorna o seu valor. Não gera erro se não encontrar a chave.
