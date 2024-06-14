@@ -543,3 +543,98 @@ for nome_atividade, alunos_atividade in atividades:
     print("Sala 2:", atividade_sala2)
     print("-" * 20)
 ```
+
+### Sets e a Teoria dos Conjuntos
+
+- Sets (Conjuntos), um conjunto não ordenado de valores únicos.
+- Para criar um conjunto se usa `{}`, porém é confundida com o Dicionário que também usam chaves para delimitar. A melhor maneira de criar então é usar `set()`.
+- Dentro da função `set()` você passa qualquer objeto iterável, seja uma Tupla ou Lista.
+- Ao criar um Set a partir de uma String, ele cria uma sequência de caracteres únicos não ordenados. Remove itens duplicados de uma coleção.
+- Não são indicados para armazenar valores, são objetos de transição, geralmente usados para operações.
+
+Não usar Sets quando se precisa ter valores repetidos e também de manter a ordem de uma sequência ao alterá-la.
+
+- Não possui o protocolo Subscriptable, não podendo usar índices para acessar os elementos.
+
+#### Implementa o Diagrama de Venn e a Teoria dos Conjuntos
+
+![Operações com Conjuntos](./images/operacoes_conjuntos_day2.webp)
+
+**Conjuntos de exemplo**
+
+```python
+conjunto_a = set([1, 2, 3, 4, 5])
+conjunto_b = set([4, 5, 6, 7, 8])
+```
+
+- Podem ser convertidos diretamente ao realizar a operação usando `set()` ou criá-los já como Sets.
+- Internamente, as funções `union(), intersection(), difference() e symmetric_difference()` também convertem o objeto iterável passado para um Set.
+
+**União**
+
+- Retorna todos os valores unidos de ambos os conjuntos. Não repete os valores.
+
+```python
+conjunto_a | conjunto_b
+
+# ou
+
+conjunto_a.union(conjunto_b)
+
+# {1, 2, 3, 4, 5, 6, 7, 8}
+```
+
+**Intersecção**
+
+- Retorna todos os valores que aparecem nos dois Sets.
+
+```python
+conjunto_a & conjunto_b
+
+# ou
+
+conjunto_a.intersection(conjunto_b)
+
+# {4, 5}
+```
+
+**Diferença**
+
+- Retorna os elementos que aparecem no conjunto A e não aparecem no conjunto B, ou vice-versa.
+
+```python
+conjunto_a - conjunto_b
+
+# ou
+
+conjunto_a.difference(conjunto_b)
+
+# {1, 2, 3}
+
+conjunto_b.difference(conjunto_a)
+
+# {6, 7, 8}
+```
+
+**Diferença Simétrica**
+
+- Retorna todos os elementos que estão apenas no conjunto A e apenas no conjunto B.
+
+```python
+conjunto_a ^ conjunto_b
+
+# ou
+
+conjunto_a.symmetric_difference(conjunto_b)
+
+# {1, 2, 3, 6, 7, 8}
+```
+
+- `set.add(valor)` -> adiciona um novo elemento ao Set. Sempre garantindo elementos únicos.
+
+#### Implementa Hash Table
+
+- Resolve a complexidade algorítmica ao realizar busca dentro de uma coleção.
+- Quando uma busca precisa iterar sobre todos os valores de uma coleção, a complexidade dessa busca é O(n) Big O. Este é o caso do protocolo Contains `in` das Listas e Tuplas.
+
+No caso de buscas usando Sets, a operação de busca é de complexidade O(1) ou constante, pois ele possui uma Hash Table, onde cada elemento possui um hash único que aponta para a posição de cada objeto na memória.
