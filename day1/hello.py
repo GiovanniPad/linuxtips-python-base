@@ -10,6 +10,10 @@ Tenha a variável de ambiente LANG devidamente configurada ex:
 
     export LANG=pt_BR
 
+Ou informe através do CLI argument `--lang`
+
+Ou o usuário terá que digitar.
+
 Execução:
 
     python3 hello.py
@@ -17,25 +21,69 @@ Execução:
     ./hello.py
 """
 # Metadados com informações adicionais.
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 __author__ = "Giovanni Padilha"
 __license__ = "Unlicense"
 
-# Importando a biblioteca `os` que permite que o Python se comunique com o SO.
+# Biblioteca que interage com o Sistema Operacional.
 import os
+# Biblioteca que interage com o ambiente de execução do Python.
+import sys
 
 # Define um bloco principal de um script Python,
 # apesar de estar caindo em desuso.
 #if __name__ == "__main__":
 
-# A função `getenv()` da lib `os` coleta o valor de uma variável de ambiente.
-# - O primeiro parâmetro informa qual o nome da variável de ambiente.
-# - O segundo parâmetro informa um valor padrão, caso essa variável não existir.
+# Dicionário declarando os argumentos que podem ser declarados na CLI.
+arguments = {"lang": None, "count": 1}
 
-# O `[:5]` refere-se ao fatiamento da string, coletando apenas os 5 primeiros caracteres.
-current_language = os.getenv("LANG", "en_US")[:5]
+# `sys.argv` da biblioteca `sys` coleta todos os argumentos passados na CLI e retorna uma lista.
+# Iterando nessa lista de argumentos a partir da segunda posição.
+for arg in sys.argv[1:]:
+    # TODO: Tratar ValueError
 
-# Dicionário contendo uma chave com o País e a língua dele e o valor é a mensagem na língua do País.
+    # Divide a string de cada argumento em dois usando o caractere "=" para separar.
+    # Desempacota em duas variáveis, o primeiro é a chave e o segundo o valor.
+    key, value = arg.split("=")
+
+    # `lstrip("-")` remove os traços no início da string.
+    # `strip()` remove os espaços em branco do início e do fim da string.
+    key = key.lstrip("-").strip()
+    value = value.strip()
+
+    # Valida se o argumento (chave) está presente dentro do dicionário de argumentos válidos.
+    if key not in arguments:
+
+        # Mostra qual argumento é inválido.
+        print(f"Invalid Option `{key}`")
+
+        # `sys.exit()` encerra o script nessa linha.
+        sys.exit()
+
+    # Atribui o valor do argumento (chave) no dicionário.
+    arguments[key] = value
+
+# Coleta a língua passada no argumento para exibir a mensagem.
+current_language = arguments["lang"]
+
+# Verifica se nenhum argumento foi passado.
+if current_language is None: 
+    # TODO: Usar repetição
+
+    # Verifica se a variável de ambiente `LANG` existe.
+    # Se existir, usa ela como valor em vez do argumento da CLI.
+    # Se não existir, pergunta pro usuário qual a língua que vai ser usada.
+    if "LANG" in os.environ:
+        # A função `getenv()` da biblioteca `os` coleta o valor de uma variável de ambiente.
+        current_language = os.getenv("LANG")
+    else:
+        # `input()` pergunta algo ao usuário a partir da stdin.
+        current_language = input("Choose language:")
+
+# Fatia a língua atual, coletando apenas os últimos 5 caracteres.
+current_language = current_language[:5]
+
+# Dicionário, a chave é o país e o valor é a mensagem na língua do país em questão.
 msg = {
     "en_US": "Hello, World!",
     "pt_BR": "Olá, Mundo!",
@@ -44,23 +92,8 @@ msg = {
     "fr_FR": "Bonjour, Monde!",
 }
 
-#Estrutura condicional `if`, onde a expressão lógica será dada como true ou false,
-#e a partir desse valor booleano, é executado um bloco de código.
-
-#A palavra `elif` faz com que uma nova comparação possa ser adicionada na estrutura.
-
-#Ordem de Complexidade O(n)
-"""
-if current_language == "pt_BR":
-    msg = "Olá, Mundo!"
-elif current_language == "it_IT":
-    msg = "Ciao, Mondo!"
-elif current_language == "es_SP":
-    msg = "Hola, Mundo!"
-elif current_language == "fr_FR":
-    msg = "Bonjour Monde!"
-"""
-
 # A função `print()` imprime um conteúdo qualquer na tela (output).
 # Ordem de Complexidade O(1) - Constante.
-print(msg[current_language])
+print(
+    msg[current_language] * int(arguments["count"])
+)

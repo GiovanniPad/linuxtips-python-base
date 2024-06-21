@@ -96,6 +96,8 @@ Um ambiente é formado de um shell e as variáveis de ambiente, a maioria dos pr
 
 Ao utilizar o SHEBANG apontando para o ambiente, todas as variáveis de ambiente serão fornecidas para o Python. Ao especificar o Python no SHEBANG não será necessário especificar o Python ao executar, pode escrever apenas `./arquivo.py`.
 
+A biblioteca `os` implementa uma função `environ()`, o environ é um Dict Like Object, que não é um dicionário puro, mas implementa seus protocolos e métodos públicos.
+
 ### Criando um programa que lê variáveis de ambiente
 
 - É recomendável seguir um guia de estilo para escrever códigos Python. O pep8.
@@ -739,3 +741,50 @@ elif current_language == "fr_FR":
 # Ordem de Complexidade O(1) - Constante.
 print(msg[current_language])
 ```
+
+## Dia 3 - Input-Output, Algoritmos, Condicionais, Repetições
+
+### Standard Input & Output e argumentos do CLI
+
+Botão Ligar -> Sinal elétrico para Bios (liga o computador e inicializa os componentes iniciais), possui um SO imbutido -> CPU, inicia o processo de boot -> SSD, identifica o SO -> RAM, carrega o SO -> **stdout** (Standard Input), imprime informações na tela.
+
+#### stdout
+
+**stdout** -> saída padrão do computador, é um módulo virtual do sistema. Pode ter um ou vários monitores conectados a esse módulo, ou até mesmo vários terminais. Cada programa possui um Shell e possui sua saída padrão (stdout).
+
+- O ambiente de execução do Python é acessado atráves de uma biblioteca chamada `sys` do Python, podendo acessar o stdout.
+- stdout é um objeto TextIOWrapper. Espera receber texto, um descritor de arquivos. Possuindo um modo de escrita e um encoding.
+- stdout varia de acordo com o programa. O stdout do iPython é o terminal.
+- A função print implementa o `sys.stdout`, é uma abstração da interface stdout.
+- Está no modo de escrita "write".
+
+<hr>
+
+- `sys.stdout.write(text)` -> imprime uma mensagem no stdout junto de um número inteiro, que é o tamanho desse texto.
+- `print("text", file=open("path", "mode"))` -> substitui o stdout por um outro descritador de arquivo, em vez de imprimir no terminal, a mensagem do print vai ser gravado no arquivo.
+- `open("path", "mode")` -> cria um novo arquivo em um modo especificado.
+
+#### stdin
+
+- Coleta informações a partir de uma interface stdin.
+- Também é um descritor de arquivos e é acessado pela biblioteca `sys`.
+- Está no modo de leitura "read".
+- A função `input()` é a abstração do stdin, está preparado para receber a tecla Enter.
+
+<hr>
+
+- `sys.stdin.read(char_length)` -> espera ler um caractere, informando a quantidade esperada de caractere.
+- `input("question")` -> abstração do stdin. Utilizado para programas que tenham interação humana. Também pode ser usado para dar uma pequena pausa do programa. Toda informação recebida por essa função está no formato de string e considera espaços em branco.
+- `strip("char")` -> remove todos os espaços em branco do começo e do final de uma string. Também pode ser especificado um caractere específico a ser removido da string, do início e do fim.
+
+**Formas de se comunicar e receber dados do ambiente**
+
+- Variáveis de ambiente (não recomendável).
+- CLI Args (recomendável).
+
+Se o usuário não passar os CLI Args, então se usa a variável de ambiente, e se não tiver uma variável de ambiente definida, se utiliza um valor padrão.
+
+- `sys.argv` -> retorna uma lista contendo os argumentos passados pelo CLI ao executar o script.
+- `str.replace(actual_char, new_char)` -> substitui os caracteres de uma string por um novo caractere especificado.
+- `str.lstrip("char")` -> retira todos os caracteres apenas no início da string a partir de um caractere especificado.
+- `str.removeprefix("str")` -> a partir do Python 3.9, também remove caracteres do início da string.
