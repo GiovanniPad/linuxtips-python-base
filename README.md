@@ -980,3 +980,58 @@ elif operation == "div":
 # Imprime o resultado na tela.
 print(f"O resultado é {result}")
 ```
+
+### Manipulando arquivos e pastas
+
+- Biblioteca `os` permite manipular o sistemas de arquivos do SO.
+
+**Alguns métodos da biblioteca os**
+
+- `os.listdir("path")` -> retorna uma lista com o conteúdo da pasta especificada no caminho dentro do método.
+- `os.chdir("path")` -> navega para o caminho especificado.
+- `os.mkdir("nome_pasta")` -> cria um diretório/pasta.
+- `os.makedirs("nome_pasta", exist_ok=True)` -> cria um subdiretório dentro de outro sem exibir um erro.
+- `os.path.join("pasta1", "pasta2", ...)` -> une e retorna o caminho de um diretório, considerando o SO em questão, usando a "\" ou "/". Sempre crie pastas e arquivos usando o caminho que esse método retorna.
+- `os.curdir` -> retorna o diretório atual, o caminho relativo. Mais recomendável, pois considera outros SOs também, multiplataforma.
+- `os.mknod(os.path.join(path, "nome_arquivo"))` -> cria um arquivo vazio dentro de um caminho.
+- `os.path.basename(filepath)` -> retorna apenas o nome do arquivo do caminho dele.
+- `os.path.exists(filepath)` -> retorna se o caminho de um arquivo existe ou não.
+- `os.abspath(path)` -> retorna o caminho absoluto de uma pasta ou arquivo.
+
+Para escrever num arquivo vazio é necessário um descritor de arquivos, um objeto capaz de ler e escrever um arquivo.
+
+- `open(filepath, mode)` -> cria um file descriptor que permite a interação com um arquivo, por padrão, inicia no modo de leitura. O segundo parâmetro é o modo do arquivo, "r" para leitura, "w" para escrita. Arquivos no modo "w" substitui todo o conteúdo do arquivo, para não apagar todo o conteúdo do arquivo usar o modo "a" append. Cria o arquivo se não existir.
+- `arquivo.read()` -> lê o conteúdo do arquivo. Consome o conteúdo do arquivo, linha por linha.
+- `arquivo.readlines()` -> retorna uma lista, onde cada posição é uma linha de conteúdo do arquivo.
+- `arquivo.write("text")` -> escreve algo dentro de um código. `\n` quebra linha.
+- `arquivo.close()` -> fecha o arquivo, necessário sempre ao terminar de realizar as operações desejadas.
+- `arquivo.seek()` -> volta no histórico de linhas consumidas do arquivo. Ou então reabra novamente o arquivo.
+
+**Context Manager with**
+
+- Cria um Context Manager usando `with`, um objeto especial para interagir com o arquivo em questão.
+- Dentro do escopo do Context Manager o código é gerenciado pelo Gerenciador de Contextos, abrindo devidamente o arquivo, realizar as operações e depois fechar o arquivo automaticamente.
+- Sempre utilizar um Gerenciador de Contexto para escrever em arquivos. Em alguns casos mais simples o `print("text", file=file_descriptor)` pode ser usado.
+
+```python
+with open(filepath, "a") as arquivo:
+    # Code block
+```
+
+- `arquivo.writelines()` -> escreve várias linhas de uma única vez no arquivo.
+
+**Biblioteca Pathlib**
+
+- Abordagem mais orientada a objetos.
+- Funciona em qualquer Sistema Operacional.
+- Não tem necessidade de importar a biblioteca `os`.
+- `from pathlib import Path`
+
+<hr>
+
+- `Path("pasta")` -> retorna um objeto que referencia a pasta em questão.
+- `Path("pasta") / Path("pasta2")` -> une duas pastas.
+- `path / Path("nome_arquivo")` -> cria um arquivo dentro de um caminho usando o objeto Path.
+- `path / "nova_pasta"` -> cria um novo objeto que representa essa nova pasta. Para criar `(path / "nova_pasta").mkdir()`.
+- `filepath.write_text("text")` -> escreve num arquivo usando o objeto Path.
+- `filepath.read_text()` -> lê o conteúdo de um arquivo usando o objeto Path.

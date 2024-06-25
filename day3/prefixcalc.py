@@ -25,11 +25,15 @@ operação: sum
 n1: 5
 n2: 4
 9
+
+Os resultados serão salvos em infixcalc.log
 """
 __version__ = "0.1.0"
 __author__ = "Giovanni Padilha"
 
+import os
 import sys
+from datetime import datetime
 
 # Colentando os argumentos necessários
 arguments = sys.argv[1:]
@@ -40,6 +44,8 @@ arguments = sys.argv[1:]
 
 # Uma lista vazia ao ser passada em um statement, retorna False. Com o uso do not, inverte, ficando como True.
 if not arguments:
+    
+    # Função `input()` permite a inserção de informações pelo stdin da aplicação
     operation = input("operação: ")
     n1 = input("n1: ")
     n2 = input("n2: ")
@@ -51,6 +57,8 @@ if not arguments:
 elif len(arguments) != 3:
     print("Número de argumentos inválidos")
     print("ex: `sum 5 5`")
+
+    # Encerra a execução do programa com o código de erro 1
     sys.exit(1)
 
 # Desempacota a variável `arguments` em uma variável com a operação e uma com os números.
@@ -117,6 +125,29 @@ elif operation == "div":
         print("Division by zero")
         sys.exit(1)
     result = n1 / n2
+
+# Coletando o caminho relativo do diretório atual
+path = os.curdir
+
+# Unindo e definindo o caminho do arquivo usado para armazenar as operações
+filepath = os.path.join(path, "archives", "prefixcalc.log")
+
+# Definindo o dia e o horário da execução da operação através do objeto datetime
+# Função `now()` retorna o dia, mês, ano e horário atuais
+# Função `isoformat()` converte o conteúdo de retorno da função `now()` para um formato ISO legível
+timestamp = datetime.now().isoformat()
+
+# Coleta através de uma variável de ambiente o nome do usuário que executou a operação
+user = os.getenv("USER", "anonymous")
+
+# Abre o arquivo de gravação das operações no modo append `a` utilizando o gerenciador de contexto `with`
+with open(filepath, "a") as file_:
+    
+    # Escrevendo a operação no arquivo, referenciado pelo nome `file_`, juntamente do timestamp e user
+    file_.write(f"{timestamp} - {user} - {operation}, {n1}, {n2} = {result} \n")
+
+# Outra maneira de escrever a log da operação no arquivo usando a função `print()`
+#print(f"{operation}, {n1}, {n2} = {result} \n", file=open(filepath, "a"))
 
 # Imprime o resultado na tela.
 print(f"O resultado é {result}")

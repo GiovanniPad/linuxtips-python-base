@@ -1,26 +1,45 @@
 #!/usr/bin/env python3
 
-email_tmpl = """
-    Olá, %(nome)s
-    Tem interesse em comprar %(produto)s?
-    Este produto é ótimo para resolver
+# Importando biblioteca `os` e `sys`
+import os
+import sys
 
-    %(texto)s
+# Coletando os argumentos CLI necessários, excluindo o nome do arquivo.py
+arguments = sys.argv[1:]
 
-    Clique agora em %(link)s
-    
-    Apenas %(quantidade)d disponíveis!
-    
-    Preço promocional %(preco).2f
-"""
+# Verificando se a lista de argumentos não está vazia
+# Se estiver, imprime um erro e encerra o programa
+if not arguments:
+    print("Informe o nome do arquivo de emails e o template de email")
+    sys.exit(1)
 
-clientes = ["Giovanni", "Beatriz", "Zeca"]
+# Definindo o nome do arquivo de emails e de template
+filename = arguments[0]
+templatename = arguments[1]
 
-for cliente in clientes:
+# Coletando o caminho relativo do diretório atual
+path = os.curdir
+
+# Unindo os caminhos dos diretórios juntamente com o nome do arquivo de emails e tempalte
+filepath = os.path.join(path, "archives", filename)
+templatepath = os.path.join(path, "archives", templatename)
+
+# Iterando sobre cada linha do arquivo de emails
+# Ao utilizar o protocolo contains `in` em um arquivo com o `open()` o interpretador vai ler linha por linha do arquivo
+for line in open(filepath):
+
+    # Desempacota os dados das linhas nas variáveis `name` e `email`
+    name, email = line.split(",")
+
+    # TODO: Substituir por envio de email
+
+    # Imprime cada mensagem do email, juntamente do email do destinatário
+    print(f"Enviando email para: {email}")
     print(
-        email_tmpl 
+        # Lê o arquivo de template e coleta o template de emails e utiliza da interpolação `%` para inserir os dados
+        open(templatepath).read() 
         % {
-            "nome": cliente,
+            "nome": name,
             "produto": "caneta",
             "texto": "Escreve muito bem",
             "link": "https://canetaslegais.com",
@@ -28,3 +47,6 @@ for cliente in clientes:
             "preco": 50.5,
         }
     )
+
+    # Divisor
+    print("-" * 50)
