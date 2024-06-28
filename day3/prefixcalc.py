@@ -38,7 +38,6 @@ from datetime import datetime
 # Colentando os argumentos necessários
 arguments = sys.argv[1:]
 
-# TODO: Exceptions
 # Verificando se a lista de argumentos está vazio ou não.
 # Se estiver vazia, perguntar a operação e os números ao usuário e reatribui na variável `arguments`.
 
@@ -101,8 +100,17 @@ for num in nums:
     # Insere o número já validado dentro da Lista de números validados.
     validated_nums.append(num)
 
-# Desempacota os números validados nas variáveis `n1` e `n2`.
-n1, n2 = validated_nums
+# Bloco `try` a ser executado que se espera um erro.
+try:
+    # Desempacota os números validados nas variáveis `n1` e `n2`.
+    n1, n2 = validated_nums
+
+# Captura um erro do tipo valor e imprime sua mensagem e encerra o programa.
+# Esse erro é estourado caso o tamanho da variável a ser desempacotada seja diferente de 2.
+except ValueError as e:
+    # TODO: logging
+    print(str(e))
+    sys.exit(1)
 
 # Variável para armazenar o resultado.
 result = 0
@@ -140,11 +148,21 @@ timestamp = datetime.now().isoformat()
 # Coleta através de uma variável de ambiente o nome do usuário que executou a operação
 user = os.getenv("USER", "anonymous")
 
-# Abre o arquivo de gravação das operações no modo append `a` utilizando o gerenciador de contexto `with`
-with open(filepath, "a") as file_:
+# Bloco de código onde se espera um erro.
+try:
+    # Abre o arquivo de gravação das operações no modo append `a` utilizando o gerenciador de contexto `with`
+    with open(filepath, "a") as file_:
     
-    # Escrevendo a operação no arquivo, referenciado pelo nome `file_`, juntamente do timestamp e user
-    file_.write(f"{timestamp} - {user} - {operation}, {n1}, {n2} = {result} \n")
+        # Escrevendo a operação no arquivo, referenciado pelo nome `file_`, juntamente do timestamp e user
+        file_.write(f"{timestamp} - {user} - {operation}, {n1}, {n2} = {result} \n")
+
+# Captura um erro de permissão, imprimindo sua mensagem e encerrando o programa.
+# Nesse caso, o erro é estourado caso o programa tente abrir um arquivo num diretório 
+# onde o usuário não tenha permissão de acesso.
+except PermissionError as e:
+    # TODO: logging
+    print(str(e))
+    sys.exit(1)
 
 # Outra maneira de escrever a log da operação no arquivo usando a função `print()`
 #print(f"{operation}, {n1}, {n2} = {result} \n", file=open(filepath, "a"))

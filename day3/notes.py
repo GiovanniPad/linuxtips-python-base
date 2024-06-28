@@ -46,8 +46,21 @@ if arguments[0] not in valid_commands:
 # Verifica se o comando inserido é o `new`, comando para criar uma nova nota
 if arguments[0] == "new":
 
-    # Coleta o título da nota dos argumentos CLI
-    title = arguments[1] # TODO: Tratar exception
+    # Bloco de código onde se espera um erro
+    try:
+
+        # Coleta o título da nota dos argumentos CLI
+        title = arguments[1]
+    
+    # Capturando um erro do tipo índice.
+    # Ocorre quando tenta acessar um índice que não existe em uma lista,
+    # normalmente por conta da lista ter um tamanho diferente.
+    except IndexError as e:
+        # TODO: logging
+        print(str(e))
+        print("You need to pass a title to your note!")
+        print("Usage ex: python3 notes.py new 'My Title'")
+        sys.exit(1)
 
     # Cria uma lista que armazena o título, tag e o conteúdo da nota em cada posição
     note = [

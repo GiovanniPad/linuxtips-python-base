@@ -40,11 +40,22 @@ arguments = {"lang": None, "count": 1}
 # `sys.argv` da biblioteca `sys` coleta todos os argumentos passados na CLI e retorna uma lista.
 # Iterando nessa lista de argumentos a partir da segunda posição.
 for arg in sys.argv[1:]:
-    # TODO: Tratar ValueError
 
-    # Divide a string de cada argumento em dois usando o caractere "=" para separar.
-    # Desempacota em duas variáveis, o primeiro é a chave e o segundo o valor.
-    key, value = arg.split("=")
+    # Bloco onde se espera um erro.
+    try:
+        # Divide a string de cada argumento em dois usando o caractere "=" para separar.
+        # Desempacota em duas variáveis, o primeiro é a chave e o segundo o valor.
+        key, value = arg.split("=")
+
+    # Capturando uma exceção do tipo valor.
+    # Exceçao ocorre caso, ao passar o argumento CLI, o usuário usar um caractere diferente de `=`.
+    except ValueError as e:
+        # TODO: Logging
+        print(f"[ERROR] {str(e)}")
+        print("You need to use `=`")
+        print(f"You passed {arg}")
+        print("try with --key=value")
+        sys.exit(1)
 
     # `lstrip("-")` remove os traços no início da string.
     # `strip()` remove os espaços em branco do início e do fim da string.
@@ -92,8 +103,23 @@ msg = {
     "fr_FR": "Bonjour, Monde!",
 }
 
+# Maneira de verificar implícita, não recomendada, pois não imprime nenhum erro.
+# message = msg.get(current_language, msg["en_US"])
+
+# Bloco onde se espera um erro.
+try:
+    message = msg[current_language]
+
+# Captura um erro do tipo chave.
+# Erro causado caso ao tentar acessar um dicionário, a chave passada não exista nele.
+except KeyError as e:
+    # TODO: logging
+    print(f"[ERROR] {str(e)}")
+    print(f"Language is invalid, choose from {list(msg.keys())}")
+    sys.exit(1)
+
 # A função `print()` imprime um conteúdo qualquer na tela (output).
 # Ordem de Complexidade O(1) - Constante.
 print(
-    msg[current_language] * int(arguments["count"])
+    message * int(arguments["count"])
 )

@@ -1188,3 +1188,72 @@ if arguments[0] == "read":
             print(f"Text: {text}", end="")
             print("-" * 50)
 ```
+
+### Tratamentos de Erros com Exceptions
+
+- **Traceback** -> palavra usada no Python para indicar um erro.
+- Evitar mostrar Tracebacks para o usuário, pois expõem informações sensíveis do programa.
+
+**Duas abordagens para tratar erros**
+
+#### LBYL (Look Before You Leap)
+
+Antes de tentar fazer uma operação, primeiro verifica se é possível realizar essa operação. 
+
+Não é perfeita pois o tempo de execução do programa não é constante, sendo executado na mesma velocidade sempre.
+
+- **Race Condition** -> é uma condição de um software aonde o comportamento do sistema é dependente de uma sequência ou tempo de eventos incontroláveis, levando a resultados inconsistentes ou inesperados.
+
+**Exemplo de LBYL**
+
+```python
+import sys
+import os
+
+if os.path.exists("archives/names.txt"):
+    input("...") # Race Condition
+    names = open("archives/names.txt").readlines()
+else:
+    print("[Error] File names.txt not found.")
+    sys.exit(1)
+
+if len(names) >= 3:
+    print(names[2])
+else:
+    print("[Error] Missing name in the list")
+    sys.exit(1)
+```
+
+#### EAFP (Easy to Ask Forgiveness than Permission)
+
+- Primeiro executa a operação, depois trata qualquer erro gerado.
+- Deixa a complexidade algorítmica do programa melhor, pois teremos menos verificações.
+- Usa a estrutura `try/except`.
+
+**Bare except** -> captura qualquer exceção que ocorrer. Ruim, pois vários erros diferentes podem ocorrer. Não recomendado.
+
+Sempre pensar nos erros individualmente!
+
+- Dentro de um bloco `try` pode haver diversos `except`, cada um tratando um erro individual, maneira mais recomendada.
+- São blocos de controle de fluxo, ajudam a tomar decisão sobre o fluxo do programa.
+- Evitar fazer várias operações num bloco `try`.
+- Possível capturar cada erro usando a palavra reservada `as`.
+- Em um único `except` é possível capturar vários erros específicos.
+- Pode ser usado um `else` também no bloco `try/except`, caso não houver nenhum erro, o bloco será executado.
+- Também possui o `finally`, que sempre executa o bloco de código, independente se tiver ou não um erro.
+
+É possível estourar as próprias exceções.
+
+- `vars(__builtins__)` -> mostra uma lista com todos os erros já inseridos no Python.
+
+Quando não souber a categoria exata do erro, o ideal é sempre utilizar um RuntimeError, erro em tempo de execução.
+
+**Exemplo de EAFP**
+
+```python
+try:
+    names = open("archives/names.txt").readlines()
+except FileNotFoundError as e:
+    print(str(e))
+    sys.exit(1)
+```
