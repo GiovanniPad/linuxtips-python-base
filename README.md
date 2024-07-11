@@ -1293,3 +1293,58 @@ O Level, a formatação e o destino podem ser configurados e modificados.
 Os loggers tem handlers, um handler é uma classe responsável pelo destino da aonde a mensagem de log será impressa e como será impressa.
 
 - **Boilerplate** -> código que se repete em vários locais, basicamente código repetitivo, normalmente são códigos de configuração padrão em projetos.
+
+### Exercício: Algoritmos
+
+Um algoritmo é uma sequência de instruções lógicas que visam obter a solução de um problema.
+
+**Exemplo**
+
+Problema: Ir a padaria e comprar pão
+Premissa: Padaria da esquina abre fds: até 12h, semana até 19h, feriado (exceto Natal) não abre.
+
+1. A padaria está aberta?
+   1. Se é feriado e NÃO é natal: não
+   2. Senão, Se é sábado OU domingo E antes do meio dia: sim
+   3. Senão, Se é dia de semana E antes das 19h: sim
+   4. Senão: não
+2. Se padaria está aberta E:
+   1. Se está chovendo: Pegar guarda-chuvas
+   2. Se está chovendo E calor: Pegar guarda-chuvas e garrafa de água
+   3. Se está chovendo E frio OU negando: pegar guarda chuva, blusa e botas
+   4. Ir até a padaria:
+      1. Se tem pão integral E baguete: Pedir 6 de cada
+      2. Senão, se tem apenas pão integral OU baguete: Pedir 12
+      3. Senão: Pedir 6 de qualquer pão
+3. Senão
+   1. Ficar em casa e comer bolachas
+
+**Statements do algoritmo**
+
+- Se -> `if`
+- Senão, se -> `elif (else if)`
+- Senão -> `else`
+- E -> `and`
+- OU -> `or`
+- Não -> `not` inverte o resultado de um outro statement.
+
+**Expressions**
+
+Retornam um valor do tipo `bool` True or False
+
+- é feriado?
+- é natal?
+- é feriado e NÃO é natal
+- é sábado?
+- é domingo?
+- é sábado OU é domingo
+
+**Actions**
+
+- Função -> bloco de código que realiza uma ação.
+- Método -> função de dentro de um objeto.
+- Instrução
+
+Usar `is` em vez de `==` para comparar variáveis booleanas.
+
+**Short Circuit** -> na estrutura de condicionais `if` e `elif` se uma das expressões foram verdadeiras ou falsas, as outras condicionais nem vão ser verificadas. Nesse caso o ideal é começar a partir da expressão com mais condições.
