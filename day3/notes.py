@@ -10,12 +10,23 @@ $ python3 notes.py read tech
 ...
 ...
 """
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __author__ = "Giovanni Padilha"
 
-# Importando bibliotecas `os` e `sys`
+# Importando bibliotecas `os`, `sys` e `logging`.
 import os
 import sys
+import logging
+
+# Criando um Logger e StreamHandler para tratar as mensagens de erro deste script.
+log = logging.Logger("notes.py", logging.DEBUG)
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+fmt = logging.Formatter(
+    "%(asctime)s %(name)s %(levelname)s l:%(lineno)d f:%(filename)s: %(message)s"
+)
+ch.setFormatter(fmt)
+log.addHandler(ch)
 
 # Coletando o caminho relativo do diretório atual
 path = os.curdir
@@ -56,10 +67,13 @@ if arguments[0] == "new":
     # Ocorre quando tenta acessar um índice que não existe em uma lista,
     # normalmente por conta da lista ter um tamanho diferente.
     except IndexError as e:
-        # TODO: logging
-        print(str(e))
-        print("You need to pass a title to your note!")
-        print("Usage ex: python3 notes.py new 'My Title'")
+
+        # Log do tipo error, com uma mensagem (atributo `message` do Formatter) personalizada.
+        # Exibe o erro caso o usuário não passar um título para sua nota ao executar o script.
+        log.error(
+            "%s - You need to pass a title to your note! Usage ex: python3 notes.py new 'My Title'",
+            str(e)
+        )
         sys.exit(1)
 
     # Cria uma lista que armazena o título, tag e o conteúdo da nota em cada posição

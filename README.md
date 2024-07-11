@@ -1257,3 +1257,39 @@ except FileNotFoundError as e:
     print(str(e))
     sys.exit(1)
 ```
+
+### Gravando Logs
+
+Armazena o histórico de execução, principalmente de erros de um programa para consulta posterior.
+
+**stderr**
+
+- Interface virtual para onde vão os erros de um software.
+- Pode ser redirecionada para um arquivo de logs.
+
+Em sistemas Linux, o comando `python3 logs.py &>2 logs.log` pode redirecionar o strerr de um script para um arquivo.
+
+**Biblioteca `logging`**
+
+- Biblioteca Python utilizada para cuidar de logs.
+- Possui um objeto chamado **root logger** que é logger raiz/principal do programa que está sendo rodado.
+- Independente de qual módulo usar a biblioteca `logging`, todos vão estar se comunicando com o logger principal, o **root logger**.
+
+Não pode utilizar **f-strings** com a biblioteca `logging`, pois a mensagem vai ser montada na hora que o erro ocorrer e não quando vai ser exibida ou armazenado em um arquivo de logs. Recomendado usar `%`.
+
+**Levels de logs**
+
+- **50: Critical** -> utilizada para indicar um erro que afetou a aplicação como um todo, todos os usuários.
+- **40: Error** -> utilizada quando o erro ocorre do lado do usuário, o erro foi causado pelo usuário ou então algo ocorreu com um usuário específico.
+- **30: Warning** -> mensagens de avisos para indicar que algo foi feito errado ou uma mudança, mas não significa que seja um erro.
+- **20: Info** -> informações úteis para quem usa o programa, seja usuário ou desenvolvedor.
+- **10: Debug** -> mensagens de erro direcionadas a desenvolvedores.
+- **0: Notset** -> não é definido, não é impresso em local algum.
+
+Por padrão, mensagens do nível info para baixo não vão ser exibidas, apenas mensagens de warning para acima vão ser visíveis.
+
+O Level, a formatação e o destino podem ser configurados e modificados.
+
+Os loggers tem handlers, um handler é uma classe responsável pelo destino da aonde a mensagem de log será impressa e como será impressa.
+
+- **Boilerplate** -> código que se repete em vários locais, basicamente código repetitivo, normalmente são códigos de configuração padrão em projetos.

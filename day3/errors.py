@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
-import os
+import logging
 
 # LBYL - Look Before You Leap
 # Primeiro você verifica se é possível uma operação.
@@ -30,6 +30,16 @@ else:
     sys.exit(1)
 """
 
+# Criando um Logger e Handler específicos para tratar as mensagens de erro desse script.
+log = logging.Logger("errors.py", logging.DEBUG)
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+fmt = logging.Formatter(
+    "%(asctime)s %(name)s %(levelname)s l:%(lineno)d f:%(filename)s: %(message)s"
+)
+ch.setFormatter(fmt)
+log.addHandler(ch)
+
 # EAFP - (Easy to Ask Forgiveness than Permission)
 # Primeiro executa, depois trata os erros/exceções.
 
@@ -41,8 +51,8 @@ try:
 
 # Bloco onde a exceção é capturada, sendo possível usar a variável `e` para mostrar sua mensagem.
 except Exception as e:
-    # TODO: logging
-    print(str(e))
+    # Log do tipo warning, exemplo
+    log.warning(str(e))
 
 # Bloco `try` que se espera um erro
 try:
@@ -50,8 +60,9 @@ try:
 
 # Captura a exceção de arquivo não localizado, imprimindo a mensagem de erro e encerrando o programa.
 except FileNotFoundError as e:
-    # TODO: logging
-    print(str(e))
+    
+    # Log do tipo error, exibe a mensagem de erro da exceção capturada.
+    log.error(str(e))
     sys.exit(1)
     # TODO: Usar retry
 
@@ -65,11 +76,15 @@ finally:
 
 # Segue a mesma lógica
 try:
-    print(names[2])
+    print(names[5])
 
 # Esse é o bloco de Bare Except, ele vai coletar todo e qualquer tipo de erro
 # que ocorrer no bloco `try`.
 except:
-    # TODO: logging
-    print("[Error] Missing name in the list")
+
+    # Log do tipo error, mostrando uma mensagem (atributo `message`) personalizada.
+    log.error(
+        "Missing name in the list, please use index in a range of %d",
+        len(names)
+    )
     sys.exit(1)

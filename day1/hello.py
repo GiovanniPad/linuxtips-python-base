@@ -21,7 +21,7 @@ Execução:
     ./hello.py
 """
 # Metadados com informações adicionais.
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 __author__ = "Giovanni Padilha"
 __license__ = "Unlicense"
 
@@ -29,6 +29,19 @@ __license__ = "Unlicense"
 import os
 # Biblioteca que interage com o ambiente de execução do Python.
 import sys
+# Biblioca para a criação de logs.
+import logging
+
+# Criando um Logger e um Handler específicos para exibir mensagens de log.
+log_level = os.getenv("LOG_LEVEL", "WARNING").upper()
+log = logging.Logger("hello.py", log_level)
+ch = logging.StreamHandler()
+ch.setLevel(log_level)
+fmt = logging.Formatter(
+    "%(asctime)s %(name)s %(levelname)s l:%(lineno)d f:%(filename)s: %(message)s"
+)
+ch.setFormatter(fmt)
+log.addHandler(ch)
 
 # Define um bloco principal de um script Python,
 # apesar de estar caindo em desuso.
@@ -48,13 +61,16 @@ for arg in sys.argv[1:]:
         key, value = arg.split("=")
 
     # Capturando uma exceção do tipo valor.
-    # Exceçao ocorre caso, ao passar o argumento CLI, o usuário usar um caractere diferente de `=`.
+    # Exceção ocorre caso, ao passar o argumento CLI, o usuário usar um caractere diferente de `=`.
     except ValueError as e:
-        # TODO: Logging
-        print(f"[ERROR] {str(e)}")
-        print("You need to use `=`")
-        print(f"You passed {arg}")
-        print("try with --key=value")
+
+        # Exibindo um log do tipo error, com uma mensagem (atributo `message`) personalizada,
+        # junto com o motivo do erro e a mensagem de erro gerada pela exceção.
+        log.error(
+            "You need to use `=`, you passed %s, try --key=value: %s",
+            arg,
+            str(e)
+        )
         sys.exit(1)
 
     # `lstrip("-")` remove os traços no início da string.
@@ -113,9 +129,14 @@ try:
 # Captura um erro do tipo chave.
 # Erro causado caso ao tentar acessar um dicionário, a chave passada não exista nele.
 except KeyError as e:
-    # TODO: logging
-    print(f"[ERROR] {str(e)}")
-    print(f"Language is invalid, choose from {list(msg.keys())}")
+    
+    # Log do tipo error, contendo uma mensagem personalizada, juntamente com o valor errado passado,
+    # e os valores que estão disponíveis e são suportados. 
+    log.error(
+        "Language is invalid, you passed %s, please choose from %s.",
+        str(e),
+        list(msg.keys())
+    )
     sys.exit(1)
 
 # A função `print()` imprime um conteúdo qualquer na tela (output).

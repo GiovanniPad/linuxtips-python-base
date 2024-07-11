@@ -28,12 +28,27 @@ n2: 4
 
 Os resultados serão salvos em infixcalc.log
 """
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __author__ = "Giovanni Padilha"
 
+# Biblioteca que interage com o Sistema Operacional.
 import os
+# Biblioteca que interage com o ambiente de execução do interpretador Python.
 import sys
+# Biblioteca responsável por logs.
+import logging
+# Importando o módulo `datetime` da lib `datetime`, usado para coletar e modificar o dia e a hora.
 from datetime import datetime
+
+# Definindo um Logger e StreamHandler para imprimir as mensagens de erro deste script.
+log = logging.Logger("prefixcalc.py", logging.DEBUG)
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+fmt = logging.Formatter(
+    "%(asctime)s %(name)s %(levelname)s l:%(lineno)d f:%(filename)s: %(message)s"
+)
+ch.setFormatter(fmt)
+log.addHandler(ch)
 
 # Colentando os argumentos necessários
 arguments = sys.argv[1:]
@@ -108,8 +123,9 @@ try:
 # Captura um erro do tipo valor e imprime sua mensagem e encerra o programa.
 # Esse erro é estourado caso o tamanho da variável a ser desempacotada seja diferente de 2.
 except ValueError as e:
-    # TODO: logging
-    print(str(e))
+
+    # Log do tipo error, com a mensagem capturada da exceção ValueError.
+    log.error(str(e))
     sys.exit(1)
 
 # Variável para armazenar o resultado.
@@ -138,7 +154,7 @@ elif operation == "div":
 path = os.curdir
 
 # Unindo e definindo o caminho do arquivo usado para armazenar as operações
-filepath = os.path.join(path, "archives", "prefixcalc.log")
+filepath = os.path.join(path, "archives", "prefixcalc.txt")
 
 # Definindo o dia e o horário da execução da operação através do objeto datetime
 # Função `now()` retorna o dia, mês, ano e horário atuais
@@ -160,8 +176,9 @@ try:
 # Nesse caso, o erro é estourado caso o programa tente abrir um arquivo num diretório 
 # onde o usuário não tenha permissão de acesso.
 except PermissionError as e:
-    # TODO: logging
-    print(str(e))
+
+    # Log do tipo error, com a mensagem capturada da exceção PermissionError.
+    log.error(str(e))
     sys.exit(1)
 
 # Outra maneira de escrever a log da operação no arquivo usando a função `print()`
