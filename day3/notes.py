@@ -54,66 +54,78 @@ if arguments[0] not in valid_commands:
     print(f"Invalid command {arguments[0]}")
     sys.exit(1)
 
-# Verifica se o comando inserido é o `new`, comando para criar uma nova nota
-if arguments[0] == "new":
+# Loop infinito, ocorre até uma condição de parada ocorrer, neste caso, um `break`.
+while True:
 
-    # Bloco de código onde se espera um erro
-    try:
+    # Verifica se o comando inserido é o `new`, comando para criar uma nova nota
+    if arguments[0] == "new":
 
-        # Coleta o título da nota dos argumentos CLI
-        title = arguments[1]
-    
-    # Capturando um erro do tipo índice.
-    # Ocorre quando tenta acessar um índice que não existe em uma lista,
-    # normalmente por conta da lista ter um tamanho diferente.
-    except IndexError as e:
+        # Bloco de código onde se espera um erro
+        try:
 
-        # Log do tipo error, com uma mensagem (atributo `message` do Formatter) personalizada.
-        # Exibe o erro caso o usuário não passar um título para sua nota ao executar o script.
-        log.error(
-            "%s - You need to pass a title to your note! Usage ex: python3 notes.py new 'My Title'",
-            str(e)
-        )
-        sys.exit(1)
+            # Coleta o título da nota dos argumentos CLI
+            title = arguments[1]
+        
+        # Capturando um erro do tipo índice.
+        # Ocorre quando tenta acessar um índice que não existe em uma lista,
+        # normalmente por conta da lista ter um tamanho diferente.
+        except IndexError as e:
 
-    # Cria uma lista que armazena o título, tag e o conteúdo da nota em cada posição
-    note = [
-        f"{title}",
+            # Log do tipo error, com uma mensagem (atributo `message` do Formatter) personalizada.
+            # Exibe o erro caso o usuário não passar um título para sua nota ao executar o script.
+            log.error(
+                "%s - You need to pass a title to your note! Usage ex: python3 notes.py new 'My Title'",
+                str(e)
+            )
+            title = input("Qual é o título:").strip().title()
 
-        # Inserção de dado, excluindo os espaços em branco do início e do fim
-        input("tag: ").strip(),
-        input("text:\n").strip()
-    ]
+        # Cria uma lista que armazena o título, tag e o conteúdo da nota em cada posição
+        note = [
+            f"{title}",
 
-    # Abre o arquivo com o Gerenciador de Contexto `with` para armazenar a nota
-    with open(filepath, "a") as file_:
+            # Inserção de dado, excluindo os espaços em branco do início e do fim
+            input("tag: ").strip(),
+            input("text:\n").strip()
+        ]
 
-        # A função `join(list)` concatena uma lista de strings em uma única string, inserindo um tab (`\t`) entre cada item 
-        # e no final um espaço em branco (`\n`)
-        # Por fim, a string concatena é escrita em uma única linha no arquivo
-        file_.write(f"\t".join(note) + "\n")
+        # Abre o arquivo com o Gerenciador de Contexto `with` para armazenar a nota
+        with open(filepath, "a") as file_:
 
-# Verifica se o comando inserido é o `read`, comando para ler notas a partir da tag
-if arguments[0] == "read":
+            # A função `join(list)` concatena uma lista de strings em uma única string, inserindo um tab (`\t`) entre cada item 
+            # e no final um espaço em branco (`\n`)
+            # Por fim, a string concatena é escrita em uma única linha no arquivo
+            file_.write(f"\t".join(note) + "\n")
 
-    # Itera sobre cada linha do arquivo
-    for line in open(filepath):
+    # Verifica se o comando inserido é o `read`, comando para ler notas a partir da tag
+    if arguments[0] == "read":
 
-        # Desempacota a linha dividida por tab (`\t`) do arquivo em três variáveis, 
-        # o primeiro valor é título, segundo valor a tag e o terceiro valor o conteúdo da nota
-        title, tag, text = line.split("\t")
+        try:
+            arg_tag = arguments[1].strip().lower()
+        except IndexError:
+            arg_tag = input("Qual a tag:").strip().lower()
 
-        # Compara a tag de cada linha com a tag inserida pelo usuário
-        # Na tag inserida pelo usuário, a função `strip()` retira os espaços em branco do início e do fim da string e
-        # a função `lower()` transforma todas os caracteres da string em minúsculo
+        # Itera sobre cada linha do arquivo
+        for line in open(filepath):
 
-        # Na tag da nota apenas é usada a função `lower()` que transforma todos os caracteres da string em minúsculo
-        if tag.lower() == arguments[1].strip().lower():
+            # Desempacota a linha dividida por tab (`\t`) do arquivo em três variáveis, 
+            # o primeiro valor é título, segundo valor a tag e o terceiro valor o conteúdo da nota
+            title, tag, text = line.split("\t")
 
-            # Imprime o título, tag e o conteúdo da nota separados por linhas
-            print(f"Title: {title}")
-            print(f"Tag: {tag}")
-            
-            # Não coloca uma quebra de linha no final
-            print(f"Text: {text}", end="")
-            print("-" * 50)
+            # Compara a tag de cada linha com a tag inserida pelo usuário
+            # Na tag inserida pelo usuário, a função `strip()` retira os espaços em branco do início e do fim da string e
+            # a função `lower()` transforma todas os caracteres da string em minúsculo
+
+            # Na tag da nota apenas é usada a função `lower()` que transforma todos os caracteres da string em minúsculo
+            if tag.lower() == arg_tag:
+
+                # Imprime o título, tag e o conteúdo da nota separados por linhas
+                print(f"Title: {title}")
+                print(f"Tag: {tag}")
+                
+                # Não coloca uma quebra de linha no final
+                print(f"Text: {text}", end="")
+                print("-" * 50)
+
+    # Condição de parada, caso o usuário digitar algo diferente de `y`
+    if input(f"Quer continuar {arguments[0]} notas? [N/y]").strip().lower() != "y":
+        break

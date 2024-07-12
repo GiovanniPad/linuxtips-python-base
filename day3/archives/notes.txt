@@ -1,2 +1,7 @@
 Minha primeira nota	geral	geral
 Minha segunda nota	tech	tech
+Minha nota nota	game	red dead 2
+Repetições	python	while e for
+Python	prog	testwadwa
+Teste	teste	teste
+Meu texto	texto	textão

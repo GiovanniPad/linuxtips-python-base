@@ -1368,3 +1368,47 @@ Se a condição `n2 > n1` for verdadeira o valor "ok" vai ser atribuído a vari�
 Também é possível usar o operador `or` para realizar operações inline, ex: `variavel = valor1 or valor2`. Se o `valor1` for verdadeiro, ele será atribuído a variável, se não, o `valor2` vai ser atribuído, usar com muito cuidado!
 
 - `help("symbols")` -> mostra todos os símbolos disponíveis no Python, excluindo os símbolos `:=` e `=`.
+
+### Repetições com for e while
+
+#### For
+
+- **Coleção materializada** -> coleções que o interpretador necessita armazenar na memória e atribuir um identificador para cada elemento dentro dessa coleção. Ocupa bastante espaço na memória
+
+A função `range()` é uma alternativa melhor para listas materializadas, pois ele não armazenada cada valor da lista em um espaço separado na memória, ele ocupa apenas três espaços, o `start`, `next`, `stop` e `step`.
+
+- `start` indica qual o valor inicial.
+- `next` qual o próximo valor.
+- `stop` qual o valor que ele deve parar.
+- `step` de quanto em quanto ele vai pular, ex: 2 em 2
+
+Essa função retorna um objeto iterável que ocupa muito menos espaço em memória, mais eficiente que listas.
+
+- `continue` -> ao ser usada dentro de um loop `while` ou `for` ela faz com que o interpretador pule para a próxima iteração do loop e não executa as prõximas linhas de código.
+- `break` -> ao ser usada dentro de um loop, ele faz com que o loop seja encerrado, se tiver próximas iterações não são executadas.
+
+**Parsing** -> transformar um texto de um arquivo em um objeto Python ou qualquer outra linguagem.
+
+**List Comprehension**
+
+- É uma abordagem mais voltada a funcional, que evita ficar criando objetos de apoio (*side effects*) e alterando-os dentro de loops.
+- Essa abordagem gera menos efeito colateral.
+- Sempre cria um objeto do tipo `list`.
+
+**Dict Comprehension**
+
+- Mesma abordagem da List Comprehension, porém cria objetos do tipo dicionários.
+
+Também é possível implementar `if ternário` dentro de uma List e Dict Comprehension!!!
+
+#### While
+
+- Repete um bloco de código enquanto uma condição for verdadeira (True).
+- Dentro do bloco de código `while` é possível ter outras condições de parada.
+- As palavras reservadas `continue` e `break` funcionam da mesma forma no `while`.
+  - O `break` para completamente a execução do `while`.
+  - O `continue` pula uma iteração e volta pro início do bloco de código.
+
+**Dead lock** -> quando o loop não consegue sair de um `continue`, para evitar esse erro, sempre incrementar a condição antes de um `continue`.
+
+Tomar cuidado com loops infinitos, sempre ter uma condição de parada em um loop `while`.
