@@ -1348,3 +1348,23 @@ Retornam um valor do tipo `bool` True or False
 Usar `is` em vez de `==` para comparar variáveis booleanas.
 
 **Short Circuit** -> na estrutura de condicionais `if` e `elif` se uma das expressões foram verdadeiras ou falsas, as outras condicionais nem vão ser verificadas. Nesse caso o ideal é começar a partir da expressão com mais condições.
+
+### Condicionais ternárias e inlines + Python Tutor
+
+- O operador `or` é Short Circuit, caso a primeira condição da direita seja verdadeira, ele nem checa a segunda. Já o operador `and` checa obrigatoriamente todas as condições.
+- O operador `is` checa se os objetos estão no mesmo lugar da memória, ou seja, são os mesmos objetos.
+
+Listas, dicionários e strings vazias contam como um objeto Falso. O número 0 também conta como Falso.
+
+**if ternário**
+
+- Também é conhecido como `if inline`.
+- Expressa uma condição em uma única linha de código.
+
+*Exemplo* -> `valor = "ok" if n2 > n1 else "nok"` ou pode ser usado separadamente `"ok" if n2 > n1 else "nok"`.
+
+Se a condição `n2 > n1` for verdadeira o valor "ok" vai ser atribuído a variável, se a condição não for verdadeira, então irá atribuir o valor "nok" a variável.
+
+Também é possível usar o operador `or` para realizar operações inline, ex: `variavel = valor1 or valor2`. Se o `valor1` for verdadeiro, ele será atribuído a variável, se não, o `valor2` vai ser atribuído, usar com muito cuidado!
+
+- `help("symbols")` -> mostra todos os símbolos disponíveis no Python, excluindo os símbolos `:=` e `=`.
