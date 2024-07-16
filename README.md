@@ -1412,3 +1412,362 @@ Também é possível implementar `if ternário` dentro de uma List e Dict Compre
 **Dead lock** -> quando o loop não consegue sair de um `continue`, para evitar esse erro, sempre incrementar a condição antes de um `continue`.
 
 Tomar cuidado com loops infinitos, sempre ter uma condição de parada em um loop `while`.
+
+### Exercícios: iterações, textos, inputs, arquivos de texto
+
+#### Exercício: Números pares
+
+**Minha solução**
+
+```python
+# Enquanto o número for menor e igual a 200 imprimir apenas os números pares e somar na variável de controle.
+num = 1
+while num <= 200:
+    if num % 2 == 0:
+        print(num)
+        num += 1
+        continue
+    num += 1
+```
+
+**Solução do professor**
+
+```python
+for num in range(1, 201):
+    if num % 2 == 0:
+        print(num)
+        continue
+```
+
+#### Exercício: Alerta
+
+**Minha solução**
+
+```python
+import logging
+import sys
+
+log = logging.Logger("alerta.py", logging.DEBUG)
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+fmt = logging.Formatter(
+    "%(asctime)s %(name)s %(levelname)s l:%(lineno)d f:%(filename)s: %(message)s"
+)
+ch.setFormatter(fmt)
+log.addHandler(ch)
+
+# Minha solução
+# TODO: Usar função
+temp = input("Digite a temperatura atual: ").strip()
+if not temp.replace(".", "").isdigit():
+    print(f"Insira um valor numérico na temperatura.")
+    exit(1)
+if "." in temp:
+    temp = float(temp)
+else:
+    temp = int(temp)
+
+moisture = input("Digite o índice de umidade do ar: ").strip()
+if not moisture.replace(".", "").isdigit():
+    print(f"Insira um valor numérico na umidade do ar.")
+    exit(1)
+if "." in moisture:
+    moisture = float(moisture)
+else:
+    moisture = int(moisture)
+
+if temp > 45:
+    print("ALERTA!!! Perigo calor extremo")
+elif (temp * 3) >= moisture:
+    print("ALERTA!!! Perigo de calor úmido")
+elif temp >= 10 and temp <= 30:
+    print("Normal")
+elif temp >= 0 and temp < 10:
+    print("Frio")
+else:
+    print("ALERTA!!! Frio extremo")
+```
+
+**Solução do professor**
+
+```python
+info = {
+    "temperatura": None,
+    "umidade": None
+}
+
+# Sempre evitar de iterar e alterar um objeto mutável em um loop, para isso utilizar sempre outro objeto para iterar.
+# Ao usar `keys()` é criado um objeto do tipo lista contendo as chaves do dicionário e a partir desse objeto "imagem" iteramos no dicionário,
+# evitando assim erros de Runtime, onde se itera e altera o mesmo objeto.
+for key in info.keys():
+    try:
+        info[key] = float(input(f"Qual a {key}?").strip())
+    except ValueError:
+        log.error(f"{key.capitalize()} inválida")
+        sys.exit(1)
+
+temp = info["temperatura"]
+umidade = info["umidade"]
+
+if temp > 45:
+    print("ALERTA!!! Perigo calor extremo")
+elif (temp * 3) >= umidade:
+    print("ALERTA!!! Perigo calor úmido")
+elif temp >= 10 and temp <= 30:
+#elif temp in range(10, 31):
+    print("Normal")
+elif temp >= 0 and temp < 10:
+    print("Frio")
+elif temp < 0:
+    print("ALERTA!!! Frio extremo")
+```
+
+#### Exercício: Repete vogal
+
+**Minha solução**
+
+```python
+# Variável contendo as vogais e variável para armazenar as palavras processadas
+words = []
+vowels = ["a", "e", "i", "o", "u"]
+
+# Loop infinito, encerra com ação do usuário
+while True:
+    # Pergunta a palavra ao usuário
+    word = input("Digite uma palavra (ou enter para sair): ").strip()
+    new_word = ""
+
+    # Condição de parada, pressionar enter e então imprime todas as palavras processadas
+    if not word:
+        for word in words:
+            print(word)
+        break
+
+    # Para cada letra na palavra, verificar se é uma vogal (sempre em minúsculo) e duplicá-la e adicionar a nova variável `new_word`.
+    # Senão, apenas adicionar a letra sem duplicar na variável `new_word`.
+    for letter in word:
+        if letter.lower() in vowels:
+            new_word += letter * 2
+            continue
+        new_word += letter
+
+    # Atribui a palavra com as vogais duplicadas na lista de palavras.
+    words.append(new_word)
+
+```
+
+**Solução do professor**
+
+```python
+# Variável para armazenar as palavras processadas
+words = []
+
+# Loop infinito, encerra com ação do usuário
+while True:
+
+    # Pergunta a palavra ao usuário
+    word = input("Digite uma palavra (ou enter para sair): ").strip()
+
+    # Condição de parada, pressionar enter
+    if not word:
+        break
+
+    
+    final_word = ""
+    # Para cada letra na palavra, se for uma vogal, duplicar e armazenar na nova variável,
+    # senão, apenas armazenar a letra na nova variável.
+    for letter in word:
+        # TODO: Remover acentuação usando função
+
+        # Verifica se a letra está dentro da string de letras "aeiou".
+        if letter.lower() in "aeiou":
+            final_word += letter * 2
+        else:
+            final_word += letter
+
+        # If ternário, igual o if acima
+        #final_word += letter * 2 if letter.lower() in "aeiou" else letter
+
+    # Armazenar a letra processada na lista de palavras
+    words.append(final_word)
+
+# Imprime as palavras da lista `words`.
+# Desempacota a lista, e cada valor (palavra) é separadado por uma quebra de linha.
+print(*words, sep="\n")
+```
+
+#### Exercício: Reserva de quartos
+
+**Minha solução**
+
+```python
+# Bibliotecas necessárias
+import os
+import sys
+import logging
+
+# Logger e Handler personalizado
+log = logging.Logger("reserva.py", logging.DEBUG)
+log.setLevel(logging.DEBUG)
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+fmt = logging.Formatter(
+    "%(asctime)s %(name)s %(levelname)s l:%(lineno)d f:%(filename)s: %(message)s"
+)
+ch.setFormatter(fmt)
+log.addHandler(ch)
+
+# Minha solução
+
+# Colentado o caminho dos arquivos
+path = os.curdir
+rooms_filepath = os.path.join(os.curdir, "archives", "quartos.txt")
+rents_filepath = os.path.join(os.curdir, "archives", "reservas.txt")
+
+# Verificando se ambos os arquivos existem.
+# Trata erro de permissão de acesso e arquivo não encontrado.
+try:
+    rented_rooms = []
+    for line in open(rents_filepath):
+        client_name, room_number, days_rented = line.strip().split(",")
+        rented_rooms.append(int(room_number))
+
+    available_rooms = {}
+    for line in open(rooms_filepath):
+        room_number, room_type, room_price = line.strip().split(",")
+
+        room_number = int(room_number)
+        room_price = float(room_price)
+
+        if room_number not in rented_rooms:
+            available_rooms[room_number] = {
+                "type": room_type,
+                "price": room_price # TODO: decimal
+            }
+except FileNotFoundError as e:
+    log.critical(str(e))
+    sys.exit(1)
+except PermissionError as e:
+    log.critical(str(e))
+    sys.exit(1)
+
+
+# Vefica se existe quartos disponíveis para alugar, senão encerra o programa.
+if not available_rooms:
+    print("Hotel lotado, volte mais tarde!")
+    sys.exit(1)
+
+# Menu principal com os quartos
+print("Sistema de reserva de quarto de hotel")
+print("Quartos disponíveis")
+print("-" * 40)
+
+# Exibe cada quarto com suas informações
+for room_number, room_data in available_rooms.items():
+    print(f"Quarto {room_number} - Tipo: {room_data["type"]} - Valor (dia): R${room_data["price"]:.2f}")
+print("-" * 40)
+
+# Pergunta o nome do cliente
+client_name = input("Qual o seu nome? ")
+
+# Loop principal, só sai se todas as informações forem inseridas corretamente.
+while True:
+
+    # Verifica se o valor inserido é numérico e se o quarto não está alugado.
+    try:
+        room_rent = int(input("Qual o número do quarto? "))
+        if room_rent not in available_rooms:
+            print("Quarto já alugado")
+            continue
+        days_rent = int(input("Por quantos dias vai alugar? "))
+        break
+    except ValueError as e:
+        log.error("Valor inválido, por favor, insirar novamente.")
+
+# Se caso tudo estiver correto, a reserva com os dados são salvas no arquivo `reservas.txt`.
+with open(rents_filepath, "a") as file_:
+    file_.write(f"{client_name},{room_rent},{days_rent}\n")
+
+# Calcula o custo total de alugar o quarto.
+total = available_rooms[room_rent]["price"] * days_rent
+
+# Mensagem de confirmação exibindo o valor do aluguel do quarto.
+# TODO: substituir casa decimal por vírgula
+print(f"{client_name.capitalize()}, o quarto {room_rent} foi alugado com sucesso por {days_rent} dias por um total de R${total:.2f}.")
+
+```
+
+**Solução do professor**
+
+```python
+ocupados = {}
+try:
+    for line in open(rents_filepath):
+        nome, num_quarto, dias = line.strip().split(",")
+        ocupados[int(num_quarto)] = {
+            "nome": nome,
+            "dias": dias
+        }
+except FileNotFoundError:
+    logging.error("Arquivo reservas.txt não existe")
+    sys.exit(1)
+
+quartos = {}
+try:
+    for line in open(rooms_filepath):
+        codigo, nome, preco = line.strip().split(",")
+        quartos[int(codigo)] = {
+            "nome": nome,
+            "preco": float(preco),
+            "disponivel": False if int(codigo) in ocupados else True
+        }
+except FileNotFoundError:
+    logging.error("Arquivo quartos.txt não existe")
+    sys.exit(1)
+
+print("Reserva Hotel Pythonico")
+if len(ocupados) == len(quartos):
+    print("Hotel lotado")
+    sys.exit(1)
+
+nome = input("Nome do cliente:").strip()
+print("-" * 40)
+print("Lista de quartos:")
+for codigo, dados in quartos.items():
+    nome_quarto = dados["nome"]
+    preco = dados["preco"]
+    disponivel = "Não disponível" if not dados["disponivel"] else "Disponível"
+    #disponivel = dados["disponivel"] and "Disponível" or "Não disponível"
+
+    print(f"{codigo} - {nome_quarto} - R$ {preco:.2f} - {disponivel}")
+print("-" * 40)
+
+try:
+    quarto = int(input("Número do quarto:").strip())
+    if not quartos[quarto]["disponivel"]:
+        print(f"O quarto {quarto} está ocupado")
+        sys.exit(1)
+except ValueError:
+    logging.error("Número inválido, digite apenas números")
+    sys.exit(1)
+except KeyError:
+    print(f"O quarto {quarto} não existe.")
+    sys.exit(1)
+
+try:
+    dias = int(input("Quantos dias:").strip())
+except ValueError:
+    logging.error("Número inválido, digite apenas números")
+    sys.exit(1)
+
+nome_quarto = quartos[quarto]["nome"]
+preco = quartos[quarto]["preco"]
+disponivel = quartos[quarto]["disponivel"]
+total = preco * dias
+
+with open(rents_filepath, "a") as file_:
+    file_.write(f"{nome},{quarto},{dias}\n")
+    #file_.write(",".join([nome, str(quarto), str(dias)]))
+
+print(f"{nome} você escolheu o quarto {nome_quarto} e vai custar R${total:.2f}")
+```
