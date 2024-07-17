@@ -1771,3 +1771,9 @@ with open(rents_filepath, "a") as file_:
 
 print(f"{nome} você escolheu o quarto {nome_quarto} e vai custar R${total:.2f}")
 ```
+
+### Exercício extra: Dica de iteração, correção de bug + sistema de reservas em hotel
+
+- Não realizar operações dentro de uma iteração que remova ou adiciona chaves em um dicionário ou lista. Para casos que são necessários alterar um dicionário ou lista, sempre criar uma cópia do objeto a ser utilizado usando a função, pois fica armazenada em outro espaço de memória `copy()`. Num geral, nunca realizar essas operações dentro de uma iteração de objetos mutáveis!
+
+Correções nos exercícios: Alerta e Reserva de quartos.

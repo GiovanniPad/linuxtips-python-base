@@ -26,24 +26,15 @@ ch.setFormatter(fmt)
 log.addHandler(ch)
 
 # Minha solução
-# TODO: Usar função
-temp = input("Digite a temperatura atual: ").strip()
-if not temp.replace(".", "").isdigit():
-    print(f"Insira um valor numérico na temperatura.")
-    exit(1)
-if "." in temp:
-    temp = float(temp)
-else:
-    temp = int(temp)
 
-moisture = input("Digite o índice de umidade do ar: ").strip()
-if not moisture.replace(".", "").isdigit():
-    print(f"Insira um valor numérico na umidade do ar.")
-    exit(1)
-if "." in moisture:
-    moisture = float(moisture)
-else:
-    moisture = int(moisture)
+while True:
+    try:
+        temp = float(input("temperatura:"))
+        moisture = float(input("umidade:"))
+    except ValueError:
+        log.error("Valor inserido inválido")
+        continue
+    break
 
 if temp > 45:
     print("ALERTA!!! Perigo calor extremo")
@@ -67,15 +58,24 @@ info = {
 # Sempre evitar de iterar e alterar um objeto mutável em um loop, para isso utilizar sempre outro objeto para iterar.
 # Ao usar `keys()` é criado um objeto do tipo lista contendo as chaves do dicionário e a partir desse objeto "imagem" iteramos no dicionário,
 # evitando assim erros de Runtime, onde se itera e altera o mesmo objeto.
-for key in info.keys():
-    try:
-        info[key] = float(input(f"Qual a {key}?").strip())
-    except ValueError:
-        log.error(f"{key.capitalize()} inválida")
-        sys.exit(1)
+while True:
 
-temp = info["temperatura"]
-umidade = info["umidade"]
+    info_size = len(info.values())
+    filled_size = len([value for value in info.values() if value is not None])
+
+    if info_size == filled_size:
+        break
+
+    for key in info.keys():
+        if info[key] is not None:
+            continue
+        try:
+            info[key] = float(input(f"{key}:").strip())
+        except ValueError:
+            log.error("%s inválida, digite números", key)
+            break
+
+temp, umidade = info.values()
 
 if temp > 45:
     print("ALERTA!!! Perigo calor extremo")
