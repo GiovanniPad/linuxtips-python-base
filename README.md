@@ -1777,3 +1777,49 @@ print(f"{nome} você escolheu o quarto {nome_quarto} e vai custar R${total:.2f}"
 - Não realizar operações dentro de uma iteração que remova ou adiciona chaves em um dicionário ou lista. Para casos que são necessários alterar um dicionário ou lista, sempre criar uma cópia do objeto a ser utilizado usando a função, pois fica armazenada em outro espaço de memória `copy()`. Num geral, nunca realizar essas operações dentro de uma iteração de objetos mutáveis!
 
 Correções nos exercícios: Alerta e Reserva de quartos.
+
+## Dia 4 - Funções, Debugging, Projetos e Bibliotecas
+
+### Funções úteis embutidas no Python - builtins
+
+- Função é um bloco de código/algoritmo que fica encapsulado dentro de um objeto. ex: `print`
+- O nome da função, ex: `print` é a variável/identificador que indica aonde esse objeto está armazenado na memória, possui um id na memória.
+- Toda função embutida (builtins) do Python é identificada por `buitin_function_or_method` ou `<function name>`.
+- Uma função é um objeto e possui atributos.
+- Normalmente o código de funções builints não são acessáveis, pois estão escritos em C.
+- Funções em Python, são objetos de primeira classe, isso significa que podem serem usadas para tudo. Por exemplo, passar uma função para dentro de outra função.
+
+<hr>
+
+- `__code__` é um atributo que guarda o código compilado de uma função.
+
+**Builtins**
+
+- Embutido no Python, sem a necessidade de importar ou instalar nada.
+
+**Stdlib**
+
+- Biblioteca padrão que vem junto da instalação do Python, sendo necessário importar as bibliotecas antes de usá-la.
+
+**Algumas funções úteis da biblioteca builtin**
+
+- `sum(collection)` -> retorna a soma de uma coleção numérica.
+- `max(collection)` -> retorna o maior elmento de uma coleção numérica.
+- `min(collection)` -> retorna o menor elemento de uma coleção numérica.
+- `len(collection)` -> retorna o tamanho de uma coleção. Alguns emojis podem ter seu tamanho maior que 1.
+- `reverse(collection)` -> retorna o objeto iterator de uma lista ou tupla invertida, podendo ser convertido para uma lista ou tupla.
+- `sorted(collection)` -> retorna uma nova coleção ordenados alfa numéricamente, também vale para strings.
+- `all(collection)` -> retorna um booleano, True se todos os elementos da coleção são considerados True (Trufy) ou False se algum elemento for considerado False (Falsy). No caso de uma lista vazia, ele considera como True. Sempre utilizar em coleções com apenas elementos booelanos para evitar bugs de Trufy e Falsy.
+- `any(collection)` retorna um booleano, se apenas um dos elementos for True (Trufy) a função retorna True, senão retorna False.
+- `enumerate(collection)` -> retorna para cada valor de uma coleção o seu index e valor em um formato de tupla.
+- `zip(collection1, collection2)` -> retorna uma lista de tuplas, onde a primeira tupla possui o primeiro elemento da primeira coleção junto com o primeiro elemento da segunda coleção, assim sucessivamente.
+
+**Programação funcional**
+
+- Usa funções como base para resolver problemas. 
+- Cria menos side effects do que a programação procedural, menos variáveis de apoio e menor uso da memória.
+
+Existem algumas funções no Python voltadas para esse tipo de paradigma de programação.
+
+- `filter(function, collection)` -> aplica uma função (com retorno booleano) para cada objeto de uma coleção. O retorno da função `filter` retorna apenas os elementos que deram True. O resultado do filter pode ser menor que a coleção original.
+- `map(function, collection)` -> aplica uma função para cada objeto de uma coleção. O retorno da função `map` retorna todos os elementos da coleção, sempre tendo um resultado do mesmo tamanho e tipo da coleção original.
