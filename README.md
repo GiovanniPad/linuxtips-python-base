@@ -1823,3 +1823,77 @@ Existem algumas funções no Python voltadas para esse tipo de paradigma de prog
 
 - `filter(function, collection)` -> aplica uma função (com retorno booleano) para cada objeto de uma coleção. O retorno da função `filter` retorna apenas os elementos que deram True. O resultado do filter pode ser menor que a coleção original.
 - `map(function, collection)` -> aplica uma função para cada objeto de uma coleção. O retorno da função `map` retorna todos os elementos da coleção, sempre tendo um resultado do mesmo tamanho e tipo da coleção original.
+
+### Funções úteis da standard library + envio de e-mails
+
+- A biblioteca padrão é instalada com o Python, um conjunto de código adicional.
+- `help("modules")` mostra os módulos da biblioteca padrão já instalados.
+
+#### Módulo random
+
+- Gera coisas aleatórias.
+- `import random` importa o módulo para o script.
+
+<hr>
+
+- `random.random()` -> retorna um número pseudo randômico. O número gerado está entre 0.0 - 1.0.
+- `random.randint(start, end)` -> retorna um número aleatório entre um intervalo de números, podendo repetir o número.
+- `random.choice(collection)` -> retorna uma escolha aleatória de dentro de uma coleção, podendo ser repetida.
+- `random.sample(collection, size)` -> retorna uma amostra (de um tamanho `size` escolhido) aleatória, podendo ser repetida. Não altera o objeto original.
+- `random.shuffle(collection)` -> randomiza uma coleção com o seu tamanho máximo, a diferença é que ele altera a coleção original com o valor aleatório gerado.
+
+#### Mõdulo itertools
+
+- Novas formas de iterações para objetos iteráveis.
+- `import itertools` para importar o módulo.
+- Normalmente abreviado com o `as` para `it`.
+
+<hr>
+
+- `it.cycle(iterable)` -> retorna um objeto do tipo cycle, serve para repetir um objeto em ciclos indefinidos. Função `enumerate()` é bom para usar com essa função, pois cria uma espécie de contador.
+- `it.repeat(iterable, num_of_repeats)` -> repete um objeto (uma string, por exemplo) um número de vezes (`num_of_repeats`) especificado.
+- `it.accumulate(iterable)` -> retorna um objeto do tipo accumulate, soma dos elementos da coleção, cada operação de soma do objeto com o próximo ele atribui a um espaço na lista, até chegar no valor máximo. (mesmo caso da função `sum` a diferença é que retorna operação por operação de soma até chegar no valor máximo)
+- `it.product(iterable, repeat)` -> retorna todos os produtos cartesianos de um objeto iterável, equivalente a loops for aninhados em uma expressão geradora. O parâmetro opcional `repeat` indica o tamanho de cada produto.
+- `it.permutations(iterable)` -> retorna todas as permutações (se repetem, não são únicas) possíveis de uma sequência.
+- `it.combinations(iterable, repeat)` -> retorna todas as combinações (não se repetem, são únicas) possíveis de uma sequência. O parâmetro `repeat` indica o tamanho de cada combinação.
+- `it.groupby(iterable, key)` -> agrupa os elementos em um iterável com base em um valor chave, retorna um iterador de tuplas, onde cada tupla contém a chave e um iterador dos elementos que possuem essa chave. O parâmetro `key` recebe uma função.
+
+#### Módulo functools
+
+- Funções que manipulam outras funções.
+- `import functools` importa o módulo.
+- Abreviada para `ft`.
+
+<hr>
+
+- `myfunction = ft.partial(function, partials_params)` -> cria uma versão parcial a partir de uma função, onde é possível preencher alguns parâmetros e deixar preenchidos como padrão. Pode ser usado em métodos e funções.
+
+#### Módulo statistics
+
+- Módulo para estatística.
+- Importado com `import statistics`.
+- Abreviado como `st`.
+
+<hr>
+
+- `st.mean(iterable)` -> retorna a média de um objeto iterável.
+- `st.median(iterable)` -> retorna a mediana de um objeto iterável.
+
+#### Módulo uuid
+
+- Universal Unique ID (Identidade Universal Única)
+- `import uuid` para importar o módulo.
+
+<hr>
+
+- `uuid.uuid4` -> retorna um id único a cada vez que é executado. O algoritmo mais usado é o uuid4. O MongoDB utiliza o formato uuid4 para gerar suas chaves únicas.
+
+#### Módulo getpass
+
+- Módulo para mexer com senhas.
+- Importado com `import getpass`
+
+<hr>
+
+- `getpass.getpass(str)` -> serve para ler um input "silencioso", tudo que é digitado nesse input não vai aparecer no terminal.
+- `getpass.getuser()` -> coleta o usuário do ambiente, também funciona no Windows.
