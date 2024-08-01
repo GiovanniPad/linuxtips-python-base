@@ -1897,3 +1897,16 @@ Existem algumas funções no Python voltadas para esse tipo de paradigma de prog
 
 - `getpass.getpass(str)` -> serve para ler um input "silencioso", tudo que é digitado nesse input não vai aparecer no terminal.
 - `getpass.getuser()` -> coleta o usuário do ambiente, também funciona no Windows.
+
+### Escrevendo sua primeira função - aplicando fórmula
+
+- Uma função é uma aplicação de uma fórmula, como uma fórmula matemática.
+- Uma função recebe parâmetros e através desses parâmetros o resultado de uma função é calculado. (o resultado é o contra domínio)
+- Toda função em python, obrigatoriamente, possui um retorno. Por padrão, se não tiver nenhuma cláusula `return`, a função irá retornar None.
+- **Solid - Single Responsibility** - uma função deve resolver apenas um único problema, apenas uma única "responsabilidade".
+- Funções que não possuem retorno são chamadas de procedimentos/procedures.
+- Funções que não recebem nenhum parâmetro é uma função de assinatura vazia.
+
+Ao chamar uma função em Python, será criado um escopo próprio para ela, onde seus argumentos terão seu próprio ambiente isolado, não influenciando nas variáveis globais, que estão fora do escopo da função, mesmo que seus nomes sejam iguais. As variáveis globais também não influenciam nas variáveis de escopo local das funções.
+
+Obs: para valores menores que 256, o Python tenta reproveitar os valores já criado em memória, em vez de atribuir ele para outro espaço em memória.
