@@ -1909,4 +1909,30 @@ Existem algumas funções no Python voltadas para esse tipo de paradigma de prog
 
 Ao chamar uma função em Python, será criado um escopo próprio para ela, onde seus argumentos terão seu próprio ambiente isolado, não influenciando nas variáveis globais, que estão fora do escopo da função, mesmo que seus nomes sejam iguais. As variáveis globais também não influenciam nas variáveis de escopo local das funções.
 
-Obs: para valores menores que 256, o Python tenta reproveitar os valores já criado em memória, em vez de atribuir ele para outro espaço em memória.
+**Obs:** para valores menores que 256, o Python tenta reproveitar os valores já criado em memória, em vez de atribuir ele para outro espaço em memória.
+
+### Anatomia de uma função
+
+**Por que usar funções?**
+
+- Código mais organizado.
+- Realizar composições utilizando funções.
+
+**Toda função é formada pelos seguintes elementos**
+
+- Definição/atribuição (`def`)
+- Assinatura + type hints (tudo que tiver entre o nome da função e os dois pontos)
+- Documentação/docstring (comentário multi linhas dentro da função)
+- Código
+- Valor de retorno
+
+`python3 -i script.py` ou `ipython -i script.py` -> roda o script no modo interativo, executa o script todo e depois abre um terminal com todos os objetos criados no script disponíveis.
+
+**Formas de passagem de parâmetros**
+
+Parâmetro é a variável que não se sabe o valor e argumento é uma variável com valor definido.
+
+- **Posicional** -> passados em ordem. Usado em funções com poucos parâmetros.
+- **Nomeados** -> passados usando o nome do parâmetro, especificando sua posição, podendo ser passados fora de ordem. Usado em funções com muitos parâmetros.
+- **Mista** -> utiliza tanto o posicional quanto nomeado. Os argumentos posicionais devem ser passados antes dos nomeados.
+- **Usando desempacotamento** -> passando argumentos utilizando o desempacotar de uma sequência, passa no modo posicional. Ao usar um dicionário a passagem é no modo nomeado. (Usar `*` para tuplas, listas e textos e usar `**` para dicionários e hashmaps)
