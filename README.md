@@ -1936,3 +1936,69 @@ Parâmetro é a variável que não se sabe o valor e argumento é uma variável 
 - **Nomeados** -> passados usando o nome do parâmetro, especificando sua posição, podendo ser passados fora de ordem. Usado em funções com muitos parâmetros.
 - **Mista** -> utiliza tanto o posicional quanto nomeado. Os argumentos posicionais devem ser passados antes dos nomeados.
 - **Usando desempacotamento** -> passando argumentos utilizando o desempacotar de uma sequência, passa no modo posicional. Ao usar um dicionário a passagem é no modo nomeado. (Usar `*` para tuplas, listas e textos e usar `**` para dicionários e hashmaps)
+
+### Escopos e argumentos mutáveis e coringas
+
+#### Escopos
+
+![Namespaces Python](./images/namespaces_day4.png)
+
+**Namespaces**
+
+Um namespace é um local onde se pode colocar vários "nomes".
+
+1. Local
+2. Envolvente
+3. Global: módulo.
+4. Built-in/prelude: já vem com o programa python, script.
+
+- Namespaces são definidos por módulo, cada arquivo com extensão `.py` por si só já é um namespace.
+- O próprio nome do arquivo é o primeiro namespace.
+- A separação de escopo existe pois no Python existe a opção de criar namespaces dentro de outros namespaces.
+
+**Módulo** -> arquivo que contém código python
+
+- `from module import object` -> importa um objeto específico de um módulo Python.
+- `import module` -> importa um módulo python, que é um script com código python, sendo ele um namespace.
+- `globals()` -> retorna um dicionário/hashmap contendo todas as variáveis do escopo global do script.
+- `locals()` -> retorna um dicionário/hashmap contendo todas as variáveis do escopo local de uma função.
+
+Ao acessar uma variável em determinado escopo, o intepretador vai buscá-la no mesmo escopo em que ela foi acessada.
+
+**Por exemplo**, se uma variável global for acessada, o Python vai buscar no escopo global.
+
+- Variáveis com o mesmo nome em diferentes escopos são tratadas como variáveis diferentes.
+- Após todo o código de um escopo for executado todas as variáveis daquele escopo são excluídas.
+- Para uma função interna em outra função, o escopo envolvente dela é o escopo da função em que ela está contida.
+- Se o interpretador Python não encontrar a função no escopo em que ela foi chamada ele vai buscar no escopo em que está envolvido, buscando sempre no sentido: local -> envolvente -> global -> builtin.
+- Toda operação de atribuição (assignment) ou que altera um nome, o Python não irá realizar a operação para variáveis de diferentes escopos, apenas irá realizar com variáveis no mesmo escopo. Para forçar esse tipo de operação basta usar a palavra reservada `global`, pode ser usada apenas no início do escopo local.
+- A palavra reservada `nonlocal` acessa o escopo envolvente de uma função interna (inner function).
+
+#### Valores Default Imutáveis
+
+- Valores padrão atribuídos para parâmetros na assinatura das funções, caso não seja passado um valor para aquele parâmetro ao chamar a função.
+
+Exemplo: `def function(param1, param2=default_value)`
+
+- Ssar valores default com objetos imutáveis é ok, muito utilizado.
+
+#### Valores Default Mutáveis
+
+- Valores default para objetos mutáveis usados dentro de funções: set, dict, list.
+- Para todas as chamadas, ao criar um argumento mutável default, todas as chamadas da mesma função estarão usando o mesmo objeto criado inicialmente.
+- Útil para cache e acumular informações.
+
+Para evitar esse problema usar como valor default o `None` e realizar a verificação dentro da função para então criar um objeto mutável novo toda vez que a função é executada.
+
+#### Coringas
+
+- Argumentos coringas são argumentos que podem receber qualquer quantidade ou tipo de objeto.
+- São usados quando não se sabe a quantidade ou os tipos dos argumentos a serem recebidos pela função.
+- Por conversão, é usado `*args` para definir um parâmetro como coringa. Todo e qualquer valor que for passado naquele parâmetro será empacotado em uma tupla.
+- Não existe uma variável nomeada ao definir um parâmetro como coringa.
+- Argumentos coringa sempre devem vir primeiro na assinatura da função.
+- Ao usar `**kwargs` a função poderá ingerir todos e qualquer tipo de argumentos nomeados passados na função. Criará um dicionário.
+
+Ao usar apenas um asterisco irá capturar apenas o valor dos argumentos (posicionais).
+
+Ao usar dois asteriscos irá capturar tanto o valor quanto o nome dos argumentos (nomeados).
