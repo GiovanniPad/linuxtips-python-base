@@ -1978,9 +1978,9 @@ Ao acessar uma variável em determinado escopo, o intepretador vai buscá-la no 
 
 - Valores padrão atribuídos para parâmetros na assinatura das funções, caso não seja passado um valor para aquele parâmetro ao chamar a função.
 
-Exemplo: `def function(param1, param2=default_value)`
+**Exemplo:** `def function(param1, param2=default_value)`
 
-- Ssar valores default com objetos imutáveis é ok, muito utilizado.
+- Usar valores default com objetos imutáveis é ok, muito utilizado.
 
 #### Valores Default Mutáveis
 
@@ -2002,3 +2002,15 @@ Para evitar esse problema usar como valor default o `None` e realizar a verifica
 Ao usar apenas um asterisco irá capturar apenas o valor dos argumentos (posicionais).
 
 Ao usar dois asteriscos irá capturar tanto o valor quanto o nome dos argumentos (nomeados).
+
+### Funções Lambda
+
+- Uma função anônima é uma função de uso único que não fica armazenada na memória.
+- Forma mais prática de criar uma função e passá-la para outras função ou para compor outros objetos.
+- É definida e criada no momento em que a função ou objeto em que ela está contida for chamada ou então o objeto for criado.
+- Só pode conter uma única expressão e vai retornar sempre o resultado da expressão. Tudo que retorna algo pode ser usado na função lambda.
+- Nunca atribuir funções lambdas para variáveis, pois é considerado uma má prática, nesse caso, definir a função utilizando `def`.
+
+**Sintaxe:** `lambda param1, param2, ...: expression`
+
+- `callable(object)` -> retorna True se o objeto é possível ser chamado, ou seja, um objeto com o protocolo Callable. E False se não for um objeto possível de ser chamado. 
