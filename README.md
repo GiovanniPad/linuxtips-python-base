@@ -2014,3 +2014,11 @@ Ao usar dois asteriscos irá capturar tanto o valor quanto o nome dos argumentos
 **Sintaxe:** `lambda param1, param2, ...: expression`
 
 - `callable(object)` -> retorna True se o objeto é possível ser chamado, ou seja, um objeto com o protocolo Callable. E False se não for um objeto possível de ser chamado. 
+
+### Exercícios com funções, recursão, programação funcional
+
+- **Deadlock** -> o programa fica preso em chamadas de funções, entrando num loop infinito.
+- **Recursão** -> quando uma função chama ela mesma. Não pode realizar mais de 1000 chamadas em sequência.
+- **Biblioteca Operator** -> biblioteca já inclusa no Python que possui os sinais matemáticos e realiza as operações matemáticas, como uma calculadora.
+
+Resolvendo os TODOs que estavam nos arquivos `alerta.py, errors.py, logs.py e prefixcalc.py` do dia 3 e os arquivos `composicao.py` do dia 4.

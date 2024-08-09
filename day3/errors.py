@@ -2,6 +2,7 @@
 
 import sys
 import logging
+import time
 
 # LBYL - Look Before You Leap
 # Primeiro você verifica se é possível uma operação.
@@ -54,37 +55,67 @@ except Exception as e:
     # Log do tipo warning, exemplo
     log.warning(str(e))
 
-# Bloco `try` que se espera um erro
-try:
-    names = open("archives/names.txt").readlines()
+# Função para tentar um arquivo, caso não seja possível ela tenta novamente uma vez.
+# O argumento `retry` indica a quantidade de vezes que será refeita a operação de abrir um arquivo qualquer.
+# O retry é feito usando recursão. E retorna uma lista vazia no final.
+def try_to_open_a_file(filepath, retry=1) -> list:
+    """Tries to open a file, if error, retries n times."""   
 
-# Captura a exceção de arquivo não localizado, imprimindo a mensagem de erro e encerrando o programa.
-except FileNotFoundError as e:
+    # Verifica se o argumento `retry` tem seu valor mais que 999 para impedir de
+    # realizar uma recursão de 1000 chamadas.
+    if retry > 999:
+        raise ValueError("Retry cannot be above 999.")
     
-    # Log do tipo error, exibe a mensagem de erro da exceção capturada.
-    log.error(str(e))
-    sys.exit(1)
-    # TODO: Usar retry
+    # Retry com recursão.
 
-# Bloco `else`, se não ocorrer nenhum erro ele vai ser executado.
-else:
-    print("Sucesso!!!")
+    # Bloco `try` que se espera um erro.
+    try:
+        # Retorna todas as linhas do arquivo.
+        return open(filepath).readlines()
 
-# Bloco `finally`, vai ser executado sempre, independente se ocorrer erro ou não.
-finally:
-    print("Execute isso sempre!")
+    # Captura a exceção de arquivo não localizado, imprimindo a mensagem de erro e encerrando o programa.
+    except FileNotFoundError as e:
+        
+        # Log do tipo error, exibe a mensagem de erro da exceção capturada.
+        log.error("%s", e)
+        time.sleep(2)
+        if retry > 1:
+            
+            # A função, após estourar uma Exception, chama ela mesma para realizar o retry,
+            # passando como parãmetro a quantia de retry menos 1, para que o próximo retry seja realizado.
+            # OBS: não pode realizar mais de 1000 chamadas em sequência usando recursão e é obrigatório usar um return,
+            # para que o valor possa ser acessado na chamada da função.
 
-# Segue a mesma lógica
-try:
-    print(names[5])
+            return try_to_open_a_file(filepath, retry=retry - 1)
 
-# Esse é o bloco de Bare Except, ele vai coletar todo e qualquer tipo de erro
-# que ocorrer no bloco `try`.
-except:
+    # Bloco `else`, se não ocorrer nenhum erro ele vai ser executado.
+    else:
+        print("Sucesso!!!")
 
-    # Log do tipo error, mostrando uma mensagem (atributo `message`) personalizada.
-    log.error(
-        "Missing name in the list, please use index in a range of %d",
-        len(names)
-    )
-    sys.exit(1)
+    # Bloco `finally`, vai ser executado sempre, independente se ocorrer erro ou não.
+    finally:
+        print("Execute isso sempre!")
+
+    # Retry com for
+
+    #for attempt in range(1, retry + 1):
+        # Bloco `try` que se espera um erro
+        #try:
+            #return open(filepath).readlines()
+        # Captura a exceção de arquivo não localizado, imprimindo a mensagem de erro e encerrando o programa.
+        #except FileNotFoundError as e:
+            # Log do tipo error, exibe a mensagem de erro da exceção capturada.
+            #log.error("%s", e)
+            #time.sleep(2)
+        # Bloco `else`, se não ocorrer nenhum erro ele vai ser executado.
+        #else:
+            #print("Sucesso!!!")
+        # Bloco `finally`, vai ser executado sempre, independente se ocorrer erro ou não.
+        #finally:
+            #print("Execute isso sempre!")
+            
+    return []
+
+# Caso abrir o arquivo com sucesso, imprime cada linha contida no arquivo.
+for line in try_to_open_a_file("archives/names.txt", retry=5):
+    print(line)

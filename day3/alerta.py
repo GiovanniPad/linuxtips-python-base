@@ -10,7 +10,7 @@ Senão, temp vezes 3 for maior ou igual a umidade: ALERTA!!! Perigo de calor úm
 .. temp entre 0 e 10: Frio
 .. temp < 0: ALERTA: Frio extremo
 """
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __author__ = "Giovanni Padilha"
 
 import logging
@@ -50,33 +50,51 @@ else:
 
 
 # Solução do professor
+
+# TODO: Mover para módulo de utilidades.
+
+# Função que verifica se a lista de inputs já foi totalmente preenchida.
+# Retorna um bool, True caso ela estiver cheia, senão False.
+def is_completely_filled(dict_of_inputs):
+    """Returns a boolean telling if a dict is completely filled."""
+    info_size = len(dict_of_inputs)
+    filled_size = len(
+        [value for value in dict_of_inputs.values() if value is not None]
+    )
+    return info_size == filled_size
+
+# Função que pede ao usuário para inserir as informações para cada input
+# no dicionário de informações necessárias.
+def read_inputs_for_dict(dict_of_info):
+    """Reads information for a dict from user input."""
+
+    # Sempre evitar de iterar e alterar um objeto mutável em um loop, para isso utilizar sempre outro objeto para iterar.
+    # Ao usar `keys()` é criado um objeto do tipo lista contendo as chaves do dicionário e a partir desse objeto "imagem" iteramos no dicionário,
+    # evitando assim erros de Runtime, onde se itera e altera o mesmo objeto.
+    for key in dict_of_info.keys():
+        if dict_of_info[key] is not None:
+            continue
+        try:
+            dict_of_info[key] = float(input(f"{key}:").strip())
+        except ValueError:
+            log.error("%s inválida, digite números", key)
+            break
+
+# Dicionário contendo as informações necessárias.
 info = {
     "temperatura": None,
     "umidade": None
 }
 
-# Sempre evitar de iterar e alterar um objeto mutável em um loop, para isso utilizar sempre outro objeto para iterar.
-# Ao usar `keys()` é criado um objeto do tipo lista contendo as chaves do dicionário e a partir desse objeto "imagem" iteramos no dicionário,
-# evitando assim erros de Runtime, onde se itera e altera o mesmo objeto.
-while True:
+# Loop while, executa enquanto a função `is_completely_filled` retornar True, negando, False.
+while not is_completely_filled(info):
 
-    info_size = len(info.values())
-    filled_size = len([value for value in info.values() if value is not None])
-
-    if info_size == filled_size:
-        break
-
-    for key in info.keys():
-        if info[key] is not None:
-            continue
-        try:
-            info[key] = float(input(f"{key}:").strip())
-        except ValueError:
-            log.error("%s inválida, digite números", key)
-            break
+    # Função que coleta as informações do usuário.
+    read_inputs_for_dict(info)
 
 temp, umidade = info.values()
 
+# Ifs e elifs para verificar as condicionais e exibir a mensagem correta para cada condicional.
 if temp > 45:
     print("ALERTA!!! Perigo calor extremo")
 elif (temp * 3) >= umidade:

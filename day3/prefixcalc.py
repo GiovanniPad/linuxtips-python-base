@@ -28,7 +28,7 @@ n2: 4
 
 Os resultados serão salvos em infixcalc.log
 """
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 __author__ = "Giovanni Padilha"
 
 # Biblioteca que interage com o Sistema Operacional.
@@ -40,6 +40,7 @@ import logging
 # Importando o módulo `datetime` da lib `datetime`, usado para coletar e modificar o dia e a hora.
 from datetime import datetime
 
+# TODO: Usar módulo de utilidade
 # Definindo um Logger e StreamHandler para imprimir as mensagens de erro deste script.
 log = logging.Logger("prefixcalc.py", logging.DEBUG)
 ch = logging.StreamHandler()
@@ -50,14 +51,39 @@ fmt = logging.Formatter(
 ch.setFormatter(fmt)
 log.addHandler(ch)
 
+# Coletando os argumentos necessários
+arguments = sys.argv[1:]
+
+# TODO: exercício: criar uma calculadora usando a biblioteca Operator do Python.
+
+# Dicionário contendo as operações válidas, juntando com as funções lambas que realizam o cálculo
+# de cada operação.
+valid_operations = {
+    "sum": lambda a, b: a + b, 
+    "sub": lambda a, b: a - b, 
+    "mul": lambda a, b: a * b, 
+    "div": lambda a, b: a / b,
+}
+
+# Coletando o caminho relativo do diretório atual
+path = os.curdir
+
+# Unindo e definindo o caminho do arquivo usado para armazenar as operações
+filepath = os.path.join(path, "archives", "prefixcalc.txt")
+
+# Definindo o dia e o horário da execução da operação através do objeto datetime
+# Função `now()` retorna o dia, mês, ano e horário atuais
+# Função `isoformat()` converte o conteúdo de retorno da função `now()` para um formato ISO legível
+timestamp = datetime.now().isoformat()
+
+# Coleta através de uma variável de ambiente o nome do usuário que executou a operação
+user = os.getenv("USER", "anonymous")
+
 # Loop Infinito, ocorre até ocorrer uma condição de parada, neste caso, um `break`.
 while True:
-    # Colentando os argumentos necessários
-    arguments = sys.argv[1:]
 
     # Verificando se a lista de argumentos está vazio ou não.
     # Se estiver vazia, perguntar a operação e os números ao usuário e reatribui na variável `arguments`.
-
     # Uma lista vazia ao ser passada em um statement, retorna False. Com o uso do not, inverte, ficando como True.
     if not arguments:
         
@@ -79,9 +105,6 @@ while True:
 
     # Desempacota a variável `arguments` em uma variável com a operação e uma com os números.
     operation, *nums = arguments
-
-    # Tupla com as operações válidas.
-    valid_operations = ("sum", "sub", "mul", "div")
 
     # Verifica se a operação digitada pelo usuário não está dentro das operações válidas.
     # Se não estiver, imprime um erro, junto com a lista de operações válidas e encerra o programa.
@@ -127,49 +150,18 @@ while True:
         log.error(str(e))
         sys.exit(1)
 
-    # Variável para armazenar o resultado.
-    result = 0
-
-    # TODO: Usar dict de funções
-
-    # Verifica qual o tipo da operação, realizando-a e armazenando o resultado na variável `result`.
-    if operation == "sum":
-        result = n1 + n2
-    elif operation == "sub":
-        result = n1 - n2
-    elif operation == "mul":
-        result = n1 * n2
-    elif operation == "div":
-
-        # Verifica se o dividor é igual a 0, não é possível dividir por 0.
-
-        # Se for igual, imprime uma mensagem de erro e encerra o programa.
-        if n2 == 0:
-            print("Division by zero")
-            sys.exit(1)
-        result = n1 / n2
-
-    # Coletando o caminho relativo do diretório atual
-    path = os.curdir
-
-    # Unindo e definindo o caminho do arquivo usado para armazenar as operações
-    filepath = os.path.join(path, "archives", "prefixcalc.txt")
-
-    # Definindo o dia e o horário da execução da operação através do objeto datetime
-    # Função `now()` retorna o dia, mês, ano e horário atuais
-    # Função `isoformat()` converte o conteúdo de retorno da função `now()` para um formato ISO legível
-    timestamp = datetime.now().isoformat()
-
-    # Coleta através de uma variável de ambiente o nome do usuário que executou a operação
-    user = os.getenv("USER", "anonymous")
+    # Acessa a função lambda correspondente a operação que o usuário inseriu e calcula o resultado.
+    result = valid_operations[operation](n1, n2)
 
     # Bloco de código onde se espera um erro.
     try:
         # Abre o arquivo de gravação das operações no modo append `a` utilizando o gerenciador de contexto `with`
-        with open(filepath, "a") as file_:
+        with open(filepath, "a") as log:
         
             # Escrevendo a operação no arquivo, referenciado pelo nome `file_`, juntamente do timestamp e user
-            file_.write(f"{timestamp} - {user} - {operation}, {n1}, {n2} = {result} \n")
+            log.write(
+                f"{timestamp} - {user} - {operation}, {n1}, {n2} = {result} \n"
+            )
 
     # Captura um erro de permissão, imprimindo sua mensagem e encerrando o programa.
     # Nesse caso, o erro é estourado caso o programa tente abrir um arquivo num diretório 
@@ -185,6 +177,9 @@ while True:
 
     # Imprime o resultado na tela.
     print(f"O resultado é {result}")
+
+    # Limpa os argumentos para que o usuário possa realizar novos cálculos.
+    arguments = None
 
     # Condição de parada, ocorre caso o usuário digitar qualquer tecla.
     if input("Pressione enter para efetuar outra operação ou qualquer tecla para sair:"):

@@ -12,7 +12,7 @@ from logging import handlers
 log_level = os.getenv("LOG_LEVEL", "WARNING").upper()
 
 # Código Boilerplate -> código repetitivo
-# TODO: usar função
+# TODO: Mover para um módulo de utilidades
 # TODO: usar lib (loguru)
 
 # Criando a própria instância de um logger com o nome `logs.py` e atribuindo um level (nível) a ele,
