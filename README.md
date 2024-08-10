@@ -2022,3 +2022,64 @@ Ao usar dois asteriscos irá capturar tanto o valor quanto o nome dos argumentos
 - **Biblioteca Operator** -> biblioteca já inclusa no Python que possui os sinais matemáticos e realiza as operações matemáticas, como uma calculadora.
 
 Resolvendo os TODOs que estavam nos arquivos `alerta.py, errors.py, logs.py e prefixcalc.py` do dia 3 e os arquivos `composicao.py` do dia 4.
+
+### Debugging
+
+- Técnica utilizada para descobrir aonde está um erro ou um comportamento inesperado no programa/script.
+- Executa o programa de uma forma mais interativa até descobrir aonde está o bug.
+
+**Abordagens de debugging**
+
+1. Executar o programa usando o `-i` para entrar no modo interativo com o terminal Python. Também funciona para frameworks, ex: `django-admin shell`.
+2. Usar `prints` nos pontos importantes do código para imprimir no stdout os valores que o script/programa está usando para ver aonde está o comando inesperado.
+3. Usar o módulo já incluso no Python `pdb` (Python Debugger). Para executar o módulo `python3 -m pdb script.py` no terminal.
+
+Além de poder interagir com tudo que estiver no escopo do programa/script, ele vai executar o programa linha a linha.
+
+- `help` -> mostra os comandos disponíveis enquanto estiver dentro de uma sessão de debug.
+- `l` -> (line) mostra qual a linha do código que debugger está parado. Mostrando as 5 linhas anteriores e as próximas 5 linhas do código.
+- `n` -> (next) executa até o fim do bloco da função atual ou então ao retornar algo, basicamente executa todo um bloco de código. Dentro de uma função, ele executa o código do escopo local.
+- `s` -> (step in) executa a linha atual, para na primeira ocasião possível (uma chamada de função ou na função atual), ao encontrar uma função, ele entra dentro do escopo da função e então o código a ser executado usando o `n` vai ser o da função, no escopo local. Basicamente, avança um nível do escopo.
+- `c` -> executa o programa todo até o fim e é restartado desde o início.
+- `q` -> sai do modo de debug.
+
+**Breakpoints** -> pontos onde pode ser definido para o programa parar a execução.
+
+Breakpoints em linhas vazias podem ser inválidos!!
+
+- `b line_number` -> cria um breakpoint indicando qual a linha que o debugger deve parar ao usar `c`. Pode criar inúmeros breakpoints. Ao chegar na linha do breakpoint criado, o breakpoint é excluído.
+- `disable breakpoint_number` -> remove um breakpoint a partir de seu número.
+
+<hr>
+
+- `python3 -m pdb -c "until line_number" script.py` -> executa um script no modo debugger até a linha passada, abrindo o debug interativo na linha específicada.
+- `python3 -m pdb -c continue script.py` -> roda um programa/script até o momento em que uma exceção ocorre, o debugger para logo antes do erro acontecer. Se não tiver erro, ele executa o programa/script todo.
+
+4. Inserir breakpoints no próprio código, para realizar isso, basta importar no código o módulo `pdb`. Forma mais utilizada de debugging, pois em determinados contextos não é possível alterar a forma como o programa é executado.
+
+- `import pdb` -> importa o módulo pdb
+- `pdb.set_trace()` -> define um breakpoint, o debugger vai parar na linha anterior.
+
+Também pode ser importado e usado da seguinte forma `__import__("pdb").set_trace()`.
+
+**ipdb**
+
+A partir do Python 3.7, foi inserido a função `breakpoint()`, que tem o mesmo resultado, mas sintaxicamente, é mais bonito.
+
+Existe atualmente várias bibliotecas criadas a partir do `pdb` base, uma delas é a `ipdb` que é uma biblioteca do python que junta tanto o `ipython` e o `pdb`.
+
+- `python3 -m ipdb script.py` -> executa o `ipdb`
+- `interact` -> inicia o interpretador padrão do `ipython`, ao usar o `exit` para sair do interpretador, volta para o debugger do `pdb`.
+
+A variável de ambiente `PYTHONBREAKPOINT` define qual é o debugger padrão do Python, para substituir para o `ipdb`, usar `export PYTHONBREAKPOINT = ipdb.set_trace()`.
+
+**pubd e winpdb**
+
+Também existe o `pudb`, que possui uma interface gráfica e também tem o `winpdb`, que é mais recomendada para sistemas Windows.
+
+**rpdb**
+
+`pdb` que se conecta com um servidor remoto.
+
+5. Usar o debugger pelo VSCode. Clicar ao esquerdo do número da linha é possível determinar um breakpoint naquela linha.
+
