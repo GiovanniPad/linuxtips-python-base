@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""Exemplos de uso de parâmetros coringas em funções."""
+__version__ = "0.1.0"
+__license__ = "Unlicense"
 
 # Define parâmetros coringas, que podem consumir qualquer tipo e quantia
 # de valores passados na chamada da função.

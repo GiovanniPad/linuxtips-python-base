@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""Exemplos de uso de logs com a biblioteca logging do Python."""
+__version__ = "0.1.0"
+__license__ = "Unlicense"
 
 # Biblioteca para interação com o SO.
 import os

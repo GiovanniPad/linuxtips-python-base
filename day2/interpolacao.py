@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""Envio de e-mails utilizando interpolação e SMTP."""
+__version__ = "0.1.1"
+__license__ = "Unlicense"
 
 # Importando biblioteca `os` e `sys`
 import os

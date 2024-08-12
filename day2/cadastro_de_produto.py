@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Cadastro de Produto"""
+"""Exemplo de uso de dicionários em Python."""
 __version__ = "0.1.0"
-__author__ = "Giovanni Padilha"
+__license__ = "Unlicense"
 
 # Importa da biblioteca `pprint` a função pprint()
 from pprint import pprint

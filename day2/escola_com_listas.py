@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Exibe relatório de crianças por atividade
+"""Exibe relatório de crianças por atividade usando listas.
 
 Imprimir a lista de crianças agrupadas por sala
 que frequentam cada uma das atividades.
 """
 __version__ = "0.1.0"
-__author__ = "Giovanni Padilha"
+__license__ = "Unlicense"
 
 # Listas com alunos
 sala1 = ["Erik", "Maia", "Gustavo", "Manuel", "Sofia", "Joana"]

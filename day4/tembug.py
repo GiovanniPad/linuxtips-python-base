@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""Exemplos para mostrar as formas de debugging de código em Python."""
+__version__ = "0.1.0"
+__license__ = "Unlicense"
 
 def repete_vogal(word):
     """Retorna a palavra com as vogais repetidas."""

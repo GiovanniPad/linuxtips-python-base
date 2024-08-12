@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""Exemplos de escopos em Python."""
+__version__ = "0.1.0"
+__license__ = "Unlicense"
 
 # aqui começa o escopo global
 nome = "Global"

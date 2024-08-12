@@ -11,18 +11,7 @@ ex
 ...
 """
 __version__ = "0.1.0"
-__author__ = "Giovanni Padilha"
-
-# Minha solução
-
-# Enquanto o número for menor e igual a 200 imprimir apenas os números pares e somar na variável de controle.
-num = 1
-while num <= 200:
-    if num % 2 == 0:
-        print(num)
-        num += 1
-        continue
-    num += 1
+__license__ = "Unlicense"
 
 # Soluçao do professor
 

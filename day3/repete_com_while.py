@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""Exemplos de uso da estrutura de repetição while do Python."""
+__version__ = "0.1.0"
+__license__ = "Unlicense"
 
 # Loop while, ocorre enquanto a condição de parada for Verdadeira (True)
 n = 0

@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""Exemplos de escopos e o uso da palavra nonlocal em Python."""
+__version__ = "0.1.0"
+__license__ = "Unlicense"
 
 contador = 0
 

@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""Exemplos de uso da estrutura de repetição for do Python."""
+__version__ = "0.1.0"
+__license__ = "Unlicense"
 
 # Coleção materializada
 #numbers = [1, 2, 3, 4, 5, 6]

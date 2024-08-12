@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""Exemplos do uso de valores default mutáveis em Python."""
+__version__ = "0.1.0"
+__license__ = "Unlicense"
 
 # set, dict, list
 

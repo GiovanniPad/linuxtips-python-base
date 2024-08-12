@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Exemplo de envio de e-mail"""
+"""Exemplo de envio de e-mail em Python usando a biblioteca smtplib."""
+__version__ = "0.1.0"
+__license__ = "Unlicense"
 
 # Biblioteca responsável pelo envio de e-mails no formato SMTP
 import smtplib

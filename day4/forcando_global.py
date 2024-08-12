@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""Exemplos para forçar o uso de variáveis globais num escopo local."""
+__version__ = "0.1.0"
+__license__ = "Unlicense"
 
 nome = "Global"
 

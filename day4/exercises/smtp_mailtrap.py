@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Envio de e-mail com mailtrap.io"""
+"""Exercíio para o envio de e-mail com mailtrap.io em Python."""
+__version__ = "0.1.0"
+__author__ = "Giovanni Padilha"
+
 import smtplib
 from email.mime.text import MIMEText
 

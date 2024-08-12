@@ -493,58 +493,9 @@ Possível usar `in` em Listas, retornando True se achar ou False se não encontr
 
 ### Exercícios com Listas, Tuplas, Loops e Condicionais
 
-**Exercício Escola com Listas**
+Exercício para imprimir um relatório de quais crianças das salas 1 e 2 frequentam as atividades de inglês, música e dança separadamente.
 
-```python
-#!/usr/bin/env python3
-"""Exibe relatório de crianças por atividade
-
-Imprimir a lista de crianças agrupadas por sala
-que frequentam cada uma das atividades.
-"""
-__version__ = "0.1.0"
-__author__ = "Giovanni Padilha"
-
-# Listas com alunos
-sala1 = ["Erik", "Maia", "Gustavo", "Manuel", "Sofia", "Joana"]
-sala2 = ["João", "Antonio", "Carlos", "Maria", "Isolda"]
-
-# Listas com alunos inscritos nas atividades.
-aula_ingles = ["Erik", "Maia", "Joana", "Carlos", "Antonio"]
-aula_musica = ["Erik", "Carlos", "Maria"]
-aula_danca = ["Gustavo", "Sofia", "Joana", "Antonio"]
-
-# Cria uma Lista atribuindo cada Lista de aula e label em uma Tupla.
-atividades = [
-    ("Inglês", aula_ingles), 
-    ("Música", aula_musica), 
-    ("Dança", aula_danca),
-]
-
-# Itera sobre cada atividade da Lista de atividades.
-# Desempacota a Tupla, atribuindo o label da atividade para a variável `nome_atividade` e os alunos para `alunos_atividade`.
-for nome_atividade, alunos_atividade in atividades:
-    print(f"Alunos da atividade de {nome_atividade}\n")
-
-    # Variáveis para adicionar os alunos de cada sala de determinada atividade.
-    # Essas variáveis são resetadas a cada loop.
-    atividade_sala1 = []
-    atividade_sala2 = []
-
-    # Iterando cada aluno de cada atividade.
-    for aluno in alunos_atividade:
-        
-        # Comparando se o aluno da atividade está na sala 1 ou sala 2.
-        if aluno in sala1:
-            atividade_sala1.append(aluno)
-        elif aluno in sala2:
-            atividade_sala2.append(aluno)
-    
-    # Imprimindo os alunos de cada sala.
-    print("Sala 1:", atividade_sala1)
-    print("Sala 2:", atividade_sala2)
-    print("-" * 20)
-```
+Para esse exercício foi criado o script `my_escola_com_listas.py` localizado na pasta `exercises` do Dia 2, que utiliza dos conceitos de listas e tuplas para resolver esse problema.
 
 ### Sets e a Teoria dos Conjuntos
 
@@ -671,76 +622,9 @@ Um único `*` desempacota sequências que contém um único elemento em cada pos
 
 ### Refatorando o Hello World usando Dicionários
 
-**Código**
+Aula onde é refatorado o script `hello.py` localizado na pasta `day1`.
 
-```python
-#!/usr/bin/env python3
-"""Hello World Multi Línguas.
-
-Dependendo da língua configurada no ambiente o programa exibe a mensagem
-correspondente.
-
-Como usar:
-
-Tenha a variável de ambiente LANG devidamente configurada ex:
-
-    export LANG=pt_BR
-
-Execução:
-
-    python3 hello.py
-    ou
-    ./hello.py
-"""
-# Metadados com informações adicionais.
-__version__ = "0.1.2"
-__author__ = "Giovanni Padilha"
-__license__ = "Unlicense"
-
-# Importando a biblioteca `os` que permite que o Python se comunique com o SO.
-import os
-
-# Define um bloco principal de um script Python,
-# apesar de estar caindo em desuso.
-#if __name__ == "__main__":
-
-# A função `getenv()` da lib `os` coleta o valor de uma variável de ambiente.
-# - O primeiro parâmetro informa qual o nome da variável de ambiente.
-# - O segundo parâmetro informa um valor padrão, caso essa variável não existir.
-
-# O `[:5]` refere-se ao fatiamento da string, coletando apenas os 5 primeiros caracteres.
-current_language = os.getenv("LANG", "en_US")[:5]
-
-# Dicionário contendo uma chave com o País e a língua dele e o valor é a mensagem na língua do País.
-msg = {
-    "en_US": "Hello, World!",
-    "pt_BR": "Olá, Mundo!",
-    "it_IT": "Ciao, Mondo!",
-    "es_SP": "Hola, Mundo!",
-    "fr_FR": "Bonjour, Monde!",
-}
-
-#Estrutura condicional `if`, onde a expressão lógica será dada como true ou false,
-#e a partir desse valor booleano, é executado um bloco de código.
-
-#A palavra `elif` faz com que uma nova comparação possa ser adicionada na estrutura.
-
-#Ordem de Complexidade O(n)
-"""
-if current_language == "pt_BR":
-    msg = "Olá, Mundo!"
-elif current_language == "it_IT":
-    msg = "Ciao, Mondo!"
-elif current_language == "es_SP":
-    msg = "Hola, Mundo!"
-elif current_language == "fr_FR":
-    msg = "Bonjour Monde!"
-"""
-
-# A função `print()` imprime um conteúdo qualquer na tela (output).
-# Ordem de Complexidade O(1) - Constante.
-print(msg[current_language])
-```
+Nessa aula adicionamos o conceito de dicionários para melhorar a lógica empregada no script.
 
 ## Dia 3 - Input-Output, Algoritmos, Condicionais, Repetições
 
@@ -791,195 +675,9 @@ Se o usuário não passar os CLI Args, então se usa a variável de ambiente, e 
 
 ### Exercício: Prefix calculator com CLI args e inputs
 
-**Meu algoritmo**
+Exerício onde é necessário criar uma calculadora prefix com as 4 operações básicas, recebendo argumentos pelo terminal (CLI Args).
 
-```python
-#!/bin/usr/env python3
-"""Calculadora prefix
-
-Funcionamento:
-
-[operação] [n1] [n2]
-
-Operações:
-
-sum -> +
-sub -> -
-mul -> *
-div -> /
-
-Uso:
-
-$ python3 prefixcalc.py sum 5 2
-7
-
-$ python3 prefixcalc.py mul 10 5
-50
-
-$ python3 prefixcalc.py
-operação: sum
-n1: 5
-n2: 4
-9
-"""
-__version__ = "0.1.0"
-__author__ = "Giovanni Padilha"
-
-import sys
-
-arguments = sys.argv[1:]
-
-if not arguments:
-    operation = input("operação: ")
-    n1 = float(input("n1: "))
-    n2 = float(input("n2: "))
-else:
-    operation, n1, n2 = arguments
-    result = 0
-    n1 = float(n1)
-    n2 = float(n2)
-
-if operation == "sum":
-    result = n1 + n2
-elif operation == "sub":
-    result = n1 - n2
-elif operation == "mul":
-    result = n1 * n2
-elif operation == "div":
-    if n2 == 0:
-        print("Division by zero")
-        sys.exit()
-    result = n1 / n2
-
-print(result)
-```
-
-**Algoritmo Final**
-
-```python
-#!/bin/usr/env python3
-"""Calculadora prefix
-
-Funcionamento:
-
-[operação] [n1] [n2]
-
-Operações:
-
-sum -> +
-sub -> -
-mul -> *
-div -> /
-
-Uso:
-
-$ python3 prefixcalc.py sum 5 2
-7
-
-$ python3 prefixcalc.py mul 10 5
-50
-
-$ python3 prefixcalc.py
-operação: sum
-n1: 5
-n2: 4
-9
-"""
-__version__ = "0.1.0"
-__author__ = "Giovanni Padilha"
-
-import sys
-
-# Colentando os argumentos necessários
-arguments = sys.argv[1:]
-
-# TODO: Exceptions
-# Verificando se a lista de argumentos está vazio ou não.
-# Se estiver vazia, perguntar a operação e os números ao usuário e reatribui na variável `arguments`.
-
-# Uma lista vazia ao ser passada em um statement, retorna False. Com o uso do not, inverte, ficando como True.
-if not arguments:
-    operation = input("operação: ")
-    n1 = input("n1: ")
-    n2 = input("n2: ")
-
-    arguments = [operation, n1, n2]
-
-# Verifica se a lista de argumentos tem menos de 3 argumentos.
-# Se tiver, imprime um erro, junto com um exemplo de uso e encerra o programa.
-elif len(arguments) != 3:
-    print("Número de argumentos inválidos")
-    print("ex: `sum 5 5`")
-    sys.exit(1)
-
-# Desempacota a variável `arguments` em uma variável com a operação e uma com os números.
-operation, *nums = arguments
-
-# Tupla com as operações válidas.
-valid_operations = ("sum", "sub", "mul", "div")
-
-# Verifica se a operação digitada pelo usuário não está dentro das operações válidas.
-# Se não estiver, imprime um erro, junto com a lista de operações válidas e encerra o programa.
-if operation not in valid_operations:
-    print("Operação inválida")
-    print(valid_operations)
-    sys.exit(1)
-
-# Lista para armazenar os números validados.
-validated_nums = []
-
-# Validando cada um dos números inseridos pelo usuário.
-for num in nums:
-    # TODO: Repetição com while + exceptions
-
-    # Remove, se houver, o "." no conteúdo da variável.
-    # Após, verifica se o conteúdo possui apenas dígitos.
-
-    # Se não tiver apenas dígitos, imprime um erro, junto com o conteúdo da variável em questão e encerra o programa.
-    if not num.replace(".", "").isdigit():
-        print(f"Número inválido {num}")
-        sys.exit(1)
-
-    # Verifica se no conteúdo da variável possui o "."
-
-    # Se possuir, converter para float.
-    # Se não possuir, converter para int.
-    if "." in num:
-        num = float(num)
-    else:
-        num = int(num)
-
-    # Insere o número já validado dentro da Lista de números validados.
-    validated_nums.append(num)
-
-# Desempacota os números validados nas variáveis `n1` e `n2`.
-n1, n2 = validated_nums
-
-# Variável para armazenar o resultado.
-result = 0
-
-# TODO: Usar dict de funções
-
-# Verifica qual o tipo da operação, realizando-a e armazenando o resultado na variável `result`.
-if operation == "sum":
-    result = n1 + n2
-elif operation == "sub":
-    result = n1 - n2
-elif operation == "mul":
-    result = n1 * n2
-elif operation == "div":
-
-    # Verifica se o dividor é igual a 0, não é possível dividir por 0.
-
-    # Se for igual, imprime uma mensagem de erro e encerra o programa.
-    if n2 == 0:
-        print("Division by zero")
-        sys.exit(1)
-    result = n1 / n2
-
-# Imprime o resultado na tela.
-print(f"O resultado é {result}")
-```
+O script `my_prefixcalc.py` do exercício se encontra na pasta `exercises` do Dia 3.
 
 ### Manipulando arquivos e pastas
 
@@ -1038,156 +736,9 @@ with open(filepath, "a") as arquivo:
 
 ### Exercício - criando um bloco de anotações
 
-**Meu algoritmo**
+Exercício para criar um bloco de anotações pelo terminal, onde as notas são salvas em um arquivo `.txt`. Também é possível ler as notas filtrando-as por sua tag.
 
-```python
-#!/usr/bin/env python3
-"""Bloco de notas
-
-$ python3 notes.py new "Minha nota"
-tag: tech
-text: 
-Anotação geral sobre carreira de tecnologia.
-
-$ python3 notes.py read --tag=tech
-...
-...
-"""
-__version__ = "0.1.0"
-__author__ = "Giovanni Padilha"
-
-import os
-import sys
-
-path = os.curdir
-filepath = os.path.join(path, "archives", "notes.txt")
-
-arguments = sys.argv[1:]
-if not arguments:
-    print("Invalid usage")
-    sys.exit(1)
-
-valid_commands = ("new", "read")
-
-if arguments[0] not in valid_commands:
-    print(f"Invalid command {arguments[0]}")
-
-if arguments[0] == "new":
-    title = arguments[1]
-    tag = input("tag: ")
-    text = input("text: \n")
-
-    with open(filepath, "a") as file_:
-        file_.write(f"{title}, {tag}, {text} \n")
-
-if arguments[0] == "read":
-    tag_read = arguments[1][6:].strip()
-
-    for line in open(filepath):
-        title, tag, text = line.split(",")
-        if tag_read == tag.strip():
-            print(f"Title: {title}")
-            print(f"Tag: {tag}")
-            print(f"Text: {text}", end="")
-            print("-" * 50)
-```
-
-**Algoritmo final**
-
-```python
-#!/usr/bin/env python3
-"""Bloco de notas
-
-$ python3 notes.py new "Minha nota"
-tag: tech
-text: 
-Anotação geral sobre carreira de tecnologia.
-
-$ python3 notes.py read tech
-...
-...
-"""
-__version__ = "0.1.0"
-__author__ = "Giovanni Padilha"
-
-# Importando bibliotecas `os` e `sys`
-import os
-import sys
-
-# Coletando o caminho relativo do diretório atual
-path = os.curdir
-
-# Definindo o caminho relativo do arquivo para armazenar as notas
-filepath = os.path.join(path, "archives", "notes.txt")
-
-# Coletando os argumentos CLI, menos o nome do arquivo.py
-arguments = sys.argv[1:]
-
-# Lista com os comandos aceitos
-valid_commands = ("new", "read")
-
-# Verificando se a lista de argumentos está vazia
-# Se não estiver com conteúdo, imprime uma mensagem de erro, juntamente com os comandos válidos e encerra o programa
-if not arguments:
-    print("Invalid usage")
-    print(f"you must specify subcommand {valid_commands}")
-    sys.exit(1)
-
-# Verifica se o comando inserido pelo usuário está dentro dos comandos válidos
-
-# Se não estiver dentro, imprime um erro juntamente com o comando errado e encerra o programa
-if arguments[0] not in valid_commands:
-    print(f"Invalid command {arguments[0]}")
-    sys.exit(1)
-
-# Verifica se o comando inserido é o `new`, comando para criar uma nova nota
-if arguments[0] == "new":
-
-    # Coleta o título da nota dos argumentos CLI
-    title = arguments[1] # TODO: Tratar exception
-
-    # Cria uma lista que armazena o título, tag e o conteúdo da nota em cada posição
-    note = [
-        f"{title}",
-
-        # Inserção de dado, excluindo os espaços em branco do início e do fim
-        input("tag: ").strip(),
-        input("text:\n").strip()
-    ]
-
-    # Abre o arquivo com o Gerenciador de Contexto `with` para armazenar a nota
-    with open(filepath, "a") as file_:
-
-        # A função `join(list)` concatena uma lista de strings em uma única string, inserindo um tab (`\t`) entre cada item 
-        # e no final um espaço em branco (`\n`)
-        # Por fim, a string concatena é escrita em uma única linha no arquivo
-        file_.write(f"\t".join(note) + "\n")
-
-# Verifica se o comando inserido é o `read`, comando para ler notas a partir da tag
-if arguments[0] == "read":
-
-    # Itera sobre cada linha do arquivo
-    for line in open(filepath):
-
-        # Desempacota a linha dividida por tab (`\t`) do arquivo em três variáveis, 
-        # o primeiro valor é título, segundo valor a tag e o terceiro valor o conteúdo da nota
-        title, tag, text = line.split("\t")
-
-        # Compara a tag de cada linha com a tag inserida pelo usuário
-        # Na tag inserida pelo usuário, a função `strip()` retira os espaços em branco do início e do fim da string e
-        # a função `lower()` transforma todas os caracteres da string em minúsculo
-
-        # Na tag da nota apenas é usada a função `lower()` que transforma todos os caracteres da string em minúsculo
-        if tag.lower() == arguments[1].strip().lower():
-
-            # Imprime o título, tag e o conteúdo da nota separados por linhas
-            print(f"Title: {title}")
-            print(f"Tag: {tag}")
-            
-            # Não coloca uma quebra de linha no final
-            print(f"Text: {text}", end="")
-            print("-" * 50)
-```
+O script de resolução `my_notes.py` está localizado na pasta `exercises` do Dia 3.
 
 ### Tratamentos de Erros com Exceptions
 
@@ -1349,6 +900,8 @@ Usar `is` em vez de `==` para comparar variáveis booleanas.
 
 **Short Circuit** -> na estrutura de condicionais `if` e `elif` se uma das expressões foram verdadeiras ou falsas, as outras condicionais nem vão ser verificadas. Nesse caso o ideal é começar a partir da expressão com mais condições.
 
+O pseudo-código encontra-se no arquivo `algoritmo.py` no Dia 3.
+
 ### Condicionais ternárias e inlines + Python Tutor
 
 - O operador `or` é Short Circuit, caso a primeira condição da direita seja verdadeira, ele nem checa a segunda. Já o operador `and` checa obrigatoriamente todas as condições.
@@ -1417,360 +970,93 @@ Tomar cuidado com loops infinitos, sempre ter uma condição de parada em um loo
 
 #### Exercício: Números pares
 
-**Minha solução**
+**Premissa do exercício**
 
-```python
-# Enquanto o número for menor e igual a 200 imprimir apenas os números pares e somar na variável de controle.
-num = 1
-while num <= 200:
-    if num % 2 == 0:
-        print(num)
-        num += 1
-        continue
-    num += 1
-```
+Faça um programa que imprime os números pares de 1 a 200.
 
-**Solução do professor**
+ex `python3 numeros_pares.py`
+- 2
+- 4
+- 6
+- 8
+- ...
 
-```python
-for num in range(1, 201):
-    if num % 2 == 0:
-        print(num)
-        continue
-```
+<hr>
+
+A minha resolução se encontra no script `my_numeros_pares.py` na pasta `exercises` do Dia 3. A resolução do professor se encontra no script `numeros_pares.py` do Dia 3.
 
 #### Exercício: Alerta
 
-**Minha solução**
+**Premissa do exercício**
 
-```python
-import logging
-import sys
+Alarme de temperatura.
 
-log = logging.Logger("alerta.py", logging.DEBUG)
-ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
-fmt = logging.Formatter(
-    "%(asctime)s %(name)s %(levelname)s l:%(lineno)d f:%(filename)s: %(message)s"
-)
-ch.setFormatter(fmt)
-log.addHandler(ch)
+Faça um script que pergunta ao usuário qual a temperatura atual e o índice de umidade do ar
+sendo que será exibida uma mensagem de alerta dependendo das condições:
 
-# Minha solução
-# TODO: Usar função
-temp = input("Digite a temperatura atual: ").strip()
-if not temp.replace(".", "").isdigit():
-    print(f"Insira um valor numérico na temperatura.")
-    exit(1)
-if "." in temp:
-    temp = float(temp)
-else:
-    temp = int(temp)
+- Se temp maior 45: ALERTA!!! Perigo calor extremo
+- Senão, temp vezes 3 for maior ou igual a umidade: ALERTA!!! Perigo de calor úmido
+- .. temp entre 10 e 30: Normal
+- .. temp entre 0 e 10: Frio
+- .. temp < 0: ALERTA: Frio extremo
 
-moisture = input("Digite o índice de umidade do ar: ").strip()
-if not moisture.replace(".", "").isdigit():
-    print(f"Insira um valor numérico na umidade do ar.")
-    exit(1)
-if "." in moisture:
-    moisture = float(moisture)
-else:
-    moisture = int(moisture)
+<hr>
 
-if temp > 45:
-    print("ALERTA!!! Perigo calor extremo")
-elif (temp * 3) >= moisture:
-    print("ALERTA!!! Perigo de calor úmido")
-elif temp >= 10 and temp <= 30:
-    print("Normal")
-elif temp >= 0 and temp < 10:
-    print("Frio")
-else:
-    print("ALERTA!!! Frio extremo")
-```
-
-**Solução do professor**
-
-```python
-info = {
-    "temperatura": None,
-    "umidade": None
-}
-
-# Sempre evitar de iterar e alterar um objeto mutável em um loop, para isso utilizar sempre outro objeto para iterar.
-# Ao usar `keys()` é criado um objeto do tipo lista contendo as chaves do dicionário e a partir desse objeto "imagem" iteramos no dicionário,
-# evitando assim erros de Runtime, onde se itera e altera o mesmo objeto.
-for key in info.keys():
-    try:
-        info[key] = float(input(f"Qual a {key}?").strip())
-    except ValueError:
-        log.error(f"{key.capitalize()} inválida")
-        sys.exit(1)
-
-temp = info["temperatura"]
-umidade = info["umidade"]
-
-if temp > 45:
-    print("ALERTA!!! Perigo calor extremo")
-elif (temp * 3) >= umidade:
-    print("ALERTA!!! Perigo calor úmido")
-elif temp >= 10 and temp <= 30:
-#elif temp in range(10, 31):
-    print("Normal")
-elif temp >= 0 and temp < 10:
-    print("Frio")
-elif temp < 0:
-    print("ALERTA!!! Frio extremo")
-```
+A minha resolução do exercício se encontra no script `my_alerta.py` dentro da pasta `exercises` do Dia 3. A resolução do professor se encontra no script `alerta.py` do Dia 3.
 
 #### Exercício: Repete vogal
 
-**Minha solução**
+**Premissa do exercício**
 
-```python
-# Variável contendo as vogais e variável para armazenar as palavras processadas
-words = []
-vowels = ["a", "e", "i", "o", "u"]
+Repete vogais,
 
-# Loop infinito, encerra com ação do usuário
-while True:
-    # Pergunta a palavra ao usuário
-    word = input("Digite uma palavra (ou enter para sair): ").strip()
-    new_word = ""
+Faça um programa que pede ao usuário que digite uma ou mais palavras e imprime cada uma
+das palavras com suas vogais duplicadas.
 
-    # Condição de parada, pressionar enter e então imprime todas as palavras processadas
-    if not word:
-        for word in words:
-            print(word)
-        break
+ex: `python3 repete_vogal.py`
 
-    # Para cada letra na palavra, verificar se é uma vogal (sempre em minúsculo) e duplicá-la e adicionar a nova variável `new_word`.
-    # Senão, apenas adicionar a letra sem duplicar na variável `new_word`.
-    for letter in word:
-        if letter.lower() in vowels:
-            new_word += letter * 2
-            continue
-        new_word += letter
+- 'Digite uma palavra (ou enter para sair):' Python
+- 'Digite uma palavra (ou enter para sair):' Bruno
+- 'Digite uma palavra (ou enter para sair):' `<enter>`
+- Pythoon
+- Bruunoo
 
-    # Atribui a palavra com as vogais duplicadas na lista de palavras.
-    words.append(new_word)
+<hr>
 
-```
-
-**Solução do professor**
-
-```python
-# Variável para armazenar as palavras processadas
-words = []
-
-# Loop infinito, encerra com ação do usuário
-while True:
-
-    # Pergunta a palavra ao usuário
-    word = input("Digite uma palavra (ou enter para sair): ").strip()
-
-    # Condição de parada, pressionar enter
-    if not word:
-        break
-
-    
-    final_word = ""
-    # Para cada letra na palavra, se for uma vogal, duplicar e armazenar na nova variável,
-    # senão, apenas armazenar a letra na nova variável.
-    for letter in word:
-        # TODO: Remover acentuação usando função
-
-        # Verifica se a letra está dentro da string de letras "aeiou".
-        if letter.lower() in "aeiou":
-            final_word += letter * 2
-        else:
-            final_word += letter
-
-        # If ternário, igual o if acima
-        #final_word += letter * 2 if letter.lower() in "aeiou" else letter
-
-    # Armazenar a letra processada na lista de palavras
-    words.append(final_word)
-
-# Imprime as palavras da lista `words`.
-# Desempacota a lista, e cada valor (palavra) é separadado por uma quebra de linha.
-print(*words, sep="\n")
-```
+A minha resolução do exercício se encontra no script `my_repete_vogal.py` dentro da pasta `exercises` do Dia 3. A resolução do professor se encontra no script `repete_vogal.py` do Dia 3.
 
 #### Exercício: Reserva de quartos
 
-**Minha solução**
+**Premissa do exercício**
 
-```python
-# Bibliotecas necessárias
-import os
-import sys
-import logging
+Faça um programa de terminal que exibe ao usuário uma listas dos quartos
+disponíveis para alugar e o preço de cada quarto, esta informação está
+disponível em um arquivo de texto separado por vírgulas.
 
-# Logger e Handler personalizado
-log = logging.Logger("reserva.py", logging.DEBUG)
-log.setLevel(logging.DEBUG)
-ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
-fmt = logging.Formatter(
-    "%(asctime)s %(name)s %(levelname)s l:%(lineno)d f:%(filename)s: %(message)s"
-)
-ch.setFormatter(fmt)
-log.addHandler(ch)
+`quartos.txt`
 
-# Minha solução
+codigo, nome, preco
+- 1, Suite Master, 500
+- 2, Quarto Familia, 200
+- 3, Quarto Single, 100
+- 4, Quarto Simples, 50
 
-# Colentado o caminho dos arquivos
-path = os.curdir
-rooms_filepath = os.path.join(os.curdir, "archives", "quartos.txt")
-rents_filepath = os.path.join(os.curdir, "archives", "reservas.txt")
+O programa pergunta ao usuário o nome, qual o número do quarto a ser reservado
+e a quantidade de dias e no final exibe o valor estimado a ser pago.
 
-# Verificando se ambos os arquivos existem.
-# Trata erro de permissão de acesso e arquivo não encontrado.
-try:
-    rented_rooms = []
-    for line in open(rents_filepath):
-        client_name, room_number, days_rented = line.strip().split(",")
-        rented_rooms.append(int(room_number))
+O programa deve salvar esta escolha em outro arquivo contendo as reservas.
 
-    available_rooms = {}
-    for line in open(rooms_filepath):
-        room_number, room_type, room_price = line.strip().split(",")
+`reservas.txt`
 
-        room_number = int(room_number)
-        room_price = float(room_price)
+cliente, quarto, dias
+- Bruno,3,12
 
-        if room_number not in rented_rooms:
-            available_rooms[room_number] = {
-                "type": room_type,
-                "price": room_price # TODO: decimal
-            }
-except FileNotFoundError as e:
-    log.critical(str(e))
-    sys.exit(1)
-except PermissionError as e:
-    log.critical(str(e))
-    sys.exit(1)
+Se outro usuário tentar reservar o mesmo quarto o programa deve exibir uma
+mensagem informando que já está reservado.
 
+<hr>
 
-# Vefica se existe quartos disponíveis para alugar, senão encerra o programa.
-if not available_rooms:
-    print("Hotel lotado, volte mais tarde!")
-    sys.exit(1)
-
-# Menu principal com os quartos
-print("Sistema de reserva de quarto de hotel")
-print("Quartos disponíveis")
-print("-" * 40)
-
-# Exibe cada quarto com suas informações
-for room_number, room_data in available_rooms.items():
-    print(f"Quarto {room_number} - Tipo: {room_data["type"]} - Valor (dia): R${room_data["price"]:.2f}")
-print("-" * 40)
-
-# Pergunta o nome do cliente
-client_name = input("Qual o seu nome? ")
-
-# Loop principal, só sai se todas as informações forem inseridas corretamente.
-while True:
-
-    # Verifica se o valor inserido é numérico e se o quarto não está alugado.
-    try:
-        room_rent = int(input("Qual o número do quarto? "))
-        if room_rent not in available_rooms:
-            print("Quarto já alugado")
-            continue
-        days_rent = int(input("Por quantos dias vai alugar? "))
-        break
-    except ValueError as e:
-        log.error("Valor inválido, por favor, insirar novamente.")
-
-# Se caso tudo estiver correto, a reserva com os dados são salvas no arquivo `reservas.txt`.
-with open(rents_filepath, "a") as file_:
-    file_.write(f"{client_name},{room_rent},{days_rent}\n")
-
-# Calcula o custo total de alugar o quarto.
-total = available_rooms[room_rent]["price"] * days_rent
-
-# Mensagem de confirmação exibindo o valor do aluguel do quarto.
-# TODO: substituir casa decimal por vírgula
-print(f"{client_name.capitalize()}, o quarto {room_rent} foi alugado com sucesso por {days_rent} dias por um total de R${total:.2f}.")
-
-```
-
-**Solução do professor**
-
-```python
-ocupados = {}
-try:
-    for line in open(rents_filepath):
-        nome, num_quarto, dias = line.strip().split(",")
-        ocupados[int(num_quarto)] = {
-            "nome": nome,
-            "dias": dias
-        }
-except FileNotFoundError:
-    logging.error("Arquivo reservas.txt não existe")
-    sys.exit(1)
-
-quartos = {}
-try:
-    for line in open(rooms_filepath):
-        codigo, nome, preco = line.strip().split(",")
-        quartos[int(codigo)] = {
-            "nome": nome,
-            "preco": float(preco),
-            "disponivel": False if int(codigo) in ocupados else True
-        }
-except FileNotFoundError:
-    logging.error("Arquivo quartos.txt não existe")
-    sys.exit(1)
-
-print("Reserva Hotel Pythonico")
-if len(ocupados) == len(quartos):
-    print("Hotel lotado")
-    sys.exit(1)
-
-nome = input("Nome do cliente:").strip()
-print("-" * 40)
-print("Lista de quartos:")
-for codigo, dados in quartos.items():
-    nome_quarto = dados["nome"]
-    preco = dados["preco"]
-    disponivel = "Não disponível" if not dados["disponivel"] else "Disponível"
-    #disponivel = dados["disponivel"] and "Disponível" or "Não disponível"
-
-    print(f"{codigo} - {nome_quarto} - R$ {preco:.2f} - {disponivel}")
-print("-" * 40)
-
-try:
-    quarto = int(input("Número do quarto:").strip())
-    if not quartos[quarto]["disponivel"]:
-        print(f"O quarto {quarto} está ocupado")
-        sys.exit(1)
-except ValueError:
-    logging.error("Número inválido, digite apenas números")
-    sys.exit(1)
-except KeyError:
-    print(f"O quarto {quarto} não existe.")
-    sys.exit(1)
-
-try:
-    dias = int(input("Quantos dias:").strip())
-except ValueError:
-    logging.error("Número inválido, digite apenas números")
-    sys.exit(1)
-
-nome_quarto = quartos[quarto]["nome"]
-preco = quartos[quarto]["preco"]
-disponivel = quartos[quarto]["disponivel"]
-total = preco * dias
-
-with open(rents_filepath, "a") as file_:
-    file_.write(f"{nome},{quarto},{dias}\n")
-    #file_.write(",".join([nome, str(quarto), str(dias)]))
-
-print(f"{nome} você escolheu o quarto {nome_quarto} e vai custar R${total:.2f}")
-```
+A minha resolução do exercício se encontra no script `my_reserva.py` dentro da pasta `exercises` do Dia 3. A resolução do professor se encontra no script `reserva.py` do Dia 3.
 
 ### Exercício extra: Dica de iteração, correção de bug + sistema de reservas em hotel
 
@@ -2028,7 +1314,7 @@ Resolvendo os TODOs que estavam nos arquivos `alerta.py, errors.py, logs.py e pr
 - Técnica utilizada para descobrir aonde está um erro ou um comportamento inesperado no programa/script.
 - Executa o programa de uma forma mais interativa até descobrir aonde está o bug.
 
-**Abordagens de debugging**
+#### Abordagens de debugging
 
 1. Executar o programa usando o `-i` para entrar no modo interativo com o terminal Python. Também funciona para frameworks, ex: `django-admin shell`.
 2. Usar `prints` nos pontos importantes do código para imprimir no stdout os valores que o script/programa está usando para ver aonde está o comando inesperado.
@@ -2062,7 +1348,7 @@ Breakpoints em linhas vazias podem ser inválidos!!
 
 Também pode ser importado e usado da seguinte forma `__import__("pdb").set_trace()`.
 
-**ipdb**
+#### ipdb
 
 A partir do Python 3.7, foi inserido a função `breakpoint()`, que tem o mesmo resultado, mas sintaxicamente, é mais bonito.
 
@@ -2073,11 +1359,11 @@ Existe atualmente várias bibliotecas criadas a partir do `pdb` base, uma delas 
 
 A variável de ambiente `PYTHONBREAKPOINT` define qual é o debugger padrão do Python, para substituir para o `ipdb`, usar `export PYTHONBREAKPOINT = ipdb.set_trace()`.
 
-**pubd e winpdb**
+#### pubd e winpdb
 
 Também existe o `pudb`, que possui uma interface gráfica e também tem o `winpdb`, que é mais recomendada para sistemas Windows.
 
-**rpdb**
+#### rpdb
 
 `pdb` que se conecta com um servidor remoto.
 

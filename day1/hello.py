@@ -22,7 +22,6 @@ Execução:
 """
 # Metadados com informações adicionais.
 __version__ = "0.1.4"
-__author__ = "Giovanni Padilha"
 __license__ = "Unlicense"
 
 # Biblioteca que interage com o Sistema Operacional.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Bloco de notas
+"""Bloco de notas.
 
 $ python3 notes.py new "Minha nota"
 tag: tech
@@ -32,7 +32,7 @@ log.addHandler(ch)
 path = os.curdir
 
 # Definindo o caminho relativo do arquivo para armazenar as notas
-filepath = os.path.join(path, "archives", "notes.txt")
+filepath = os.path.join(path, "..", "archives", "notes.txt")
 
 # Coletando os argumentos CLI, menos o nome do arquivo.py
 arguments = sys.argv[1:]

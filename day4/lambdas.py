@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""Exemplos do uso de funções lambda em Python."""
+__version__ = "0.1.0"
+__license__ = "Unlicense"
 
 def transforma_em_maisculo(texto):
     return texto.upper()

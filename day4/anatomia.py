@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""Exemplos da anatomia das funções em Python."""
+__version__ = "0.1.0"
+__license__ = "Unlicense"
 
 # Sphinx docstring
 def nome_da_funcao(a, b, c):

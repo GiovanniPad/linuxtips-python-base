@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""Exemplo de pseudo-código para entender como algoritmos funcionam."""
+__version__ = "0.1.0"
+__license__ = "Unlicense"
 
 # Pseudo código
 import ir, pegar, pedir, tem, comer, ficar

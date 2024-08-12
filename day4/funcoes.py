@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """Exemplos de funções"""
+__version__ = "0.1.0"
+__license__ = "Unlicense"
 
 """
 f(x) = 5 * (x / 2)

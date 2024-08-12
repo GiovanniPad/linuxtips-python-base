@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Exibe relatório de crianças por atividade
+"""Exibe relatório de crianças por atividade usando dicionários
 
 Imprimir a lista de crianças agrupadas por sala
 que frequentam cada uma das atividades.

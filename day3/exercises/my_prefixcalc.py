@@ -1,5 +1,5 @@
 #!/bin/usr/env python3
-"""Calculadora prefix
+"""Calculadora prefix.
 
 Funcionamento:
 
@@ -69,7 +69,7 @@ valid_operations = {
 path = os.curdir
 
 # Unindo e definindo o caminho do arquivo usado para armazenar as operações
-filepath = os.path.join(path, "archives", "prefixcalc.txt")
+filepath = os.path.join(path, "..", "archives", "prefixcalc.txt")
 
 # Definindo o dia e o horário da execução da operação através do objeto datetime
 # Função `now()` retorna o dia, mês, ano e horário atuais

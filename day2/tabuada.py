@@ -20,7 +20,7 @@ Exemplo:
 ...
 """
 __version__ = "0.1.0"
-__author__ = "Giovanni Padilha"
+__license__ = "Unlicense"
 
 # Cria uma lista, sempre usando `[]`
 #base = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]

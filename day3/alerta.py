@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Alarme de temperatura
+"""Alarme de temperatura.
 
 Faça um script que pergunta ao usuário qual a temperatura atual e o índice de umidade do ar
 sendo que será exibida uma mensagem de alerta dependendo das condições:
@@ -11,10 +11,9 @@ Senão, temp vezes 3 for maior ou igual a umidade: ALERTA!!! Perigo de calor úm
 .. temp < 0: ALERTA: Frio extremo
 """
 __version__ = "0.1.1"
-__author__ = "Giovanni Padilha"
+__license__ = "Unlicense"
 
 import logging
-import sys
 
 log = logging.Logger("alerta.py", logging.DEBUG)
 ch = logging.StreamHandler()
@@ -24,30 +23,6 @@ fmt = logging.Formatter(
 )
 ch.setFormatter(fmt)
 log.addHandler(ch)
-
-# Minha solução
-
-while True:
-    try:
-        temp = float(input("temperatura:"))
-        moisture = float(input("umidade:"))
-    except ValueError:
-        log.error("Valor inserido inválido")
-        continue
-    break
-
-if temp > 45:
-    print("ALERTA!!! Perigo calor extremo")
-elif (temp * 3) >= moisture:
-    print("ALERTA!!! Perigo de calor úmido")
-elif temp >= 10 and temp <= 30:
-    print("Normal")
-elif temp >= 0 and temp < 10:
-    print("Frio")
-else:
-    print("ALERTA!!! Frio extremo")
-
-
 
 # Solução do professor
 
