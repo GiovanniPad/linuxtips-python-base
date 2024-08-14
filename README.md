@@ -1369,3 +1369,172 @@ Também existe o `pudb`, que possui uma interface gráfica e também tem o `winp
 
 5. Usar o debugger pelo VSCode. Clicar ao esquerdo do número da linha é possível determinar um breakpoint naquela linha.
 
+### O sistema de imports do Python
+
+#### O sistema de módulos do Python
+
+- Mecanismo que é ativado ao utilizar a palavra chave `import` dentro dos scripts.
+- Conforme o projeto vai ficando maior e mais complexo, há a tendência de criar uma arquitetura mais bem definida, assim, criando vários módulos/arquivos e separando o código em contextos.
+
+Para realizar essa operação, o Python vai utilizar um mecanismo de imports provido pela `importlib`.
+
+**Exemplo**
+
+Ao usar pela primeira vez o comando: `from email import enviar_email`
+
+- A primeira coisa que o interpretador do Python irá realizar é procurar no sistema de arquivo pelo módulo chamado email, ou seja, o arquivo `email.py`. Para encontrar esse módulo o interpretador Python vai buscar em uma lista de diretórios, provida pelo comando `sys.path`, que irá conter todos os locais possíveis que esse módulo pode estar. 
+
+Para verificar o `sys.path` utilizar o comando: `python3 -c "import sys; print(sys.path)"`
+
+**Ao utilizar esse comando o Python retorna a seguinte lista:**
+
+```python
+[
+  '', 
+  '/usr/lib/python312.zip', 
+  '/usr/lib/python3.12', 
+  '/usr/lib/python3.12/lib-dynload', 
+  '/home/geovannepad/Repositories/linuxtips-python-base/venv/lib/python3.12/site-packages'
+]
+```
+
+- O primeiro item dessa lista, a string vazia, indica o diretório atual, ou seja, ele vai buscar o módulo no mesmo diretório em que está o script que o está importando.
+- Caso ele não encontrar no diretório atual, por padrão, ele vai buscar na Standard Library.
+- E caso ele não encontrar na Standard Library, ele vai buscar no User Path (local de instalação de bibliotecas para cada usuário), nesse caso, as bibliotecas instaladas passando o `-u` para o instalador.
+- Por fim, caso ele não encontrar em nenhum dos locais anteriores, ele vai buscar no Sys Path, que é aonde as bibliotecas do sistema estão instaladas.
+
+É possível reutilizar os módulos em vários projetos. **Para isso, há várias maneiras de se realizar esse processo**
+
+1. Copiar e colar os módulos nos diretórios de cada projeto (não recomendado).
+2. Comprimir os módulos dentro de um arquivo zip e colocar uma data de controle de versão, para que ao atualizar haja um controle melhor.
+3. Utilizar um sistema de controle de versão, como o git (mais recomendado). Assim é possível realizar o build do pacote e depois publicar esse pacote para o repositório central do Python (PyPI). **O grupo PyPI mantém as seguintes ferramentas**
+   1. setuptools -> ferramenta para criar o arquivo `setup.py` para buildar e publicar.
+   2. wheel -> formato de arquivo binário, o programa final será compactado nesse formato.
+   3. PyPI -> repositório dos pacotes, aonde podem ser baixados.
+   4. virtualenv -> isola ambientes de desenvolvimento, evitando conflitos.
+   5. pip -> ferramenta para instalação de pacotes e módulos no Python.
+
+#### Empacotamento e Distribuição
+
+1. **Desenvolvimento** -> quando termina o desenvolvimento do software e coloca disponível para outros instalarem.
+2. **Especificação** -> para isso é necessário a criação do arquivo `setup.py`, aonde é colocado todas as especificações/metadados do pacote que vai ser distribuído.
+3. **Empacotamento** -> uma vez especificado, então é usado o comando `sdist` para realizar uma distribuição simples. Ou então, o comando `bdist_wheel` para criar uma distribuição binária, que vai ser compilada para cada plataforma diferente.
+4. **Upload** -> a partir desse momento, há um pacote gerado no formato e pode realizar o upload para o servidor principal de pacotes do Python, usando o setuptools ou uma ferramenta como o twine.
+5. **Publicação** -> a partir do momento em que o upload é feito, o pacote fica disponível no pypi.org.
+
+Ambientes virtuais são muito importantes nessa estrutura, pois separam as dependências de um projeto do Python do sistema e de outros projetos, evitando conflitos. Geralmente, se cria um ambiente virtual para cada projeto no sistema. Isso permite que seja possível apagar um ambiente virtual, sem prejudicar nenhum outro ambiente, seja o do Python do sistema ou de outro projeto.
+
+- Criado o ambiente virtual de um projeto, vamos realizar a instalação de dependências e para isso, em vez de instalar uma a uma, vamos criar um arquivo chamado `requirements.txt` e colocar todas as dependências que queremos.
+- Além das dependências, especificamos as versões de uma cada das dependências, seja uma versão específica ou então um intervalo de versões aceitáveis, isso se chama "Pinar" as dependências
+
+**Exemplo de arquivo `requirements.txt`**
+
+```txt
+flask = 1.0.1
+django >= 2.0
+dynaconf <= 2.2.1
+```
+
+- Uma vez criado essa lista de dependências, usa-se o comando: `pip install -r requirements.txt` para instalar todas as dependências e suas versões especificadas no arquivo. 
+- Depois desse momento, as dependências podem ser utilizadas usando o `import`.
+
+#### Gestão de Dependências e seus problemas
+
+Quando o projeto tem muitas dependências e muitas versões diferentes, a árvore de dependências pode ficar muito complexa e haverá problemas e conflitos entre dependências.
+
+- Ao usar `--site-packages` ao criar um ambiente virtual garante que o Python tem acesso a dependências do sistema operacional.
+
+1. **Conflitos em bibliotecas no sistema operacional**
+
+Em alguns casos, onde é necessário instalar dependências diferentes que usam uma mesma biblioteca do sistema, porém em versões diferentes vai causar um problema de "invasão" de ambientes virtuais, onde eles não serão mais isolados, pois dependem da mesma biblioteca do sistema operacional, além de dar problemas com versões diferentes. Para evitar esse tipo de conflito vai ser necessário o uso de containers, onde todo o sistema operacional é separado um do outro. Ou então sistemas operacionais com modularidades.
+
+![Conflitos em Dependências](./images/conflitos_dependencias_day4.png)
+
+- Isso ocorre caso não seja utilizado corretamente os conceitos de isolamento da virtualenv.
+- Para resolver esse problema, foi criado um outro pacote chamado Dephell.
+
+2. **Conflito de versões de dependências no mesmo ambiente virtual**
+
+Ao instalar dependências diferentes, elas podem depender de outras bibliotecas, as vezes a mesma biblioteca, porém em versões diferentes, e ao instalar qualquer uma dessas dependências, a outra vai parar de funcionar, pois ela vai instalar a biblioteca em uma versão diferente, quebrando a outra dependência.
+
+Ficar atento na evolução das dependências, e utilizar ferramentas como o Dependabot e o PyUp, que avisam quando as versões de bibliotecas e/ou dependências são atualizadas.
+
+3. **Segurança**
+
+Instalar uma dependência de um servidor não original, com scripts maliciosos.
+
+Para resolver esse problema, utilizar o `--require-hashes` para verificar os hashes toda vez que o pip for instalar um pacote.
+
+#### Soluções
+
+- Para resolver esses problemas citados anteriores foi criado as PEPs, que são padronizações na linguagem Python. 
+- A partir da PEP 517 e 518 foi específicado um arquivo único que vai conter todas as configurações de projeto, em vez de vários arquivos separados, vai ser criado um arquivo chamado `pyproject.toml`, além disso, esse arquivo específica um sistema de build que pode ser extendido, não ficando preso a um único sistema de build. Seguindo um padrão.
+
+Em 2016, foi criado o pipenv, que criou um padrão antes da PEP 517 ser aceita, apresentando a especificação `Pipfile`. Após um tempo, essa ferramenta foi colocada como ferramenta recomendada, sem passar pela via formal, a PEP. Após um tempo, o pipenv deu tantos problemas.
+
+**Porém, há várias alternativas ao pipenv**
+
+- pip-tools
+- flit
+- pbr
+- dephell
+- conda
+- poetry
+
+##### Como resolver os problemas de gestão de dependências?
+
+- Isolamento
+- Conflitos
+- Segurança
+
+**Solução mais simples**
+
+```shell
+# Ambiente de desenvolvimento
+pip install pip-tools
+pip-compile --generate-hashes \ --output-file requirements.txt
+```
+
+- A ferramenta pip-tools vai gerar o hashes automaticamente e colocar as versões e o hash de cada pacote no arquivo.
+
+```shell
+# Ambiente de usuário/ci/produção
+pip install --require-hashes \ -r requirements.txt
+```
+
+- No ambiente de produção, será fornecido o arquivo formatado gerado pela ferramenta pip-tools. Criando um build determinístico.
+- Ela resolve apenas o problema de segurança e a questão de build determinístico.
+
+### Poetry
+
+Gestor de dependências que segue as especificações da PEP 517 e 518. Recomendado para ambiente de desenvolvimento!
+
+- Substitui os arquivos `setup.py, requirements.txt, manifest.in e Pipfile` pelo arquivo `pyproject.toml`.
+- Substitui os comandos `build, sdist, twine, pip, hashes, pip-tools` pelo comando `poetry`.
+- Respeita a árvore git.
+- Força semantic versionsing.
+- Resolve conflitos.
+
+Inspirado no cargo do Rust
+
+#### Onde usar o Poetry?
+
+![Onde usar o Poetry](./images/onde_usar_poetry_day4.png)
+
+- No ambiente de produção não usar o Poetry, usar o arquivo `requirements.txt` com o pip, gerado pelo poetry com os hashes.
+
+#### Comandos Poetry
+
+- `poetry new project_name` -> cria um projeto com o Poetry como gerenciador de dependências.
+- `poetry env use python_version` -> cria um ambiente virtual para o projeto especificando uma versão. Podem ser criados vários ambientes virtuais.
+- `poetry shell` -> ativa o ambiente virtual criado.
+- `poetry add depency_name==depency_version` -> adiciona uma dependência especificando uma versão e juntamente com a dependência, são instaladas as bibliotecas necessárias para ela funcionar. Ou usar `depency_name@latest` para instalar a última versão disponível para a versão do Python utilizada.
+- `poetry install` -> atualiza os pacotes. Além de regerar o arquivo `poetry.lock` e também resolve conflitos.
+- `poetry build` -> gera a distribuição simples (`tar.gz`) e a distribuição compilada (`whl`) do projeto.
+- `poetry publish` -> pública o projeto no PyPI.
+- `poetry export -f requirements.txt -o requirements.txt` -> gera o arquivo de requirements, com todas as dependências controladas e com seus devidos hashes. Recomendado usar antes de publicar. Usar esse formato para instalar em produção, usando o pip: `pip install --require-hashes -r requirements.txt`!
+- `poetry search depency_name` -> busca na PyPI todas as bibliotecas disponíveis com aquele nome.
+
+**Observação:** O arquivo `poetry.lock` possui toda a árvore de dependências "resolvida" do projeto com os hashes específicos de cada uma. Esse arquivo permite que ao instalar outra dependência, o Poetry consegue resolver e determinar conflitos entre dependências e versões.
+
+Usar o git juntamente, pois ele leva em consideração a árvore do git para realizar buils.
