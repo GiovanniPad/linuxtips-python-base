@@ -1505,7 +1505,7 @@ pip install --require-hashes \ -r requirements.txt
 - No ambiente de produção, será fornecido o arquivo formatado gerado pela ferramenta pip-tools. Criando um build determinístico.
 - Ela resolve apenas o problema de segurança e a questão de build determinístico.
 
-### Poetry
+#### Poetry
 
 Gestor de dependências que segue as especificações da PEP 517 e 518. Recomendado para ambiente de desenvolvimento!
 
@@ -1517,13 +1517,13 @@ Gestor de dependências que segue as especificações da PEP 517 e 518. Recomend
 
 Inspirado no cargo do Rust
 
-#### Onde usar o Poetry?
+##### Onde usar o Poetry?
 
 ![Onde usar o Poetry](./images/onde_usar_poetry_day4.png)
 
 - No ambiente de produção não usar o Poetry, usar o arquivo `requirements.txt` com o pip, gerado pelo poetry com os hashes.
 
-#### Comandos Poetry
+##### Comandos Poetry
 
 - `poetry new project_name` -> cria um projeto com o Poetry como gerenciador de dependências.
 - `poetry env use python_version` -> cria um ambiente virtual para o projeto especificando uma versão. Podem ser criados vários ambientes virtuais.
@@ -1538,3 +1538,55 @@ Inspirado no cargo do Rust
 **Observação:** O arquivo `poetry.lock` possui toda a árvore de dependências "resolvida" do projeto com os hashes específicos de cada uma. Esse arquivo permite que ao instalar outra dependência, o Poetry consegue resolver e determinar conflitos entre dependências e versões.
 
 Usar o git juntamente, pois ele leva em consideração a árvore do git para realizar buils.
+
+### Projeto: Criando o repositório, organizando o projeto e configurando o VSCode
+
+**Projeto Dundie Rewards**
+
+Nós fomos contratados pela Dunder Mifflin, grande fabricante de papéis para desenvolver um sistema de recompensas para seus colaboradores.
+
+Michael, o gerente da empresa quer aumentar a motivação dos funcionários oferecendo um sistema de pontos que os funcionários podem acumular de acordo com as suas metas atingidas, bonus oferecidos pelo gerente e os funcionários podem também trocar pontos entre si.
+
+O funcionário pode uma vez a cada ano resgatar seus pontos em um cartão de crédito para gastar onde quiser.
+
+Acordamos em contrato que o MVP (Minimum Viable Product) será uma versão para ser executada no terminal e que no futuo terá também as interfaces UI, Web e API.
+
+Os dados dos funcionários atuais serão fornecidos em um arquivo que pode ser no formato .csv ou .json e este mesmo arquivo poderá ser usado para versões futuras. `Nome, Depto, Cargo, Email`
+
+MVP - Terminal 0.1.0
+
+User Stories:
+
+Epic: Administração
+
+- EU como ADMIN quero ser capaz de EXECUTAR O COMANDO `dundie load people.txt` para alimentar o banco de dados com as informações dos funcionários.
+  - Para cada funcionário no arquivo caso ainda não exista no banco de dados deverá ser criado com a pontuação inicial de `100` para gerentes e `500` para associados, caso já exista as informações diferentes deverão ser atualizadas e a pontuação somada.
+  - O sistema deve evitar entrada de associados em duplicidade, e aceitar apenas e-mails válidos.
+  - O sistema deve criar uma senha ideal para cada funcionário e enviar por email.
+  - Os dados deverão ser armazenados em um banco de dados SQL.
+
+- EU como ADMIN quero ser capaz de VISUALIZAR no terminal um relatório contendo as informações dos funcionários.
+  - No terminal desejo ver Nome, e-mail, saldo de pontos, data da última atualização.
+  - Este relatório deverá ter a opção de ser salvo em um arquivo .txt.
+  - `dundie show --filter|--sort|--limit|--output`
+
+- EU como ADMIN quero ser capaz de atribuir pontos para um funcionário específico ou para todo um departamento.
+  - `dundie add --dept|--to --value=100`
+
+- EU como ADMIN quero que as operações de ADMIN sejam protegidas por usuário e senha.
+
+Epic: Movimentação
+
+- EU como FUNCIONARIO quero ser capaz de visualizar meu saldo de pontos e extrato de movimentações.
+- EU como FUNCIONARIO quero ser capaz de transferir pontos para outro funcionário.
+- EU como FUNCIONARIO quero que as operações sejam protegidas por senha, impedindo que outro usuário altere minha conta.
+
+<hr>
+
+- Epic são duas entregas grandes, que possuem outras tarefas interligadas.
+- Milestones são os épicos e issues são as funcionalidades de cada milestone.
+- Todo projeto deve ter um ambiente virtual próprio!
+
+**Configurando o ambiente de desenvolvimento**
+
+1. Criar o ambiente virtual na pasta do projeto usando `python3 -m venv .venv`. E abri-lá usando `source`.
