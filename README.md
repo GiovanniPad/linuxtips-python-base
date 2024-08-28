@@ -1590,3 +1590,32 @@ Epic: Movimentação
 **Configurando o ambiente de desenvolvimento**
 
 1. Criar o ambiente virtual na pasta do projeto usando `python3 -m venv .venv`. E abri-lá usando `source`.
+
+### Projeto: Criando a estrutura de pastas, build e install do projeto
+
+- `sys.modules` -> mostra todos os módulos importados para o ambiente virtual.
+
+Se um módulo 1 tiver importando um módulo 2, não se deve importar para o módulo 1 o módulo 2, pois isso gera um import circular, por conta do Python ser interpretado, o interpretador vai ficar tentando importar ambos os módulos, num loop infinito. Esse erro é chama-se **Circular Import**.
+
+- **Módulos** -> arquivos em Python que não são independentes, pois eles dependem de outro módulos, estão ligados uns aos outros e normalmente estão presente num pacote. Módulos não precisam de shebang e metadados.
+  - A pasta `__pycache__` contém o cache de compilação (Bytecode) dos módulos do projeto, é um intermediário entre o código Python e o arquivo binário. Gerado toda vez que um módulo é importado. 
+- **Pacote** -> pasta onde estão os módulos (arquivos Python) e contém um arquivo `__init__.py`. Também pode existir subpacotes.
+
+A pasta raiz é o "repositório dos códigos", onde se tem informação que não é código em si, como o arquivo LICENSE ou README.
+
+Em versões mais antigas do Python, o interpretador não conseguia identificar algumas pastas como pacotes, para evitar que isso ocorra se coloca um arquivo `__init__.py` dentro da pasta para ser considerada um pacote. No Python 3 não é mais obrigatório, porém é uma boa prática. A primeira vez que o pacote for importado o arquivo `__init__.py` sempre será executado.
+
+Algumas ferramentas de testes usam o arquivo `__init__.py` para saber quais as pastas que são pacotes e devem ser testadas.
+
+- **Pasta `docs`** -> contém os arquivos de documentação em markdown do projeto.
+- **Pasta `project_name`** -> indica o nome do projeto e é aonde contém todos os códigos, também pode ficar dentro da pasta `src`.
+
+**Entry Point** -> ponto de entrada do programa, quando o programa for executado, o arquivo `__main__.py` vai ser executado. Determina que o pacote é um módulo executável.
+
+Os arquivos `__main__.py e __init__.py` são essenciais para apps de CLI.
+
+O arquivo `setup.py` é responsável por realizar a build do programa (permite que o programa possa ser instalado) e fica na raiz do repositório, esse arquivo é um modelo antigo. Não fica dentro do programa. Existem várias formas de criar esse arquivo, são elas: setuptools, pyproject, external build tools (poetry, flit).
+
+- `pip list` -> mostra todos os módulos instalados no ambiente virtual usado.
+- `python3 setup.py build` -> realiza a build do programa.
+- `pip install -e caminho` -> instala o módulo a partir de um caminho/diretório no modo editável. Ao realizar mudanças no projeto, essas mudanças refletem já no projeto instalado no ambiente virtual
