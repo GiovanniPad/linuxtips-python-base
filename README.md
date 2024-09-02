@@ -1634,3 +1634,51 @@ Módulo da biblioteca padrão do Python que auxilia ao coletar argumentos da lin
 
 - Para importar: `import argparse`.
 
+### Projeto: Gestão de dependências e Makefile
+
+#### Gestão de dependências
+
+**`Setup.py`**
+
+O padrão para organizar as dependências é através do arquivo `setup.py` inserindo a chave `install_requires`, que é uma lista de dependências, e adicionalmente, a chave `extras_require`, que é um dicionário que indica dependências extras do projeto.
+
+- As dependências colocadas no argumento `install_requires` vão ser instaladas por padrão ao realizar a instalação do pacote, por meio do pip, por exemplo. Aqui são colocadas as dependências necessárias para o projeto funcionar.
+- Já as dependências colocadas no argumento `extras_require` são dependências opcionais, que o usuário, ao instalar, pode optar por instalá-las ou não. Aqui são colocadas as dependências que são usadas para desenvolvê-lo, como dependências de testes e desenvolvimento. Adicionalmente, pode ser criado dependências para situações específicas, como para diferentes SOs.
+
+Para instalar as dependências extras, roda-se o comando `pip install -e .[dev|test]`.
+
+- `pip show lib_name` -> mostra as informações da biblioteca especificada, como as bibliotecas adicionais instaladas, para que a biblioteca em questão, funcione.
+
+Ao realizar uma instalação padrão de uma biblioteca, sempre é usada a última versão disponível no PyPi. Para especificar uma versão específica de uma biblioteca, basta adicionar na frente do nome dela a versão, por exemplo: `ipython<=8.0.0`.
+
+**Boas práticas:** não é recomendável "pinar" (travar a versão da biblioteca) para dependências de testes e desenvolvimento, pois é necessário saber se ao atualizar a aplicação é quebrada, para então consertar. Essa abordagem não é recomendada para as dependências de produção.
+
+<hr>
+
+Outra abordagem para gerenciar dependências é ter um arquivo `requirements.txt` separado para cada situação, sendo elas, ambiente de desenvolvimento (`requirements.dev.txt`), testes (`requirements.test.txt`) e produção (`requirements.txt`).
+
+Dentro desses arquivos, vão ter em cada linha as dependências necessárias.
+
+Desse modo, é possível instalar as dependências usando: `pip install -r txt_file`.
+
+#### Makefile
+
+- Makefile é um arquivo colocado na raiz do projeto.
+- Não é específico do Python, surgiu no C em ambientes Unix.
+- Sua função é de criar e builds, compilar um programa.
+
+Para o Python é utilizado para automatizar comandos.
+
+Para executar um comando usando a Makefile: `make command`.
+
+**Os comandos na Makefile são definidos da seguinte maneira**
+
+```makefile
+command:
+  command1
+  @command2
+  ...
+```
+
+- A identação do arquivo é feito apenas por TABS, e não por quantidade de espaços.
+- Se um comando possui o caractere `@`, o comando não vai ser exibido no terminal. Caso não tiver, o comando primeiro vai ser exibido e depois executado.
