@@ -1682,4 +1682,3 @@ command:
 
 - A identação do arquivo é feito apenas por TABS, e não por quantidade de espaços.
 - Se um comando possui o caractere `@`, o comando não vai ser exibido no terminal. Caso não tiver, o comando primeiro vai ser exibido e depois executado.
-
