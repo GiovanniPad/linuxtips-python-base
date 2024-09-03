@@ -1682,3 +1682,93 @@ command:
 
 - A identação do arquivo é feito apenas por TABS, e não por quantidade de espaços.
 - Se um comando possui o caractere `@`, o comando não vai ser exibido no terminal. Caso não tiver, o comando primeiro vai ser exibido e depois executado.
+
+## Dia 5 - Testes e Qualidade de Software
+
+### Doctests, Pytest e Decorators
+
+**Boa prática:** `__init__.py` o mais vazio possível e usar o arquivo `__main__.py` apenas como ponto de entrada.
+
+- **Import absoluto:** específica, ao importar, o nome do pacote da onde o módulo será importado. ex: `from dundie.cli import main`
+- **Import relativo:** não específica o nome do pacote que o módulo está, substitui o nome por um `.`, fazendo com que o Python busque o módulo no mesmo diretório em que ele está sendo importado. ex: `from .cli import main`
+
+O import relativo não possui uma interação boa com ferramentas de logging.
+
+Funções que fazem parte das regras de negócio/business do projeto são colocadas num módulo separado, podendo ser chamado de `base, core ou controller`.
+
+Normalmente, módulos com o nome `cli` contém a código do programa referente a execução de uma linha de comando/terminal.
+
+<hr>
+
+Quanto melhor separar o código, mais fácil será de testar, como teste unitário.
+
+- **Teste unitário** -> testa uma única função por vez para todas as funções do programa. 
+
+A ferramenta utilizada/padrão para escrever testes no Python é a `Pytest`. Existe outra chamada unittest, porém está caindo em desuso.
+
+O Pytest é um test runner, uma ferramenta que executa testes dentro do projeto. Testes através do pytest são basicamente uma automação de chamar a função várias vezes.
+
+Também existe uma abordagem de teste que não necessita, obrigatoriamente, de ferramentas externa, sendo chamado de doctests. Doctests são testes usando a própria documentação da função. Ele usa os caracteres `>>>` dos exemplos de uso da documentação para executar os testes, comparando com o retorno esperado, que está logo abaixo.
+
+`python3 -m doctest -v module` -> executa o doctest para testar um módulo específico no modo de verbose, que mostra o resultado dos testes.
+
+- Uma função testável é uma função com output.
+- O ideal é que a função seja escrita de um jeito que ela possa ser executada fora do fluxo padrão da aplicação.
+- Para rodar testes com o pytest, deve existir um arquivo com o nome `test`.
+
+O statement de testes, a palavra que define um teste é a palavra `assert`. ex `assert len(retorno) == 2`. Se o teste falhar retorna um AssertionError.
+
+- **Pasta tests:** pasta onde contém os testes do projeto. Podendo estar dentro da raiz do projeto ou dentro do pacote do programa. Na maior parte dos casos, fica dentro do pasta raiz do projeto.
+
+Dentro da pasta tests, pode existir uma outra pasta assets para especificar arquivos apenas para testes, separando os arquivos de testes dos arquivos utilizados na aplicação final.
+
+Também é possível ter um arquivo de utilidades dentro da pasta de tests para utilizar apenas nos testes.
+
+- `pytest -v ou -vv` -> executa o pytest mostrando informações adicionais.
+- `pytest -s` -> torna possível a utilização de um debugger juntamente com os testes.
+
+#### Pytest-watch
+ 
+Possibilita que a qualquer mudança no código que está sendo testado, os testes sejam executados novamente. Como se estivesse sendo "vigiado".
+
+- Importado com: `pip install pytest-watch`
+- Utiliza com: `ptw`
+- Para mais ajuda: `ptw --help`
+
+<hr>
+
+`getLogger()` -> retorna um logger com um nome específico caso exista, senão existir ele cria. Mas ele reaproveita o mesmo logger em vez de criar vários.
+
+#### Decorators
+
+Decorator é uma função que vai interceptar uma função e então alterar seu comportamento. 
+
+- Não é específico do Python, pode ser aplicado em qualquer linguagem de programação que permitem que funções sejam passadas como argumentos.
+- A função decorator recebe uma função como parâmetro.
+- É possível aplicar mais de um decorator para uma função.
+
+O padrão decorator indica que deve ser criado uma função manipuladora interna a função decorator, onde será interceptado os parâmetros da função que vai utilizar o decorator.
+
+No fim, o decorator retorna a função manipuladora. Para aplicar um decorator na função usa: `function_name = decorator(function_name)`, onde o decorator substitui a função original.
+
+Uma boa prática para criar decorators é usar o wraps do functools através do comando `from functools import wraps`.
+
+- Wrapper é uma função que vai agir como um "invólucro" para a outra função.
+
+**Um jeito mais "bonito" de criar e aplicar decorators**
+
+```python
+from functools import wraps
+
+def decorator(f):
+    @wraps(f)
+    def wrapper(params):
+        return foo
+
+    return wrapper
+
+
+@decorator
+def funcao(params):
+    return foo
+```
