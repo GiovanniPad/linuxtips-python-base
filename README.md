@@ -1772,3 +1772,30 @@ def decorator(f):
 def funcao(params):
     return foo
 ```
+
+### Unit, Integration, Configuração do Pytest e CI com Github Actions
+
+**Testes de integração:** testes que imitam as ações do usuário.
+
+**Pasta integration:** pasta para os testes de integração.
+
+Uma boa prática é separar totalmente a lógica dos testes de integração dos testes unitários, essa prática é chamada de testes black box.
+
+Para configurar o Pytest, deve-se usar um arquivo chamado `pyproject.toml` na raiz do projeto, onde nele estará contido todas as configurações de ferramentas do projeto.
+
+O arquivo `conftest.py` deve estar dentro de ambos os módulos de testes de integração e unitários para configurar os hooks.
+
+- **Marcadores de testes:** forma de separar e agrupar testes por meio de marcadores. Para configurar os marcadores deve ser dentro do arquivo `conftest.py` de cada módulo de teste.
+- **Hooks:** funções escritas dentro de `conftest.py`.
+
+Quando o Pytest é executado, ele chama uma função chamada `pytest_configure(config)`. Nesse arquivo são adicionados os marcadores
+
+Para atribuir um marcador a um teste utiliza-se o decorator `@pytest.mark.marker_name`, sendo `marker_name` o nome definido anteriormente para cada marcador.
+
+#### Github Actions
+
+Todos os arquivos criados dentro da pasta `.github/workflows` vão ser os passos do CI.
+
+- A ideia de usar integração contínua é que se tenha segurança ao integrar código de uma branch separada para a branch principal.
+
+Nessa aula criamos um CI básico para realizar testes ao criar uma pull request ou um push.
