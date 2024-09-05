@@ -1799,3 +1799,46 @@ Todos os arquivos criados dentro da pasta `.github/workflows` vão ser os passos
 - A ideia de usar integração contínua é que se tenha segurança ao integrar código de uma branch separada para a branch principal.
 
 Nessa aula criamos um CI básico para realizar testes ao criar uma pull request ou um push.
+
+### Boas práticas em testes, setup, teardown, parametrize e test reports
+
+**Boas práticas**
+
+#### Finalizers, setup e teardown
+
+- Os testes não podem ter side effects (efeitos colaterais). Efeitos colaterais são arquivos indejados criados, código indesejado etc.
+
+Para evitar side effects o idela é rodar todos os testes do projeto em uma pasta temporária. O próprio Pytest tem uma solução para isso, que são as fixture, que são usadas para definir os pré-requisitos utilizados para os testes. Fixtures podem ser usadas para diversos casos.
+
+Para criar uma fixture dedicada a um módulo de teste basta criá-la no mesmo arquivo do teste em questão.
+
+Fixtures são aplicadas ou por injeção de dependência (passando a função fixture por parâmetro a função de teste) ou por autouse.
+
+Também existe as funções `setup_module` que é executada antes dos testes do módulo e a função `teardown_module` que é executada após os testes do módulo, porém o modo mais usado é a fixture.
+
+- `yield` -> é um tipo de retorno que retorna, mas continua a execução do restante do código da função, podem existir diversos `yields` numa função.
+
+**Objeto generator** -> tipo de objeto que armazena todos os retornos (`yields`) de uma função.
+
+- `next(generator)` -> retorna um por um, os retornos da função.
+
+#### Testes unitários
+
+- Ter apenas um único `assert` por teste unitário.
+- Colocar o nome de cada função de teste de uma forma que seja auto explicativo o que o teste faz faz.
+
+#### Test reports (relatórios de teste)
+
+- Arquivo para relatórios de execução de testes.
+- O padrão de relatório mais adotado é JUnit.
+
+Para criar um arquivo de relatório de teste no padrão JUnit usa-se a tag `--junitxml=path_to_file` ao executar o pytest.
+
+**OBS:** testes que não geram métricas basicamente não servem pra nada.
+
+#### Testes de integração
+
+- Não focar só no "Happy path", que é o caminho mais ideal e "feliz".
+- É bom testar os caminhos que geram erros, se realmente ta gerando o erro.
+
+Existem formas de publicar esse arquivo ao mandar pelo GitHub, por exemplo usando a GitHub action **Publish Test Results**.
