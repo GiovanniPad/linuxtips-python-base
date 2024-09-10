@@ -1842,3 +1842,49 @@ Para criar um arquivo de relatório de teste no padrão JUnit usa-se a tag `--ju
 - É bom testar os caminhos que geram erros, se realmente ta gerando o erro.
 
 Existem formas de publicar esse arquivo ao mandar pelo GitHub, por exemplo usando a GitHub action **Publish Test Results**.
+
+### Qualidade de código, linters e auto formatação
+
+**Testes e Qualidade de Software** -> aquilo que testa o produto que está sendo entregue ao usuário final. Usando testes unitários e de integração.
+
+**Qualidade de Código** -> é interessante para os devs, sendo mais fácil de ler e manter, evitando perdas de tempo por conta de código má escrito. Para isso deve-se seguir práticas de nomenclaturas.
+
+A qualidade de código de Python, inicialmente, tem haver com padrões pré estabelecidos. Como a PEP 8, que são regras para a qualidade de escrita de código.
+
+Para isso existem algumas ferramentas e bibliotecas que nos auxiliam.
+
+É possível trocar o linter do vscode para que ele aponte os erros em tempo real.
+
+#### Biblioteca flake8
+
+- Ferramenta para verificar se o código escrito está ferindo alguma regra de escrita da PEP 8.
+- Não possui suporte ao `pyproject.toml`, para isso é necessário instalar outra biblioteca chamada `pyproject-flake8`.
+- pflake é um linter, um linter faz uma análise estática (não executa o código) do código para verificar se o código está de acordo.
+
+##### Comandos
+
+- `flake8 package_name` -> verifica todos os erros de escrita do pacote específicado.
+- `pflake8 package_name` -> mesma função do comando `flake8`, a diferença é que considera o arquivo de configuração `pyproject.toml`. Usar esse como padrão!
+- `pflake8 --exclude=dir1,dir2...` -> específica quais diretórios não vão ser verificados.
+
+Pode ser inserido como configuração no arquivo `pyproject.toml` utilizando `[tool.flake8]` desde que possua a biblioteca `pyproject-flake8`.
+
+#### Ferramenta black
+
+- Ferramenta para corrigir automaticamente os problemas de escrita da PEP8.
+- Não possui muitas opções de configurações.
+
+##### Comandos
+
+- `black --check --diff dir1 dir2 ...` -> não altera o código, apenas mostra o que é capaz de fazer, se encontrar algo que ele é capaz de fazer ele vai mostrar o que vai ser alterado e retorna erro.
+
+#### Ferramenta isort
+
+- Ferramenta para reordenar os imports de uma forma correta
+- Ao usar junto com a biblioteca `black` definir o profile correto para o `isort` usando: `--profile=black`.
+- O ideal é utilizar o `isort` junto com algum formatter, como o `black`.
+
+##### Comandos
+
+- `isort --profile=linter --check --diff dir1 dir2 ...` -> não altera os imports, apenas mostra as possíveis mudanças e erros que ele encontra.
+- `isort --profile=black dir1 dir2` -> executa as modificações possíveis.
