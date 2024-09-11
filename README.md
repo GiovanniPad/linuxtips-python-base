@@ -1888,3 +1888,25 @@ Pode ser inserido como configuração no arquivo `pyproject.toml` utilizando `[t
 
 - `isort --profile=linter --check --diff dir1 dir2 ...` -> não altera os imports, apenas mostra as possíveis mudanças e erros que ele encontra.
 - `isort --profile=black dir1 dir2` -> executa as modificações possíveis.
+
+### Escolhendo boas ferramentas e libraries - click + rich + testing
+
+Sempre escolher bem as bibliotecas e ferramentas que for utilizar, pois impacta diretamente na qualidade do código e do software.
+
+Cautela para não cair em 2 possíveis problemas ao utilizar bibliotecas
+
+1. O primeiro problema é não utilizar bibliotecas de terceiros e reinventar as coisas, ótimo para aprender, porém no dia a dia, ao desenvolver um projeto "real", com uma expectativa de produtividade, é importante escolher bibliotecas prontas.
+
+#### Biblioteca  click
+
+- Biblioteca para criar ferramenta de linha de comando no Python.
+- Mais utilizada para CLI.
+- Utiliza decorators.
+
+#### Biblioteca rich ou tabulate
+
+- Bibliotecas para formatar as saídas do terminal e criar tabelas, deixando-as mais bonitas e apresentáveis.
+- A biblioteca `rich` possui uma integração mais natural com o `click`, através da `rick-click`.
+- A `rich` é a mais completa para estilizar no terminal.
+
+A biblioteca `rich` também inclui um módulo para realizar testes de integração já integrado com seus próprios módulos e estilos.
