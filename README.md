@@ -1910,3 +1910,26 @@ Cautela para não cair em 2 possíveis problemas ao utilizar bibliotecas
 - A `rich` é a mais completa para estilizar no terminal.
 
 A biblioteca `rich` também inclui um módulo para realizar testes de integração já integrado com seus próprios módulos e estilos.
+
+### TDD (Test Driven Development) e Regex
+
+- **TDD** -> Desenvolvimento orientado a testes, alguns testes são escritos antes mesmo de ter qualquer código.
+
+O primeiro passo é usar alguma ferramenta para ficar "assistindo" os testes em tempo real e identificar o que será desenvolvido.
+
+Um dos objetivos do TDD é justamente fazer o teste falhar, para então saber o que implementar.
+
+Todo desenvolvimento é em volta do resultado dos testes. Só será programado aquilo que o teste validar. Com o teste se tem certeza do que é necessário.
+
+#### Regex - Regular Expression
+
+- Maneira de identificar porções dentro de um texto. É uma linguagem de parse de conjunto de textos.
+- É um texto que possui chaves que vão vasculhar o texto e pega partes da informação.
+- Pode ser usada em qualquer linguagem de programação.
+
+##### Exemplos
+
+- `\w` -> identifica todas as palavras, sem pontuações.
+- `\d` -> identifica só dígitos.
+
+É possível encadear expressões usando o operador `+`.
