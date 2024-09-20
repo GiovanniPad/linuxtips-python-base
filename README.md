@@ -1933,3 +1933,21 @@ Todo desenvolvimento é em volta do resultado dos testes. Só será programado a
 - `\d` -> identifica só dígitos.
 
 É possível encadear expressões usando o operador `+`.
+
+### Aulão pt1: Criando um sistema de banco de dados com JSON + mocking patch
+
+#### Persistência de Dados
+
+- JSON é muito útil para trafegar dados, substituiu o XML. Qualquer sistema moderno utiliza o formato JSON.
+- JSON é texto, porém usando um formato específico.
+- Um JSON pode ser definido como uma lista ou objeto.
+- JSON não aceita chaves com aspas simples e nem valores booleanos com letras maiúsculas.
+- **Arquivo serializado** -> coletou as informações de um objeto do Python, por exemplo, e transforma em textos e armazena no JSON.
+- Um dicionário só pode ser convertido para JSON se todos as suas informações/objetos forem serializáveis.
+
+Para converter um texto de um arquivo JSON para um objeto utilizável no Python, será necessário o uso de um Parser.
+
+Para isso utiliza a biblioteca `json` já inclusa no Python.
+
+- **Schema** -> definição de como vai a estrutura do banco de dados.
+- **Mocking** -> técnica para fazer algo "se parecer" com outra coisa. Pode ser feito direto no teste ou nas configurações do pytest no `conftest`.
