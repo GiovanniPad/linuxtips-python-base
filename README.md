@@ -1968,3 +1968,27 @@ Para isso utiliza a biblioteca `json` já inclusa no Python.
 - `from csv import reader` -> função para ler um arquivo do tipo csv (arquivo com dados separados por vírgulas).
 
 Assignment expression -> só funciona a partir do python 3.8, operador walrus vai fazer com que o dado seja atribuído (assignment) a variável e ao mesmo tempo utilizá-la para uma expressão lógica (expression). ex: `if (email := query.get("email")) and email != pk`. O operador walrus é `:=`.
+
+### Documentação com mkdocs
+
+**Existem 3 categorias de documentação:**
+
+- **Categoria 1:** documentação de código, aquela feita no próprio código. Importante toda função ter uma docstring juntamente com um exemplo de uso.
+  - **RST** -> linguagem usada para documentação de função.
+  - `flake8-docstrings` -> módulo para verificar as docstrings das funções, e garantir que tudo tenha uma docstring e esteja escrita corretamente.
+- **Categoria 2:** Documentação de contribuidores, recomendado ter na raiz do programa um arquivo chamado `CONTRIBUTING.md` para documentação de instruções para as pessoas que vão contribuir para o projeto.
+  - **Conventional commits:** conjunto de regras e padrões para commits. Site: [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
+- **Categoria 3:** documentação oficial, é a documentação para o usuário final, com todas as opções e informações devidamente organizada.
+  - Mkdocs, mais utilizada para documentação.
+  - Sphinx, outra opção para documentação, está caindo em desuso.
+
+#### Mkdocs
+
+Biblioteca usada para estruturar e fazer um site de documentação para projetos.
+
+- `mkdocs new <dir>` -> cria um arquivo de configuração em um diretório específicado. Arquivo `mkdocs.yml` de configuração da ferramenta mkdocs
+  - Uma das configurações disponíveis é a opção de alterar o tema do site, usando `theme` juntamente com o `name`, que é o nome do tema que vai ser usado.
+- `mkdocs serve` -> builda a documentação e abre um servidor web para exibi-lá no navegador.
+- `mkdocs build --clean` -> gera o site pronto que precisa para disponibilizar a documentação online. O `--clean` limpa a versão de build anterior.
+
+Para fazer o host da documentação pode ser o **GitHub Pages** para projetos de código aberto e o **Netlify** para projetos privados.
