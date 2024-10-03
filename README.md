@@ -1951,3 +1951,20 @@ Para isso utiliza a biblioteca `json` já inclusa no Python.
 
 - **Schema** -> definição de como vai a estrutura do banco de dados.
 - **Mocking** -> técnica para fazer algo "se parecer" com outra coisa. Pode ser feito direto no teste ou nas configurações do pytest no `conftest`.
+
+### Aulão pt2: Testes com pytest-forked e implementando as funcionalidades de report e adição de pontos no projeto
+
+- Ao rodar vários testes e algum falhar e ao executar o teste que falha isolado e ele passar, provavelmente algum teste está interferindo com outro. Para evitar isso pode-se usar a extensão `pytest-forked`.
+- Sem o `pytest-forked`, os testes vão ser executados em um único processo e todos eles estão compartilhando as mesmas informações e estado de memória, levando a erros.
+
+#### pytest-forked
+
+- Extensão que garante que cada teste seja executado em um processo diferente no sistema, de uma forma isolada, sem compartilhar informações e estado de memória. Para isso, usa-se a anotação `--forked` ao executar os testes com o PyTest.
+
+---
+
+**Dica de testes:** Usar a palavra "negative" nas funções de testes onde se espera que ocorra um erro, bom para filtrar os testes.
+
+- `from csv import reader` -> função para ler um arquivo do tipo csv (arquivo com dados separados por vírgulas).
+
+Assignment expression -> só funciona a partir do python 3.8, operador walrus vai fazer com que o dado seja atribuído (assignment) a variável e ao mesmo tempo utilizá-la para uma expressão lógica (expression). ex: `if (email := query.get("email")) and email != pk`. O operador walrus é `:=`.
