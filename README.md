@@ -1992,3 +1992,53 @@ Biblioteca usada para estruturar e fazer um site de documentação para projetos
 - `mkdocs build --clean` -> gera o site pronto que precisa para disponibilizar a documentação online. O `--clean` limpa a versão de build anterior.
 
 Para fazer o host da documentação pode ser o **GitHub Pages** para projetos de código aberto e o **Netlify** para projetos privados.
+
+### Empacotamento, semantic version e distribuição com twine
+
+#### Semantic Version
+
+Versão semântica do software, sempre no modelo `Major(x).Minor(y).Patch(z)`.
+
+- `Major(x)` -> representa a versão maior, esse número muda quando há mudanças drásticas, onde torne o software inutilizável. Também há casos de mudar por conta de marketing, onde muda por conta da estratégia, design etc. indicando mudanças significativas, mesmo não tendo quebra de compatibilidade
+- `Minor(y)` -> representa e versão menor, esse número muda quando há implementação de novas funcionalidades no software sem a quebra de compatibilidade.
+- `Patch(z)` -> representa a versão de correções, esse número muda quando há a correção de bugs e falhas sem a quebra de compatibilidade, podendo ir até o número que quiser, porém, normalmente vai até o número 20.
+
+#### Empacotamento
+
+Empacotar o software para disponibilizar no PyPi.
+
+Repositório de Teste do PyPi!
+
+- Exportar o token do repositório de pacotes para uma variável de ambiente chamada `TWINE_PASSWORD` e exportar o valor `__token__` para uma outra variável de ambiente chamada `TWINE_USERNAME`.
+
+**Existem dois formatos para empacotar**
+
+- Formato `egg` ou `tar gz`, é antigo, utiliza um arquivo compactada `.tar` para distribuir.
+- Formato `wheel`, é novo, é uma distribuição binária, utiliza um único arquivo para instalar o projeto.
+
+O melhor a ser usado é o formato `wheel`
+
+Para conseguir fazer a build nesse formato é necessário instalar a biblioteca `wheel` no ambiente virtual.
+
+- `python setup.py sdist bdist_wheel` -> gera a build do pacote, onde `sdist` indica o source (origem) dos arquivos, e `bdist` indica que vai ser compilado em um arquivo do tipo binário, no caso, no formato `wheel`.
+
+Por padrão, o `setup.py` usando o `find_packages` só vai considerar os arquivos `.py` na distribuição, os arquivos que não sejam `.py` ele não vai colocar, para isso é necessário criar um manifesto e adicionar uma propriedade extra no setup, chamada `include_package_data` e definir ela como `True`.
+
+- `MANIFEST.in` -> manifesto dos arquivos que estarão inclusos na distribuição, opção para incluir arquivos que não sejam `.py` na distribuição, quando necessário.
+  - `include` -> inclui um arquivo/pasta do build.
+  - `include-recursive <dir>` -> inclui tudo abaixo do diretório no build.
+  - `exclude` -> exclui um arquivo/pasta do build.
+  - `exclude-recursive <dir>` -> exclui tudo abaixo do diretório específicado.
+  - `graft` -> pega tudo abaixo de um diretório.
+
+Pasta `build` -> pasta intermediária usada para gerar o build binário final, muito usado para realizar testes antes de disponibilizar.
+
+Pasta `dist` -> pasta que contém o pacote tanto no formato `.whl` e `.tar.gz` ou `egg`. Esses pacotes já podem ser usados para realizar a instalação do software.
+
+#### Distribuição com twine
+
+O twine é usado para realizar o upload do pacote para o repositório de pacotes.
+
+O pip instala o projeto, o wheel builda o projeto e twine faz o upload do projeto.
+
+- `twine upload --repository testpypi dist/*` -> realiza o upload para o repositório de pacotes, a opção `--repository` indica qual é o repositório que vai ser mandado. E `dist/*` indica a pasta onde está o arquivo do projeto empacotado.
