@@ -2042,3 +2042,26 @@ O twine é usado para realizar o upload do pacote para o repositório de pacotes
 O pip instala o projeto, o wheel builda o projeto e twine faz o upload do projeto.
 
 - `twine upload --repository testpypi dist/*` -> realiza o upload para o repositório de pacotes, a opção `--repository` indica qual é o repositório que vai ser mandado. E `dist/*` indica a pasta onde está o arquivo do projeto empacotado.
+
+### System Design
+
+- Interessante de ser feito antes de codificar o projeto, mas não há o problema de se fazer depois.
+- Fazer a análise de um design de sistema ajuda muito a entender como o sistema funciona.
+
+Como o sistema está conectado e como os componentes se conversam.
+
+1. Sempre parte do ponto de vista dos usuários, podendo representar vários tipos de usuários que usaram a ferramenta.
+2. Quanto mais desacoplamento tiver nas camadas melhor para manter o software, como exemplo, misturar regras de negócio com a camada de interação do usuário. Sempre separar muito bem as camadas.
+
+**Técnica de inversão de controle** -> um usuário final faz chamadas em uma API de alto nível, e essa parte que ele controla faz chamadas para uma camada de nível interior, e o conteúdo que está dentro da camada inferior basicamente só se importa em disponibilizar interfaces para que sejam executadas para acessar as informações necessárias, ela não tem conhecimento nem do usuário e nem da camada de mais alto nível, que o usuário interage.
+
+![Dundie Rewards Simple System Design](/images/system_design_dundie_day5.jpg)
+
+- **CLI** -> camada de interação com o usuário, é nela que vai ser definido como os dados vão ser formatos e apresentados ao usuário, camada que o usuário interage. Também pode ser chamada de View ou Integração.
+- **Core** -> camada de regras de negócio, onde contém toda a lógica necessária do software, onde os dados vão ser processados para virar informação, que será disponibiliza para a camada CLI. Também pode ser chamada de Controller ou Domínio/Business Logic.
+- **Dados** -> camada de dados, onde está localizado o banco de dados e toda a sua estrutura, camada que cuida do acesso e modelagem dos dados que a camada Core vai acessar. Também pode ser chamada de Model ou Repository.
+- **Serviços** -> camada de serviços, onde todos os serviços da aplicação estão, como o serviço de e-mails SMTP e o Sistema de arquivos (FileSystem) do SO está, aqui é definido como esses serviços vão interarir com o software. Serviços externos.
+
+Todas essas quatro camadas são conectadas por uma única seta, indicando que elas não possuem aclopamento entre si, ou seja, são independentes, por exemplo, a camada Core não sabe que a camada CLI e o usuário existem, ela só sabe que precisa tratar os dados e disponibilizá-los quando chamada.
+
+**UML e PlantUML** -> formatos para de desenvolver um design de sistema mais profissional.
