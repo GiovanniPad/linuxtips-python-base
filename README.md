@@ -2065,3 +2065,17 @@ Como o sistema está conectado e como os componentes se conversam.
 Todas essas quatro camadas são conectadas por uma única seta, indicando que elas não possuem aclopamento entre si, ou seja, são independentes, por exemplo, a camada Core não sabe que a camada CLI e o usuário existem, ela só sabe que precisa tratar os dados e disponibilizá-los quando chamada.
 
 **UML e PlantUML** -> formatos para de desenvolver um design de sistema mais profissional.
+
+## Dia 6 - Orientação a Objetos
+
+### Os paradigmas de Programação
+
+- Em Python tudo é objeto!!
+- Python não obriga a utilização de orientação de objetos ao desenvolver softwares, mas é bom usar para organizar o código.
+
+**Paradigma** -> modelo tanto mental quanto um modelo de execução/implementação de código. Existem vários paradigmas, um deles é o imperativo/procedural. Também existe o paradigma funcional, o paradigma declarativo e o paradigma de orientação a objetos.
+
+- **Paradigma Imperativo/Procedural** -> uso de variáveis para manter o estado de informações/dados, e funções para processar essas informações/dados modificando essas variáveis.
+- **Paradigma Funcional** -> uso de funções encadeadas juntamente com funções lambdas. Nesse paradigma, os objetos criados/construídos só vão ser executados ao serem consumidos em algum momento no código, isso se chama Lazy Evaluation. Nesse contexto, as funções também não devem possuir side effects (função pura), que é o fato das funções não alterarem o objeto já existente, mas sim uma cópia desse objeto.
+
+Em Python é possível juntar vários paradigmas em um único software!!!
