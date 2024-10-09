@@ -2079,3 +2079,25 @@ Todas essas quatro camadas são conectadas por uma única seta, indicando que el
 - **Paradigma Funcional** -> uso de funções encadeadas juntamente com funções lambdas. Nesse paradigma, os objetos criados/construídos só vão ser executados ao serem consumidos em algum momento no código, isso se chama Lazy Evaluation. Nesse contexto, as funções também não devem possuir side effects (função pura), que é o fato das funções não alterarem o objeto já existente, mas sim uma cópia desse objeto.
 
 Em Python é possível juntar vários paradigmas em um único software!!!
+
+### Introdução a Orientação a Objetos no Python
+
+- Surgiu por volta de 1970, um matemático da Xerox, a partir de um Dynabook, que era uma espécie de tablet.
+- Alan Kay foi esse matemático. Pois ele queria um jeito de representar objetos do mundo real, porém ele via o paradigma daquela época, de armazenar as características de um objeto, muito ruim.
+- Small Talk, primeira linguagem a trazer conceitos de orientação a objetos. Por baixo a orientação a objetos vai utilizar a mesma estrutura de dados dos outros paradigmas, ela é como uma camada superior de abstração.
+
+**Componentes da orientação a objetos**
+
+- **Classe** -> define o tipo do objeto, a categoria do objeto. Deve ser pensada da maneira mais abstrata possível. No Python é definida pela palavra reservada `class`. Os objetos serão armazenados dentro de uma classe. É um protótipo para criar objetos.
+- **Objetos** -> instâncias criadas a partir de uma classe. Tudo definido dentro da classe será atribuído a essas instâncias. Podendo uma classe ter várias instâncias
+- **Atributos** -> valores definidos nas classes e nos objetos. Todas instâncias criadas a partir de uma classe trás os atributos definidos dentro dessa classe. Também existem os atributos de instância, que são definidos por instância e não dentro da classe.
+- **Método** -> função definida no escopo da classe. Os atributos criados dentro da classe podem ser acessados dentro de um método. Para executar os métodos é necessário primeiro criar uma instância da classe.
+
+Cada instância tem um identificador diferente, ou seja, são objetos diferentes.
+
+- Na classe só vai atributos que será levado para todos os objetos, atributos que são diferentes a cada instância são definidos fora da classe.
+- A classe é como se fosse um namespace.
+- Atributos de uma classe podem ser acessados dentro de um método.
+- Para escrever nomes de variáveis e nomes de funções utiliza-se o padrão snake_case. Já para escrever nomes de classes usa o PascalCase ou UpperCamelCase. Acrônimos/siglas são colocados tudo em maiúsculo.
+- Por baixo, a implementação interna de uma classe em Python é um dicionário. É possível ver as informações tanto de uma classe quanto de uma instância utilizando, respectivamente, `ClassName.__dict__` e `InstanceName.__dict__`.
+
