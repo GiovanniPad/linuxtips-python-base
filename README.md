@@ -2101,3 +2101,25 @@ Cada instância tem um identificador diferente, ou seja, são objetos diferentes
 - Para escrever nomes de variáveis e nomes de funções utiliza-se o padrão snake_case. Já para escrever nomes de classes usa o PascalCase ou UpperCamelCase. Acrônimos/siglas são colocados tudo em maiúsculo.
 - Por baixo, a implementação interna de uma classe em Python é um dicionário. É possível ver as informações tanto de uma classe quanto de uma instância utilizando, respectivamente, `ClassName.__dict__` e `InstanceName.__dict__`.
 
+### Inicialização de objetos
+
+- Em Python, as instâncias e as classes são mutáveis (abertos), ou seja, podem ser modificados. Filosofia de Consent Adults - Somos adultos e sabemos o que fazemos.
+- Os dados colocados dentro de uma classe, deve tomar cuidado com os objetos mutáveis. Pois podem ser modificados e são compartilhados com todas as instâncias e até para instâncias que serão criadas. Uma maneira de evitar isso é reatribuir o objeto mutável a cada instância, mas num geral, o melhor é nunca definir valores mutáveis como atributo de classe.
+
+#### Python Data Model
+
+- Ao criar uma instância nova de um objeto, o interpretador vai chamar o `ClassName.__new__()` qué o construtor de um objeto. Já no Python 3, ele chama o método `__prepare__()` antes do `__new__()`. Esses métodos são de baixo nível e raramente são usados.
+- O método mais usado, o de alto nível, é o método `__init__()` que é o inicializador da classe, chamado após o método `__new__()`.
+
+Para definir objetos mutáveis ou mesmo outros objetos individuais para cada instância, deve-se usar criar um método chamado `__init__()` dentro da classe. A vantagem de usar o `__init__` é de definir informações individuais já de início. Esses objetos são passados dentro dos parênteses ao instanciar uma classe pelo seu nome.
+
+- O primeiro argumento de qualquer método dentro de uma classe no Python é recebido através de injeção de dependência, são métodos que operam com a própria instância da classe. É sempre igual a própria instância.
+  - Esse primeiro argumento, pode ter um nome genérico, logo pode ser qualquer nome. Porém por convenção é utilizar a palavra reservada `self`, que representa a própria instância do objeto.
+
+#### Convertendo um código procedural para orientado a objeto
+
+- Primeiramente, cria-se a classe que representa o objeto em questão.
+- Definir os atributos que são iguais para todos os objetos. (atributos de classe)
+- E por fim definir os métodos (ações) que o objeto possui.
+
+**Obs:** o principal motivo para se utilizar orientação a objetos é a padronização, pois uma classe representa um objeto real.
