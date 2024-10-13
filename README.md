@@ -2123,3 +2123,59 @@ Para definir objetos mutáveis ou mesmo outros objetos individuais para cada ins
 - E por fim definir os métodos (ações) que o objeto possui.
 
 **Obs:** o principal motivo para se utilizar orientação a objetos é a padronização, pois uma classe representa um objeto real.
+
+### Os 4 Pilares da Orientação a Objetos: Abstração, Herança, Polimorfismo, Encapsulamento
+
+- Padronização da Orientação a Objetos. Extrair sentido e porque de se estar utilizando.
+
+#### Pilar Abstração
+
+- Abstrair os objetos e implementações do Python, criando uma camada extra de abstração para trazer mais perto da vida real. E também de como esses objetos vão ser usados.
+- Criar objetos em código que abstrai a informação em um nível que fica próximo a linguagem humana, como exemplo, representar uma fruta através de uma classe.
+- Capacidade de descrever objetos do mundo real e abstrair a implementação.
+
+#### Pilar Herança
+
+Herança é a capacidade de criar uma classe base e definir atributos e métodos e a partir dessa classe, criar classes derivadas/sub classes.
+
+- **Classe abstrata:** é uma classe que não se refere a um objeto específico, ela é um objeto generalizado.
+- **Classe material:** uma classe criada a partir de uma classe abstrata, um objeto específico/material.
+
+Uma classe se torna material através da herança, que é habilidade de uma classe herdar todos os métodos e atributos de uma outra classe abstrata. Dessa forma o objeto se torna mais específico, se aproximando de fato de um objeto da vida real.
+
+Não é recomendado ter vários níveis de herança, o ideal é ter uma classe abstrata e apenas um nível de herança, pois com muitos níveis torna o código difícil de manter.
+
+**Obs:** não se deve instanciar uma classe abstrata, apesar do Python permitir, não é recomendado. Apenas instanciar classes materiais.
+
+Uma maneira de especificar melhor que uma classe é abstrata é importar do módulo `abc` a classe `ABC` para indicar, através de herança, que é uma classe é abstrata.
+
+Python permite herança múltipla, que é a possibilidade de uma classe herdar de mais de uma classe. É útil quando se utiliza o modelo de desenvolvimento chamado mixins.
+
+#### Pilar Polimorfismo
+
+- Em Python, polimorfismo está ligado a protocolos. Em Python os protocolos não são nominais, eles são estruturais.
+- Polimorfismo é a capacidade de objetos, independente da sua forma, se comportarem de uma forma igual.
+
+O polimorfismo no Python está baseado no Duck Typing: "se o objeto anda como um pato, parece um pato, faz quack como um pato, então é um pato".
+
+Não importa o que é o objeto, e sim quais são suas ações ou protocolos, em Python.
+
+#### Encapsulamento
+
+- Capacidade de um objeto esconder sua implementação interna e expor o que for conveniente.
+- Uma das maneiras de realizar o encapsulamento no Python é pela convenção de nomes.
+
+##### Convenção de nomes
+
+É apenas uma convenção para indicar boas práticas, porém o Python permite utilizar o atributo mesmo tendo essa convenção.
+
+- Uso de um único underline `_` para indicar que o atributo é protegido (protected). Indica que o atributo só deve ser usado dentro da mesma classe. Esses atributos devem ser acessados através de um método e não diretamente, com esses métodos é possível realizar verificações e validações.
+- Uso de dois underlines `__` para indiicar que o atributo é privado (private). Esse atributo não deve ser acessado de forma alguma. Esta convenção caiu em desuso.
+
+Essa forma não é muito utilizada, pois ela não protege em si, apenas indica de uma forma visual.
+
+###### Name Mangling
+
+Tudo que tiver dois underlines `__` é realizado uma operação chamada Name Mangling. Que é como "sujar" o nome do atributo.
+
+O Python insere o nome da classe antes do nome do atributo que possui dois underlines.
