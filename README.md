@@ -2191,3 +2191,92 @@ O uso de propriedades faz com que possa criar métodos com nomes iguais, mas com
 A principal vantagem é de deixar o código mais bonito.
 
 O Name Mangling não funciona com subclasses, pois ele também impede que as subclasses acessam um atributo privado.
+
+### Python Data Model e Protocolos
+
+- No Python a aplicação da orientação a objetos no dia a dia tem mais haver com protocolos, do que com a base da orientação a objetos. Apesar de que essa base é usada para construir protocolos. É um desenvolvimento "orientado a protocolos".
+- Tudo no Python é implementado e definido através de protocolos.
+- Em algumas linguagens é tratada como Interface e implementada de forma nominal.
+
+Tabela com os protocolos padrões do Python: [Tabela com protocolos](https://docs.python.org/3/library/collections.abc.html#collections-abstract-base-classes)
+
+#### Python Data Model
+
+Nome dado para o modelo de dados padrão do Python.
+
+#### Protocolo Printable
+
+O protocolo Printable é dado para todo objeto que implementa o método dunder `__str__`. Esse protocolo faz com que os objetos possam ser impressos, seja para o desenvolvedor ou para o usuário.
+
+- O método dunder `__str__` define como o objeto vai ser apresentado na tela. É basicamente sua representação visual em string.
+- Já o método dunder `__repr__` define a implementação do programa do objeto, como seu tipo e espaço na memória.
+
+Esses métodos podem ser sobrescritos para mudar tanto a apresentação e a implementação.
+
+Toda vez que é realizado uma operação de casting (converção) do objeto para string o método `__str__` é chamado.
+
+#### Protocolo Addible
+
+Esse protocolo permite que os objetos sejam somados ou concatenados com outros objetos que também implementam esse protocolo. Ele é composto por dois métodos dunder.
+
+- O método dunder `__add__` atua no objeto da esquerda.
+- O método dunder `__radd__` atua no objeto da direita. Realiza a adição ao contrário.
+
+Apenas um dos objetos na adição precisa implementar um desses métodos.
+
+**Obs:** pelo Python ter a tipagem forte, antes de tentar fazer a cooersão ele vai verificar se os tipos são compatíveis, ou seja, se implementam o mesmo protocolo.
+
+Os protocolos são estruturais e não nominais, pois é conceito.
+
+#### Protocolo Iterable
+
+Esse protocolo permite que o objeto possa ser iterado, podendo ser percorrido utilizando um loop ou então algum iterador.
+
+- Esse protocolo é implementado através do método dunder `__iter__`.
+
+#### Protocolo Container
+
+Esse protocolo permite que seja verificado se um determinado item ou valor está contido dentro desse objeto. Permitindo o uso da palavra reservada `in` no objeto em questão.
+
+- Esse protocolo é implementado através do método dunder `__contains__`.
+
+#### Protocolo Sized
+
+Esse protocolo permite que o tamanho do objeto seja obtido, que o número de elementos dentro dele seja contado. A função `len()` utiliza esse protocolo para retornar o tamanho do objeto.
+
+- Esse protocolo é implementado através do método dunder `__len__`.
+
+Esse protocolo é nominal.
+
+#### Protocolo Collection
+
+Esse protocolo é um super protocolo, que mistura objetos que implementam os protocolos Sized + Container + Iterable. Se um objeto possui esses três protocolos, pode ser considerado que o objeto é uma Coleção (Collection).
+
+É importante saber que o objeto é uma Collection pois se sabe quais são as funções disponíveis e necessárias para definir uma Collection.
+
+#### Protocolo Subscriptable
+
+Esse protocolo permite que seja coletado de dentro de um objeto que seja do tipo composto ou strings um valor especificado, podendo ser um índice ou o próprio valor em si.
+
+Em dicionários pode usar os valores das chaves para a coleta. Em strings, listas ou tuplas pode ser usados os índices numéricos ou partes (slices) para a coleta.
+
+- Esse protocolo é implementado através do método dunder `__getitem__`.
+
+#### Classe `object`
+
+Toda classe em Python herda da classe `object` por padrão e por si só possui várias implementações já inclusos por padrão.
+
+**Implementações padrões para os seguintes métodos**
+
+```python
+__new__              # Construtor chamado antes de criar a intância
+__init__             # Inicializador chamado após a instância é criada
+__init_subclass__    # Inicializador de subclasses
+__repr__             # Imprime a representação em string
+__str__              # chama __repr__ por padrão
+__setattr__          # executado sempre que atribuimos com obj.name = value
+__getattr__          # executado quando acessamos obj.name
+__delattr__          # executado quando apagamos com `del obj.name`
+__getattribute__     # executado quando um atributo não é encontrado
+__dir__              # lista todos os atributos e métodos
+```
