@@ -2179,3 +2179,15 @@ Essa forma não é muito utilizada, pois ela não protege em si, apenas indica d
 Tudo que tiver dois underlines `__` é realizado uma operação chamada Name Mangling. Que é como "sujar" o nome do atributo.
 
 O Python insere o nome da classe antes do nome do atributo que possui dois underlines.
+
+### Encapsulamento com Propriedades
+
+- O uso do decorator `@property` em um método faz com que não necessite passar os parênteses para acessar. Dessa forma não é possível e modificar essa propriedade. O método se torna um getter, para consultar um atributo através de um método.
+- O uso do decorator `@property_name.setter` faz com aquele método se torna um setter, fazendo com que possa atribuir um valor a um atributo.
+- O uso do decorator `@property_name.deleter` faz com que aquele método se torna um reset para o atributo, reiniciando o seu valor. Ele é chamado ao usar a palavra `del`.
+
+O uso de propriedades faz com que possa criar métodos com nomes iguais, mas com funções diferentes.
+
+A principal vantagem é de deixar o código mais bonito.
+
+O Name Mangling não funciona com subclasses, pois ele também impede que as subclasses acessam um atributo privado.

@@ -118,7 +118,7 @@ print(funcao())
 
 # Encapsulamento
 
-# Convenção de nomes
+# Propriedades
 
 
 # Classe que representa uma conta bancária
@@ -128,51 +128,49 @@ class Conta:
     # Atributo privado / private
     __id_interno = 456789
 
+    # Método inicializador da classe
     def __init__(self, cliente):
         self.cliente = cliente
-        self._saldo = 0
+        self.__saldo = 0
 
-    # Maneira correta de acessar um valor para um atributo protegido,
-    # através de um método getter
-    def consultar_saldo(self):  # getter
-        if self._saldo < 0:
-            print("AVISO: Você está devendo...")
-        return self._saldo
+    # Declara que o atributo `saldo` é uma propriedade,
+    # esse decorator declara um método getter, que retorna o valor
+    # de `saldo`
+    @property  # getter, consulta o atributo
+    def saldo(self):
+        if self.__saldo < 0:
+            print("AVISO: você está devendo")
+        return self.__saldo
 
-    # Método para sacar dinheiro da conta
-    def sacar(self, value):
-        if self._saldo < value:
-            print("AVISO: Saldo insuficiente.")
-            return
-        self._saldo -= value
+    # Propriedade que declara um setter para o atributo `saldo`,
+    # tornando-o possível alterar seu valor
+    @saldo.setter  # setter, atribui ao atributo
+    def saldo(self, value):
+        self.__saldo += value
 
-    # Maneira correta de definir um valor para um atributo protegido,
-    # através de um método setter
-    def depositar(self, value):  # setter
-        self._saldo += value
+    # Propriedade que declara um deleter para o atributo `saldo`,
+    # tornando possível resetar o valor de `saldo` ao executá-lo
+    @saldo.deleter
+    def saldo(self):
+        self.__saldo = 0
 
 
 # Instanciando e imprimindo informações de uma conta bancária
 conta = Conta(cliente="Bruno")
 
-conta._tipo_de_conta = 1000
-conta.__id_interno = 567891
-
-# Imprime todas as informações daquele objeto, seus métodos dunder e públicos
-print(dir(conta))
 print(conta.cliente)
+# Utilizando o método getter para coletar o valor do atributo `saldo`
+print(conta.saldo)
 
-# Realizando operações de maneira correta
-# em cima do atributo protegido `_saldo`
+# Utilizando o método setter para alterar o valor do atributo `saldo`
+conta.saldo = 100
+print(conta.saldo)
 
-print(conta.consultar_saldo())
+conta.saldo = -50
+print(conta.saldo)
 
-conta.depositar(100)
-conta.depositar(50)
+# Reiniciando o valor do atributo `saldo` através do método deleter,
+# para invocar esse método usa a palavra reservada `del`
+del conta.saldo
 
-print(conta.consultar_saldo())
-
-conta.sacar(80)
-print(conta.consultar_saldo())
-
-conta.sacar(200)
+print(conta.saldo)
