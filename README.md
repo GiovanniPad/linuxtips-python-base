@@ -2280,3 +2280,71 @@ __delattr__          # executado quando apagamos com `del obj.name`
 __getattribute__     # executado quando um atributo não é encontrado
 __dir__              # lista todos os atributos e métodos
 ```
+
+### Python Moderno, Type Annotations e Dataclasses
+
+- Python é uma linguagem dinâmica, já que não precisa definir explicitamente o tipo de cada variável. Podendo levar a erros graves, para isso o Python evoluiu e implementou a anotação de tipos
+
+Ao trabalhar com valores financeiros não se utiliza o float, pois o float não tem a precisão necessária para tratar valores monetários. Para valores que necessitam de maior precisão, utilizar o tipo Decimal.
+
+#### Type Annotations
+
+- Garantia de tipos de variáveis, disponível a partir do Python 3.5.
+- Permite evitar alterações de tipos das variáveis durante o código.
+- Elas são basicamente dicas de tipos.
+- O runtime do Python não força a utilização de Type Annotations.
+- As Type Annotations estão contidas na biblioteca `typping` do Python.
+
+Para realizar a Type Annotation em uma variável usa a seguinte sintaxe: `variable_name: type_annotation = value`.
+
+O Python guarda esses anotações de tipo em uma variável dunder do módulo chamada `__annotations__`, lá é específicado o nome da variável e a classe de tipo atribuída a ela. Esse atributo também está disponível para uma função e classes.
+
+Essas anotações também podem ser especificadas em funções e dentro de classes também.
+
+**Observação:** Porém, o Type Annotation não impede de realizar atribuições ou operações com valores diferentes da anotação. Por conta que o Python implementa o Duck Typing. Desde que o objeto ou variável tenha o protocolo que permite realizar tal operação, o Python não vai impedir.
+
+Não é necessário colocar Type Annotation em uma variável ou objeto que já tenha seu valor explícito. Porém, é sempre importante colocar as anotações de tipo em funções, métodos, classes e seus atributos. Pois não têm seus valores garantidos. Não se usa Type Annotation em todos os lugares.
+
+##### Mypy
+
+Ferramenta parecido com um linter que vai usar a Type Annotation para analisar estaticamente o código e demonstrar erros de substituição de tipos.
+
+- Instala com `pip install mypy`.
+
+Ele compara o conteúdo da `__annotations__` para verificar os tipos.
+
+Sempre executar essa ferramenta antes de realizar o envio do código para a produção.
+
+Ele não precisa necessariamente de um Type Annotation para verificar, caso realize alguma mudança de tipo em uma variável, ele também avisa. Ele verifica a própria tipagem dinâmica.
+
+##### Beartype
+
+Ferramenta parecida com o mypy, a diferença é que ele roda em tempo de execução. Sendo em tempo constante. Porém é necessário usar um decorator na função.
+
+##### Tipos Compostos - Antes do Python 3.9
+
+Possibilidade de colocar anotações de tipos compostas, por exemplo, um parâmetro de uma função aceitar mais de um tipo.
+
+- Para isso é usado a classe `Union` da biblioteca `typing`.
+- Para valores compostos, também é necessário importá-los da biblioteca `typing`.
+
+**Sintaxe de uso:** `Union([type1, type2 ...])`
+
+Também existe os tipos `Any` e `Optional`. O `Any` indica que qualquer tipo possa ser recebido. E o `Optional` indica que aquele parâmetro é opcional. Tem a mesma sintaxe do `Union`.
+
+Também é possível criar um Type Alias, que é uma Type Annotation tendo sua estrutura definida e atribuir a um novo Alias (apelido). Isso é útil para Type Annotations complexas.
+
+**Observação:** essa maneira com `Union` é antiga, a partir do Python 3.9 não se torna mais necessário.
+
+##### Tipos compostos - Após Python 3.9
+
+Maneira mais recente de realizar tipos compostos, tendo a sintaxe: `type1 | type2 | type3 | None ...`.
+
+**Observação:** é possível utilizar a própria classe como uma Type Annotation. Verificando se a instância em questão é da própria classe e também verifica os valores de seus atributos.
+
+#### Dataclass
+
+Permite criar uma classe de um jeito melhor utilizando o decorator `@dataclass` junto com os Type Annotations.
+
+Uma classe que é uma dataclass não necessita do método `__init__` mais. Para isso são utilizadas os Type Annotations definidas nos atributos para criar o método `__init__`.
+
