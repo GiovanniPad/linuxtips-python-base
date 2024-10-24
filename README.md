@@ -2348,3 +2348,49 @@ Permite criar uma classe de um jeito melhor utilizando o decorator `@dataclass` 
 
 Uma classe que é uma dataclass não necessita do método `__init__` mais. Para isso são utilizadas os Type Annotations definidas nos atributos para criar o método `__init__`.
 
+### Dataclass abstrata, Enums, field e super()
+
+#### Abstração e Herança com dataclass?
+
+- É possível.
+- O Python permite criar instâncias de classes abstratas, mesmo que não seja recomendado.
+- Para que não seja possível herdar de uma classe abstrata, é necessário importar do pacote `abc` o decorator `abstractmethod`.
+- Ao definir um método abstrato em uma classe base, se torna necessário implementar esse mesmo método em suas classes herdeiras.
+
+Cada classe/método deve ter uma única responsabilidade.
+
+**Classe Mixin:** toda classe que possui "Mixin" no seu nome é uma classe que não deve ser instanciada, em vez disso, ela deve ser usada juntamente com outro objeto. Esse classe serve para misturar/adicionar atributos as classes.
+
+Ao se usar `dataclass` os atributos que tem um valor padrão devem ser definidos após os atributos que não tem um valor padrão.
+
+#### Tem enum no Python?
+
+- Existe enum no Python.
+- Um enum (enumeração/enumerador) é um objeto, no caso do Python, uma classe. E os atributos dessa classe representa estados.
+- Dessa forma não se utiliza strings para atribuir valores de escolha. Evitando erros de digitação.
+
+Para criar um enum no Python, utiliza-se a classe `Enum` do pacote `enum` e então criar uma classe e herdar da classe `Enum`.
+
+A ordem de criação tem o mesmo peso de números inteiros, o último valor criado sempre vai ter seu valor maior que o valor anterior. Isso torna possível comparar os estados de enum entre si.
+
+#### Dataclasses com valor default dão erro
+
+Ao criar um atributo com valor padrão mutável usando dataclass irá gerar um erro do tipo `ValueError`.
+
+- Para evitar esse erro utiliza-se a função `field()` do módulo `dataclasses`. E dentro dela passa um parâmetro chamado `default_factory` e seu valor é o tipo do valor padrão.
+
+Na lógica, o Python vai criar primeiramente o atributo com o valor `None` e então executar a função `default_factory` que irá retornar o objeto mutável vazio do tipo específicado.
+
+Esse valor default vai ser sobrescrito ao definir o valor desse atributo que possui valor default quando a classe estiver sendo instanciada.
+
+- Todo valor default mutável dentro de uma classe deve usar o `field` e `default_factory`.
+
+#### Para que serve o `super()` ?
+
+- Utilizado para coletar o retorno de métodos e os valores dos atributos da classe pai da classe que está utilizando o `super`.
+
+Caso a classe que estiver utilizando o `super` e tenha mais de uma classe pai, o interpretador vai começar a procurar na primeira classe (da esquerda) até achar o método, indo da esquerda para a direita.
+
+- Um enum que herda da classe `str` permite a comparação de seus valores com objetos do tipo string.
+- Um enum também pode ser buscado através do `is`, permitindo que ele seja encontrado por identidade, pois o enum nunca é instanciado, ou seja, tem apenas um na memória.
+
