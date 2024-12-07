@@ -2394,3 +2394,25 @@ Caso a classe que estiver utilizando o `super` e tenha mais de uma classe pai, o
 - Um enum que herda da classe `str` permite a comparação de seus valores com objetos do tipo string.
 - Um enum também pode ser buscado através do `is`, permitindo que ele seja encontrado por identidade, pois o enum nunca é instanciado, ou seja, tem apenas um na memória.
 
+### Structural Pattern Matching, Python 3.10 e o jogo da tartaruga
+
+#### Biblioteca `turtle` no Python 3.10
+
+- Biblioteca para estudos. Importada com: `import turle` sempre importar a classe `Turtle`.
+- Interface gráfica, é como se a tartaruga fosse uma caneta para desenhar em um plano cartesiano.
+- É como se fosse um terminal próprio com seus comandos.
+
+Dessa forma se terá muitos `ifs`, o que o Pattern Match Estrutural resolve. E surgiu a partir do Python 3.10.
+
+#### Pattern Match Estrutural
+
+- Inserido a partir do Python 3.10 na PEP 636.
+- Utilizado a partir da palavra reservada `match`.
+
+Parecido com o `switch` de outras linguagens, porém no Python, ele é estrutural, logo a primeira preocupação é com a estrutura dos objetos e não com os valores dos objetos.
+
+Dentro da estrutura criada pelo `match`, utiliza-se a palavra reservada `case` para determinar cada caso diferente, criando-se assim vários blocos de código/ação para diferentes estruturas. Quando o valor passado como alvo no `match` é um literal, é como se fosse um `if`.
+
+Sempre irá executar apenas em um dos `case`.
+
+O underline (`_`), apenas dentro do Pattern Match, indica a opção final, como se fosse um `finally`.
