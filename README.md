@@ -2416,3 +2416,59 @@ Dentro da estrutura criada pelo `match`, utiliza-se a palavra reservada `case` p
 Sempre irá executar apenas em um dos `case`.
 
 O underline (`_`), apenas dentro do Pattern Match, indica a opção final, como se fosse um `finally`.
+
+## Dia 7 - Integração com APIs e Bancos de Dados
+
+### Modelagem de dados com dataclass e Pydantic
+
+#### Modelagem de dados utilizando dataclasses
+
+1. Ver o esquema de banco de dados para definir as classes.
+2. Criar um arquivo `models.py` na pasta `dundie`, models é o nome dado para cada um dos objetos que representam tabelas do banco de dados ou para cada objeto que representa instâncias de dados. Também é uma boa prática separar os models para cada entidade do banco de dados.
+3. Definir as classes que irão representar as entidades do banco de dados.
+4. Inserir nas classes os atributos, que são os campos da entidade em específico.
+
+**Boa prática:** usar composição ao realizar a modelagem das classes de dados.
+
+**Curiosidade:** A classe `datetime` ainda não tem o padrão Pascal Case para classes, pois é uma classe muito antiga, antes da existência das convenções.
+
+5. Com tudo concluído, torna-se possível realizar o processo de serialização e desserialização.
+
+**Serialização:** é o processo de converter um objeto representado através de linguagem de programação para um formato de texto que pode ser armazenado externamente. `json.dumps`.
+
+**Desserialização:** é o processo inverso, converter um objeto em formato de texto para um objeto representado com linguagem de programação. `json.loads`.
+
+6. Com o processo de desserialização é possível criar instâncias de classes que representam as os dados em cada entidade.
+7. Delegar as validações durante o processo de desserialização e serialização.
+
+Para realizar validações em *dataclass* é utilizado o método `__post_init__`, esse método é chamado após que a *dataclass* estiver inicializada.
+
+Os objetos criados dentro de um *loop* `for` não fica apenas no escopo do `for` e assim no escopo global. Chamado de *Leak*.
+
+- `vars(object)` -> retorna os dados de um objeto no formato de dicionário.
+
+A biblioteca `json` só consegue serializar dados que são primitivos do Python e dados embutidos. Ao tentar serializar, por exemplo, um dado em formato Objeto irá gerar um *TypeError*. Para contornar isso, é necessário converter os dados não serializáveis para dados que conseguem ser serializados.
+
+**Observação:** ao trabalhar com *Decimal* e *JSON*, o ideal é serializar o valor que está como *Decimal* para *String*.
+
+Na criação de classe, não é só criar a classe e pronto, deve-se criar métodos para serialização, desserialização e validações
+
+#### Biblioteca Pydantic
+
+É uma biblioteca utilizada para realizar serialização, desserialização e validações. A grande vantagem dela é que pode usar os mesmos *models* para conectar com banco de dados e também para criar *APIs* com *FastAPI*.
+
+- O *Pydantic* é um substituto para *dataclasses*, é possível usar os dois juntos, mas nem sempre é necessário.
+- A principal classe do *Pydantic* é a `BaseModel`.
+- Para colocar validações no *Pydantic* é necessário importar dois objetos chamados `field_validator` e `ValidationError`.
+  - `field_validator` é aplicado através de um *decorator*, passando o atributo a ser validado. Por padrão, esse método sempre precisa retornar o valor ou então um erro, caso ocorra (sempre usar `raise` do próprio erro).
+    - Ao utilizar o parâmetro `mode` como after no *decorator*, a validação vai ocorrer antes de criar a classe, e não depois, que é o padrão. Isso serve além de validar, para inserir lógicas extras.
+  - `ValidationError` é um tipo de *wrap* que vai ser envolver qualquer erro lançado dentro do método que tem o *decorator* `field_validator`.
+
+Não há a necessidade de validar o dado de entrada, pois essa biblioteca já garante que o tipo de dado vai ser de acordo com o que está definido no atributo.
+
+**Serialização com *Pydantic***
+
+- Para realizar a serialização automática com o *Pydantic*, incluindo a conversão de dados não serializáveis para dados serializáveis, basta utilizar o método `model_dump_json()` a partir da instância da classe.
+- É possível criar uma classe `Config` dentro da classe utilizando o *Pydantic*, dessa forma é possível customizar o modelo de saída do *JSON* ao utilizar o método `model_dump_json()`.
+  - Ao criar essa classe é necessário definir o atributo `json_encoders` e especificar como tal objeto será exibido e o que será exibido.
+
