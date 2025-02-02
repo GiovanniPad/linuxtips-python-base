@@ -2472,3 +2472,14 @@ Não há a necessidade de validar o dado de entrada, pois essa biblioteca já ga
 - É possível criar uma classe `Config` dentro da classe utilizando o *Pydantic*, dessa forma é possível customizar o modelo de saída do *JSON* ao utilizar o método `model_dump_json()`.
   - Ao criar essa classe é necessário definir o atributo `json_encoders` e especificar como tal objeto será exibido e o que será exibido.
 
+### Prova de conceito de ORM
+
+#### ORM
+
+*ORM* significa *Object Relational Mapping* e é o nome dado a abordagem de mapear dados serializados em bancos de dados relacionais com classes e objetos.
+
+#### Implementação de uma prova de conceito de ORM
+
+Essa implementação é baseada em classes *Pydantic* e é apenas uma prova de conceito, não possui nenhum tipo de garantia ou otimização.
+
+Essa implementação está localizada na *branch ORM* do repositório do projeto *Dundie Rewards*.
