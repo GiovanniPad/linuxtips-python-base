@@ -2483,3 +2483,105 @@ Não há a necessidade de validar o dado de entrada, pois essa biblioteca já ga
 Essa implementação é baseada em classes *Pydantic* e é apenas uma prova de conceito, não possui nenhum tipo de garantia ou otimização.
 
 Essa implementação está localizada na *branch ORM* do repositório do projeto *Dundie Rewards*.
+
+### SQL e SQLite
+
+- *SQL* -> Structured Query Language (Linguagem Estruturada para Informações).
+- *SQL* é apenas um dos modos de armazenar dados em SGBDs.
+- *MongoDB* e *Cassandra* são SGBDs que guardam informações em formatos *JSON*.
+- Também existem ferramentas que utilizam a teoria de grafos, como o *Neo4J*.
+
+Mas o *SQL* é o mais utilizado para armazenar dados.
+
+**Motivos para o amplo uso do *SQL***
+
+1. Tecnologia muito antiga e desenvolvida.
+2. Existem diversos *providers*, ou seja, com uma mesma base de código é possível se comunicar com diversos tipos de ferramentas.
+3. Tende a ser mais fácil para lidar com consultas de dados.
+
+<hr>
+
+Os SGBDs mais robustos para *SQL* são: *PostgreSQL*, *MySQL*
+
+#### SQLite
+
+É um banco de dados *embedded* que está embutido na linguagem, que utiliza a *AnsiSQL*, mas a base é a mesma do *SQL*.
+
+- Sistema mais usado do mundo, pois não há necessidade de um SGBDs.
+- Ele é *serverless*, não possui servidor, seus dados e configurações serão armazenados em um arquivo.
+
+#### Bancos de dados relacionais
+
+**Características**
+
+- É estruturado com tabelas, onde as informações serão armazenadas, essa tabela pode ser considerada um análogo a uma tabela do excel. **Essa tabela é logicamente dividida em duas partes:**
+  - **Colunas/Columns (vertical)** -> cada coluna determina um campo de uma tabela, uma espécie de categoria de informação. **Por exemplo:** o nome de um usuário seria uma coluna.
+  - **Linhas/Registros/Rows (Horizontal)** -> são as linhas que armazenam os registros em uma tabela, cada linha representa um registro. **Por exemplo:** uma linha representa o cadastro de um usuário.
+
+![Tabela SQL](images/tabela_sql_day7.png)
+
+É possível estrutrar essas tabelas com *JSON*, mas os bancos de dados *SQLite*, entre outros, irão estruturar as tabelas e seus dados no formato binário. Para visualizar nesse formato de tabela é possível utilizar ferramentas de abstração.
+
+Não é possível acessar diretamente a representação binária, para isso é necessário um *client*, e o *SQLite* já vem com esse *client* embutido.
+
+O banco de dados precisa de meta informações (metadados) e eles são armazenados em forma de índices e chaves.
+
+- É possível marcar uma coluna como sendo uma coluna de chave primária. Além disso será criado uma *Hash Table* nessa coluna, com isso a busca é feita mais rápida.
+- Também há as *constrains*, que são como validações/bloqueios, entre elas há as *constrains* que fazem com que aquela coluna seja obrigatória para um registro e também que os dados da coluna não podem se repetir, como uma identificação única de cada registro. Também há o *auto increment*, que o valor da coluna será incrementado a cada registro inserido.
+- A linguagem para definir todas essas regras é a *SQL*, mas não é uma única linguagem, há varios dialetos para isso, como por exemplo, o *SQLite* segue o *AnsiSQL*.
+
+**Categorização dos comandos da linguagem *SQL***
+
+![Categorias da Linguagem SQL](images/categorias_linguagem_sql_day7.png)
+
+- *DDL (Data Definition Language)* -> comandos para manipular a estruturas dos objetos, como criar ou excluir uma tabela ou mesmo alterar o nome de um campo.
+- *DML (Data Manipulation Language)* -> comandos para manipular os dados/informações no banco de dados, como adicionar, modificar ou excluir um dado de uma tabela. É possível aplicar programação funcional.
+- *TCL (Transaction Language)* -> é uma linguagem de transação, com isso é possível criar uma espécie de validar comandos, para caso haja um erro nos comandos solicitados, há um *rollback*, volta para o estágio inicial, antes do comando ser executado, evitando erros e não deixando dados sujos. É usada para garantias.
+- *DQL (Data Query Language)* -> linguagem usada para selecionar dados de um banco de dados.
+- *DCL (Data Control Language)* -> linguagem para controlar as permissões de acessos e usuários em um banco de dados, usada para a segurança e proteções.
+
+A convenção do *SQL* é escrever todos os seus comandos em maiúsculos.
+
+#### sqlite3
+
+- Biblioteca já embutida no *Python* para trabalhar com *SQLite*.
+- Importada a partir da biblioteca `sqlite3`.
+
+**Funções**
+
+- `sqlite3.connect(database)` -> cria e retorna uma conexão ao banco de dados. Ao passar o valor `":memory:"` para o parâmetro `database` será criado um banco de dados efêmero, que significa que o banco de dados vai ser criado e vai existir enquanto o programa estiver sendo executado, quando o programa parar de executar ele será excluído, muito útil para testes.
+
+Através desse objeto que é possível utilizar as instruções *SQL*
+
+- `sqlite3.execute(instruction)` -> função utiliza para passar uma comando `instruction` *SQL* para o banco de dados.
+- `sqlite3.commit()` -> comando para confirmar um comando. É necessário utilizar sempre esse comando após executar um comando para realizar a confirmação.
+
+No caso de comandos *DDL* ele faz direto, sem a necessidade de *commit*.
+
+- `con.close()` -> comando para fechar a conexão, pois se trata de um arquivo.
+
+O *SQLite* também permite a utilização do gerenciador de contextos `with` do *Python*, com isso a conexão é aberta no início e sempre fechada no final
+
+Para armazenar dados em um banco de dados *SQL* primeiro é necessário definir um esquema de como esses dados serão armazenados. Uma tabela precisa ter nome e seus campos também precisam de nomes e ter um tipo atribuídos a eles, além de *constrains* necessárias.
+
+**Relacionamentos entre tabelas**
+
+Ao usar um banco de dados relacional é possível relacionar tabelas. É uma das principais vantagens de um banco de dados relacional.
+
+Para fazer isso no *SQLite* é necessária ativá-la, já que por padrão os relacionamentos utilizando chaves estrangeiras vem desabilitado. Para ativar deve ser passado no execute o comando `PRAGMA foreign_keys = ON;`. Onde `PRAGMA` é um comando do *SQLite*.
+
+Enquanto o *JSON* não permite acessos simultâneos, o *SQLite* permite.
+
+Ao executar operações de `SELECT` é necessário um *cursor*. E para obter um cursor se utiliza a função `con.cursor`. *Cursor* é como um ponteiro que vai navegar registro por registro na tabela.
+
+- Ao realizar um `SELECT`, o *cursor* retorna um objeto do tipo `sqlite3.Cursor` e esse objeto implementa o protocolo *iterable*, que permite iterar sobre esse objeto.
+- Ao realizar essa iteração, cada linha (*row*) retornada é um objeto do tipo tupla (*tuple*).
+- Ao usar um *cursor*, a consulta vai navegar por linhas, horizontal e não vertical, ou seja, não vai retornar o nome das colunas, mas sim seus valores.
+- Toda vez que rodar um comando na categoria *DML* deve ser executado um *commit*.
+
+Ao executar um comando de `INSERT` onde os valores são dinâmicos se utiliza o caractere "?" para indicar aquele campo como um *placeholder* para receber um dado, ele espera receber esses dados em formato tupla ou uma lista para preencher as informações na sequência específicada.
+
+O melhor jeito para escrever códigos *SQL* é utilizar uma biblioteca/ferramenta que disponibiliza um *ORM*, tirando a necessidade de escrever código *SQL* cru
+
+- Uma das ferramentas mais utilizadas de *ORM* em *Python* é o *SQL Alchemy*.
+
