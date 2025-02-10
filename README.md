@@ -2585,3 +2585,61 @@ O melhor jeito para escrever códigos *SQL* é utilizar uma biblioteca/ferrament
 
 - Uma das ferramentas mais utilizadas de *ORM* em *Python* é o *SQL Alchemy*.
 
+### SQL Alchemy
+
+- O *SQL Alchemy* é um *ORM (Object Relational Mapper)* e seu intuito é mapear classes/objetos no *Python* para tabelas em um banco de dados.
+- Ele resolve a parte de precisar escrever instruções cruas *SQL*, fazendo com que seja possível fazer isso com funções.
+- Ele pode ser conectado a praticamente todos os bancos de dados relacionais existentes.
+- Essa biblioteca ainda não foi migrada totalmente para o formato de *Type Annotations*, pois ele ainda usa composição.
+
+É chamado de Composição pois as classes usarão heranças para determinar as tabelas e os atributos usarão outras classes para compor suas características.
+- O uso da composição é para deixar o código mais desacoplado.
+
+**Principais funções**
+
+- `declarative_base` -> função localizada no módulo `sqlalchemy.ext.declarative` e essa função realiza meta programação, ela basicamente cria e retorna classes/objetos. Cria uma metaclasse. É uma *Factory Function*, uma função que fábrica objetos. Ele cria a classe base para o *SQL Alchemy* como se fosse a classe *DataModel* do *Pydantic*.
+- `Column(type, *args)` -> classe usada para definir uma coluna em uma tabela a partir de uma classe *Python*. Seu primeiro parâmetro é referente ao tipo do dado naquela coluna. No parâmetro `args` recebe-se as *constrains* daquela coluna, **por exemplo:**
+  - `primary_key=True` indica que a coluna é uma chave primária.
+  - `index=True` indica que a coluna é de índices.
+  - `autoincrement=True` indica que a coluna é auto incrementada
+  - `__tablename__` -> atributo criado dentro da classe usado para definir qual o nome da tabela no banco de dados. O nome deve ser sempre singular.
+- `String | Integer | ...` -> são classes do *SQL Alchemy* usadas para definir o tipo de dado em uma coluna, são usadas dentro da classe `Column`.
+- `create_engine(connection_string)` -> *Factory Function* utilizada para criar um motor de conexão com o banco de dados. O parâmetro `connection_string` é a *string* de conexão com o caminho para o banco de dados, exemplo: `sqlite:///tmp/database.db`, através dessa *string* de conexão é possível determinar o protocolo de conexão, no caso *SQLite* usando `sqlite:///` e o caminho para o banco de dados `tmp/database.db` (por ser *SQLite*).
+- `Base.metadata.create_all(bind)` -> cria todas as tabelas com base nas classes definidas em *Python*, com suas devidas características. O parâmetro `bind` é aonde deve-se passar a conexão do banco de dados, a *engine*.
+- `sessionmaker(args)` -> função utilizada para criar uma sessão de interação com o banco de dados. É possível inserir parâmetros em `args` para fazer ações automaticamente, como: `autocommit=True` para realizar o *commit* automaticamente, `autoflush=True` é usado para limpar o histórico da sessão ao usar *commit* e o `bind` que é a *engine* que vai ser utilizada.
+- `session.add(instance)` -> adiciona uma instância de uma classe na sessão. Ele não grava no banco de dados, apenas adiciona a sessão. Ele cria uma *string* automaticamente que representa o comando usado para adicionar aquela instância como registro na tabela correspondente.
+- `session.commit()` -> confirma as instruções inseridas na sessão, nesse momento, o *SQL Alchemy* de fato altera o banco de dados.
+- `session.query(entity)` -> realiza uma *query* de consulta em uma tabela no banco de dados, o parâmetro `entity` indica qual tabela será, nesse caso é passado a classe que representa esse tabela para esse parâmetro.
+  - `session.query.filter(criterion)` -> adiciona um filtro na busca por dados na tabela, `criterion` é o parâmetro que vai receber a expressão de comparação que será a base para filtragem. Ele transforma essa expressão *Python* em um comando *SQL*.
+  - Essa função retorna um objeto *cursor*. E é um objeto iterável no *Python*.
+  - É possível especificar os campos e as tabelas que se quer fazer a consulta utilizando `query`, podendo ser de mais de uma tabela por vez. No fim é inserido o `join()`.
+    - `join(target, isouter)` -> realiza o comando *JOIN* do *SQL*, onde o parâmetro `target` indica a tabela alvo do *JOIN* e o parâmetro `isouter` indica se o *JOIN* é *LEFT JOIN*.
+    - Ao realizar uma *query* com `join()` o tipo do retorno será uma tupla contendo os dados consultados.
+
+<hr>
+
+Assim que terminar de criar os modelos das classes que irão virar tabelas no banco de dados é necessário criar uma conexão com o banco de dados.
+- E por convenção, essa conexão é chamada de *engine*. Tem essa convenção, pois é possível conectar com vários bancos ao mesmo tempo e utilizar para realizar diferentes operações em diferentes bancos de dados a partir de uma única aplicação.
+- *Connection String* é um padrão de conexão utilizando a *engine* para qualquer banco de dados, no caso do *SQLite* utiliza o caminho do arquivo, mas para os outros bancos de dados, se específica o servidor e a porta de conexão.
+
+Para manipular e acessar dados dentro do *SQL Alchemy* é utilizado um objeto chamado *Session*, pois ele tem uma conexão com uma sessão de banco de dados, a sessão é criada ao abrir o banco de dados com algum visualizador. Através dessa sessão é possível controlar as permissões de acesso e as *transactions*. É basicamente uma sessão de interação com o banco de dados.
+
+É interessante usar *Sessions* para compor as instruções aos poucos, evitando inserir dados sujos no banco de dados.
+
+O *SQLite* funciona em sistemas de arquivos, ele precisa ser fechado sempre e nunca acessado de várias ferramentas ao mesmo tempo.
+
+O *SQL Alchemy* é muito fléxivel, sendo possível criar todo tipo de expressão e/ou objetos para bancos de dados relacionais.
+
+**Relacionamentos com *SQL Alchemy***
+
+Uma convenção no *SQL Alchemy* para os nomes das chaves estrangeiras é inserir o nome da tabela que a chave estrangeira irá vir, seguido do nome da coluna que representa ela. **Por exemplo:** `person_id` representa a chave estrangeira da tabela `person` na coluna `id`.
+
+- `ForeignKey(column)` -> classe usada para criar uma chave estrangeira através de composição de classes. O parâmetro `column` representa a coluna da tabela que será relacionada.
+
+O *SQL Alchemy*, caso haja uma exclusão em uma tabela que está relacionada com outra, na tabela que está relacionada o registro correspondente também é excluído.
+
+Além do relacionamento físico criado, também é criado um campo virtual, para facilitar o uso na camada de código *Python*.
+
+- `relationship(class, foreign_keys)` -> função que cria um relacionamento virtual, o parâmetro `class` representa de qual classe está se relacionamento com a classe atual e o parâmetro `foreign_keys` indica qual é o atributo da classe atual que está a chave estrangeira.
+
+É possível realizar o uso do *Type Annotations* no *SQL Alchemy* com uma extensão chamada *SQLModel*.
