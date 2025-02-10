@@ -2643,3 +2643,54 @@ Além do relacionamento físico criado, também é criado um campo virtual, para
 - `relationship(class, foreign_keys)` -> função que cria um relacionamento virtual, o parâmetro `class` representa de qual classe está se relacionamento com a classe atual e o parâmetro `foreign_keys` indica qual é o atributo da classe atual que está a chave estrangeira.
 
 É possível realizar o uso do *Type Annotations* no *SQL Alchemy* com uma extensão chamada *SQLModel*.
+
+### SQLModel
+
+- Ferramenta que é uma abstração em cima da abstração do *SQL Alchemy*.
+- Essa ferramenta permite a utilização de *Type Annotations* e contém características do *Python* moderno.
+- Deve ser instalada através de: `pip install sqlmodel`.
+
+Nessa ferramenta possui uma classe base também, chamada de `SQLModel` e uma característica interessante dela é que ela é ao mesmo tempo uma subclasse da classe Base (`declarative_base`) e uma subclasse da classe `BaseModel` (*Pydantic*).
+- Ela é uma junção da classe base do *Pydantic* com a classe base do *SQL Alchemy*.
+- Para modelar utilizando ela basta criar as classes e fazer com que elas herdem de `SQLModel`.
+- Ela utiliza uma característica nova do *Python* 3.8, que é a possibilidade de passagem de atributos para as subclasses que herdam de `SQLModel`.
+- É necessário utilizar as *Type Annotations* de `typing` para definir os tipos dos atributos e suas características.
+- Sempre usar a abstração contida na biblioteca `sqlmodel` e não mais as do `sqlalchemy`.
+
+<hr>
+
+- `Optional[type]` -> define um atributo como opcional, não sendo preciso passá-lo ao criar uma instância. `type` define o tipo desse atributo.
+- `Field()` -> *descriptor* para definir características do campo. Como seu valor padrão `default` ou se uma chave primária `primary_key`.
+- `create_engine(url)` -> cria a *engine* responsável pela conexão com o banco de dados. `url` indica a *string* de acesso ao banco de dados.
+- `SQLModel.metadata.create_all(bind)` -> comando para criar todas as tabelas no banco de dados, são criadas de acordo com as classes que herdaram de `SQLModel`. `bind` indica a engine (conexão) do banco de dados.
+- `Session(engine)` -> cria uma sessão para manipular e ler dados do banco de dados. Com essa `Session` é possível utilizar o gerenciador de contexto do *Python*. `engine` é a conexão do banco de dados a ser utilizada.
+
+Dessa forma, todo o código de manipulação dos dados do banco de dados é feito dentro desse gerenciador de contexto. O uso do gerenciador de contexto é bom pois no final da execução do código, ele automaticamente realiza o `close`, como se fosse uma *transaction*.
+
+- `select(entity)` -> função para consumir dados do banco de dados. `entity` indica em qual entidade vai ser feita a consulta.
+- `where(expression)` -> função para incluir um filtro na consulta. `expression` é a expressão lógica para a filtragem da consulta.
+- `session.exec(query)` -> função para executar uma instrução *SQL* `query`. O retorno dessa função é um objeto `ScalarResult` e é possível iterar sobre ele.
+
+Em algumas situações, o *SQLModel* vai emitir alguns *Warnings* por conta de atualizações, nessas situações, o ideal é realizar a aplicação de *patch* (*Monkey Patch*), que é uma espécie de correção/alteração devido a atualização. Nesses casos, o ideal é sempre buscar na documentação e no repositório oficial do *SQLModel* para ver a prática recomendada a ser feita.
+
+**Relacionamentos com *SQLModel***
+
+Para criar relacionamentos com o *SQLModel* é necessário criar o campo que vai receber a chave estrangeira com a convenção de nome `class_attribute`.
+
+Após isso, basta definir seu tipo usando *Type Annotation* e usar a função `Field(foreign_key)` para definir a chave estrangeira, o parâmetro `foreign_key` é que vai receber o atributo da classe que vai representar a chave estrangeira.
+
+Também é legal criar um relacionamento virtual, para criá-lo basta criar o atributo novo na classe e definir seu tipo, através de *Type Annotation*, como sendo uma instância da classe da chave estrangeira, após isso utilizar a função `Relationship(back_populates)`, onde `back_populates` faz com que ao chamar a outra classe, a classe que recebe a chave estrangeira seja automaticamente populada.
+- O relacionamento virtual existe apenas na camada das classes do *Python*, apenas para criar as *subquerys*.
+- Isso deve ser feito para ambas as tabelas. Para que vire um relacionamento "em cruz", dessa forma é possível acessar a instância da outra classe a partir da outra e vice-versa.
+- Caso de problema de aviso das classes não estarem criadas, basta envolver o nome da classe ainda não criada em aspas, tornando-a uma *string*.
+- Ao criar uma instância da classe que recebe a chave estrangeira, é possível passar a própria instância para criar o relacionamento de forma automática, não necessitando passar diretamente para o atributo que recebe a chave estrangeira "física".
+
+As vezes é necessário criar relacionamentos que não são 1 para 1, mas sim uma relação *Many To Many* (muitos para muitos) e o jeito de fazer isso é criando uma tabela de apoio chamado de *Link Table*.
+
+**Joins**
+
+O jeito mais fácil é utilizar o relacionamento cruzado entre as tabelas através dos atributos criados para armazenar o relacionamento virtual. Dessa forma, é possível realizar a consulta a partir de qualquer tabela.
+
+Mas também é possível realizar o *JOIN* caso não exista os relacionamentos virtuais. Para isso utiliza-se a função `select()` passando as duas classes que serão usadas para realizar o *JOIN* e por fim você adiciona um filtro `where()` que vai usar o atributo da chave estrangeira (sem ser o virtual) e comparar com o valor do atributo que criou a chave estrangeira, dessa forma os dados vão retornar os dados relacionados corretamente.
+
+Também é possível usar a função `join(target, join_type)` após o `select()` para indicar que será feito um *JOIN* e a tabela alvo é indica no parâmetro `target` e o tipo do *JOIN* é indicado no `join_type`, **por exemplo:** `isouter=True` indica que é um *LEFT OUTER JOIN*.
