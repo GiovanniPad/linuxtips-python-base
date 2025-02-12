@@ -2786,3 +2786,11 @@ Ao utilizar *APIs* deve-se fazer o processo de desserialização dos dados receb
 Criar um objeto próprio para padronizar a resposta da *API*. Pois a resposta de *APIs* não há um padrão na ordem a ser retornada.
 
 Por ser uma *API* pública não é necessário passar nenhum *token* de segurança, mas para *APIs* privadas é necessário.
+
+### Finalização do projeto e desafios
+
+Finalização do projeto dundie
+
+**Desafios**
+
+- Resolver as issues restantes.
