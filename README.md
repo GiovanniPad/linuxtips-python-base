@@ -2710,3 +2710,79 @@ Para trabalhar com o tipo `Decimal` no *SQLModel* não é possível utilizar a c
 - Para gravar datas no banco de dados utilizando o *SQL Alchemy* o ideal é utilizar sem formatar e deixar no objeto padrão.
 
 **Fat Models** -> incluir todas as ações e métodos referente a uma classe dentro dela, juntar regras de negócio com modelagem de dados. Em projetos pequenos é legal, mas em projetos grandes é ruim, sendo o ideal deixar separado.
+
+### Database Migrations e acesso a API Rest
+
+O *Python* não se comunica automaticamente com o banco de dados *SQL*. Alterações em tabelas ou campos é necessária realizar manualmente, porém não é ideal executar comandos *SQL* manualmente, pois é inviável.
+
+Ao trabalhar com *ORMs* não se executa comandos *SQL* diretamente.
+
+Para realizar essas alterações de maneira correta utiliza-se *Migrations*.
+
+- **Database Migrations** -> é o ato de alterar a estrutura atual do banco de dados para uma nova estrutura.
+
+A ferramenta para trabalhar com *Migrations* é a `alembic`.
+
+#### alembic
+
+É uma ferramenta de linha de comando para gerenciar o histórico de alterações de um banco de dados, é um "git" para o banco de dados.
+
+- `alembic init migrations` -> cria os arquivos e pastas necessárias para trabalhar com *migrations*.
+- Pasta `migrations` -> é aonde será controlado o ambiente do banco de dados, ela é muito importante e deve ser enviada junto com o repositório ao GitHub.
+- Arquivo `alembic.ini` -> arquivo de configurações para o alembic.
+  - Configuração `sqlalchemy.url` -> indica o driver e o caminho do banco de dados.
+- Arquivo `script.py.mako` -> `mako` é uma linguagem de *templates*, toda alteração realizada no banco de dados  por um script, o alembic usará esse arquivo como *template* para gerar o script.
+
+Por padrão, o *alembic* é desenvolvido para o *SQL Alchemy*, para que ele possa funcionar junto com o *SQL Model* é necessário adicionar o `import sqlmodel` no arquivo `script.py.mako`.
+
+- Arquivo `env.py` -> arquivo que contém as configurações relacionadas ao ambiente.
+  - Módulo `context` -> objeto aonde o alembic guarda quais as tabelas que ele está gerenciando.
+  - Configuração `target_metadata` -> variável para indicar qual o objeto que está armazenando os metadados das modelos de tabelas da aplicação. **Por exemplo:** `models.SQLModel.metadata`.
+
+<hr>
+
+- `alembic revision --autogenerate -m "migration-name"` -> cria uma *migration* automática. Define um *checkpoint*. Sempre importante gerar uma para o início do banco de dados. É como gerar uma *screenshot* do estado atual do banco de dados
+
+Para toda e qualquer alteração que ocorrer nos modelos, é necessário gerar uma nova *migration* dessa forma, ele atualiza a *migration* com as novas mudanças.
+
+Ele guarda o histórico de versões em uma tabela chamada `alembic_version`.
+
+- `alembic upgrade head` -> aplica uma ou várias *migrations* no banco de dados. `head` faz com que todas as *migrations* criadas sejam aplicadas no banco de dados com as suas respectivas alterações. Mas também é possível passar um número de uma *migration* específica. Com isso ele uma versão para o banco de dados atual.
+- `alembic history` -> mostra o histórico de *migrations*.
+
+#### Acesso a APIs
+
+- Uso da API `economia.awesomeapi.com.br`.
+- Consumindo *APIs* com *Python*
+
+**Opções**
+
+- Biblioteca `requests`, ferramenta para chamadas *HTTP*.
+- Biblioteca `httpx`, ferramenta mais moderna, compatível com requisições assíncronas. Foi feita em cima da biblioteca `requests`.
+
+É necessário ter um *template url* para as chamadas a uma *API*.
+
+##### urllib
+
+Biblioteca já embutida no *Python* para chamadas em APIs. Muito antiga!!
+
+- `urlopen(url)` -> passa uma *url* para fazer a chamada e retorna um objeto `HTTPResponse`.
+- `responde.code` -> mostra o código retornado da chamada a *API*. Cada código representa um erro ou um sucesso de chamada a *API*.
+- `responde.read()` -> retorna em formato de *string* todo o corpo de resposta da chamada na *API*.
+
+Não é uma biblioteca boa de usar, pois não é assíncrona e é crua.
+
+##### httpx
+
+Biblioteca mais moderna, com chamadas assíncronas.
+
+- `httpx.get(url)` -> realiza uma chamada *GET* a uma *API*. `url` representa o caminho da *API*. Ela retorna um objeto `HTTPResponse` da biblioteca httpx.
+- `response.status_code` -> retorna o código de status da chamada.
+- `response.content` -> retorna o corpo de resposta da *API* em formato de string.
+- `response.json()` -> também retorna o corpo de resposta da *API*, porém em formato *json* automaticamente.
+
+Ao utilizar *APIs* deve-se fazer o processo de desserialização dos dados recebidos de uma *API*.
+
+Criar um objeto próprio para padronizar a resposta da *API*. Pois a resposta de *APIs* não há um padrão na ordem a ser retornada.
+
+Por ser uma *API* pública não é necessário passar nenhum *token* de segurança, mas para *APIs* privadas é necessário.
