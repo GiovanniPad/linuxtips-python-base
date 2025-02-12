@@ -2694,3 +2694,19 @@ O jeito mais fácil é utilizar o relacionamento cruzado entre as tabelas atrav�
 Mas também é possível realizar o *JOIN* caso não exista os relacionamentos virtuais. Para isso utiliza-se a função `select()` passando as duas classes que serão usadas para realizar o *JOIN* e por fim você adiciona um filtro `where()` que vai usar o atributo da chave estrangeira (sem ser o virtual) e comparar com o valor do atributo que criou a chave estrangeira, dessa forma os dados vão retornar os dados relacionados corretamente.
 
 Também é possível usar a função `join(target, join_type)` após o `select()` para indicar que será feito um *JOIN* e a tabela alvo é indica no parâmetro `target` e o tipo do *JOIN* é indicado no `join_type`, **por exemplo:** `isouter=True` indica que é um *LEFT OUTER JOIN*.
+
+### Convertendo software legado para *SQL*
+
+Convertendo um software que utiliza banco de dados *JSON* para um banco de dados *SQL*.
+
+- Todo o código convertido está na *branch* `sql-database`.
+
+Se não tem índices no banco de dados na hora de escrever vai ser rápido mas a leitura vai ser lenta. E se tiver muitos índices, a escrita vai ser lenta e a leitura vai ser rápida. Por conta disso, é importante balancear.
+
+Para trabalhar com o tipo `Decimal` no *SQLModel* não é possível utilizar a classe `Decimal` direto, pois o *SQLite* não "entende" de fato que um campo é Decimal.
+- A solução é usar `Annotated` de `typing_extensions` juntamente com `Decimal` e `Field`.
+
+`isoformat` em datas também não pode ser utilizada em banco de dados.
+- Para gravar datas no banco de dados utilizando o *SQL Alchemy* o ideal é utilizar sem formatar e deixar no objeto padrão.
+
+**Fat Models** -> incluir todas as ações e métodos referente a uma classe dentro dela, juntar regras de negócio com modelagem de dados. Em projetos pequenos é legal, mas em projetos grandes é ruim, sendo o ideal deixar separado.
