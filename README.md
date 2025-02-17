@@ -2794,3 +2794,40 @@ Finalização do projeto dundie
 **Desafios**
 
 - Resolver as issues restantes.
+
+## Dia 8 - Demonstrações de Framework para GUI, CLI, API
+
+### GUI - Graphical User Interface - Desktop
+
+Cada sistema operacional possui um gerenciador de janelas próprio. Porém todos tem uma certa padronização para desenhar as janelas na tela.
+
+#### Biblioteca tkinter
+
+- É uma biblioteca que possibilita desenvolver aplicativos desktop utilizando *Python*.
+- Ela já vem pré instalada com o *Python*.
+- Ela se comunica com a linguagem intermediária, é uma abstração da linguagem *TCL*.
+- Ela é uma biblioteca muito simples, não possui muitas propriedades gráficas para deixar as janelas "bonitas".
+- A vantagem de utilizar essa biblioteca é que ela é muito fácil de se utilizar.
+- Muito útil para serviços que necessitam interação com o sistema operacional ou o acesso a internet é limitado. E também para máquinas grandes de empresas.
+
+Toda aplicação que roda em ambiente gráfico precisa de um loop de eventos, como apps gui, games e web.
+
+A biblioteca interage com o padrão de construção das janelas, mas no momento em que a janela é aberta, já é o sistema operacional que controla ela. O *shell* do programa é o ambiente gráfico do SO e não mais o terminal.
+
+A biblioteca possui os *Widgets*, que são os componentes utilizados para desenhar nas janelas.
+
+Uma boa prática ao desenvolver com o *tkinter* é nomear as funções de callback, com `callback_nomedafuncao`.
+
+#### Biblioteca pysimplegui
+
+- Biblioteca que também serve para desenvolver interfaces gráficas para desktop.
+- Ela é uma abstração em cima do `tkinter`, tornando o desenvolvimento mais rápido e simples.
+- Ela também pode se comunicar com a biblioteca `qt`, que é uma outra biblioteca para desenvolver interfaces desktop e também funciona na web.
+
+#### Biblioteca kivy
+
+- Também usada para desenvolver interfaces gráficas.
+- Constrói interfaces mais modernas, por ser uma biblioteca mais moderna e recente.
+- É uma biblioteca totalmente orientad a objetos.
+- É uma biblioteca mais pesada e consome mais memória, porque ele é uma aplicação reativa, usa um sistema reativo de verdade orientado a eventos. Não utiliza tcl/tk, ele tem seu próprio *toolkit* para montar as janelas.
+- Os apps feitos em `kivy` podem ser exportados para serem executados como apps móveis, em celulares/tablets.
