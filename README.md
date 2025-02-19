@@ -2831,3 +2831,13 @@ Uma boa prática ao desenvolver com o *tkinter* é nomear as funções de callba
 - É uma biblioteca totalmente orientad a objetos.
 - É uma biblioteca mais pesada e consome mais memória, porque ele é uma aplicação reativa, usa um sistema reativo de verdade orientado a eventos. Não utiliza tcl/tk, ele tem seu próprio *toolkit* para montar as janelas.
 - Os apps feitos em `kivy` podem ser exportados para serem executados como apps móveis, em celulares/tablets.
+
+### Game 2D
+
+#### Biblioteca pygame
+
+- Biblioteca para criar jogos 2D simples.
+- Utiliza a escala RGB para cores e utiliza a base decimal, de 0 a 255.
+- Também pode ser utilizada a orientação a objetos no `pygame`.
+- É bem mais leve que o `kivy` por exemplo e também há opções de exportar para várias plataformas.
+
