@@ -2864,3 +2864,35 @@ A parte da interativa é o que transforma uma CLI em uma TUI. Uma TUI também é
 - Ela utiliza métodos assíncronos. Por ser assíncrona, permite que vários eventos sejam executados ao mesmo tempo.
 - Métodos estáticos são métodos que não precisam de uma instância da classe para serem executados, eles podem ser executados a partir da própria classe.
 - Também existe a biblioteca `blessed`.
+
+### Web - HTML
+
+- Ao trabalhar com web, se trabalha com textos, mais especificamente HiperTexto, que é um texto que carrega consigo além do texto a semântica de organização e significado.
+- O protocolo usado para trafegar esse texto é o protocolo HTTP. Específico para trafegar esse tipo de conteúdo.
+- Esse HyperText possui tags, onde cada tag tem um significado semântico para o navegador e tudo é estruturado utilizando essas tags.
+- O HTTP possui otimizações para trafegar o conteúdo e está organizado em verbos HTTP, mas para servir um conteúdo pelo protocolo HTTP é necessário ter um servidor (web server).
+
+Toda requisição que tem o objetivo de coletar um recurso armazenado dentro do servidor o verbo GET é utilizado. Enquanto para enviar uma informação para o servidor se utiliza o verbo POST.
+
+O servidor mais famoso e utilizado é o Apache. E também tem o nginx
+
+Nas páginas feitas com HTML é possível estilizar elas com CSS e adicionar interações com JavaScript.
+
+No momento em que o conteúdo chega para o navegador, o Python já não é mais utilizado. É utilizado apenas HTML, CSS e JavaScript.
+
+Além do servidor web, para usar uma linguagem de programação para realizar a geração de páginas HTML é necessário um servidor de aplicação. Ele fica entre o conteúdo e a entrega, também é chamado de proxy reverso. Isso permite que um script Python dentro de um servidor possa criar um arquivo HTML.
+
+- Servidores de aplicação -> gunicorn, uvicorn, wsgi ...
+- Servidores de web -> apache, nginx ...
+
+#### Framework flask
+
+- Principal framework Python para construir páginas HTML.
+- É uma convenção as aplicações em flask serem chamadas de app.
+- Utiliza a orientação a objetos para desenvolver.
+- Todo framework para web tem como objetivo basicamente enviar texto para o navegador, sendo HTML ou JSON.
+- Templates são utilizados para se criar arquivos HTML de uma forma mais organizada. Isso torna possível passar dados através de um contexto, para que sejam acessados dentro da página HTML.
+- O Flask utiliza a linguagem Jinjia2 para realizar o acesso de dados entre Python e HTML. Essa linguagem permite utilizar estruturas do Python dentro do HTML, até mesmo chamar funções.
+
+Na Web moderna não se gera mais templates, a maioria atual utiliza APIs e retornam JSON e são gerados no navegador.
+
