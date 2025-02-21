@@ -2841,3 +2841,26 @@ Uma boa prática ao desenvolver com o *tkinter* é nomear as funções de callba
 - Também pode ser utilizada a orientação a objetos no `pygame`.
 - É bem mais leve que o `kivy` por exemplo e também há opções de exportar para várias plataformas.
 
+### TUI - Terminal User Interface
+
+- CLI -> interface em linha de comando, tem a característica de executar com comandos em um terminal.
+- TUI -> o desenvolvimento é muito similar a interface de linha de comando, porém tem a diferença uma interface que o usuário possa interagir, como uma tela ou janela com botões etc.
+
+A parte da interativa é o que transforma uma CLI em uma TUI. Uma TUI também é uma interface que permite o usuário continuar interagindo com a aplicação, e tendo feedbacks em tempo real.
+
+#### Biblioteca unicodedata
+
+- Biblioteca que pode ser utilizada para remover acentos de palavras.
+- A função de tirar acentos possui três passos, o primeiro passo é rodar uma normalização e depois encodificar utilizando somente a tabela ASCII ignorando o que não faz parte da tabela ASCII e no final transforma para o formato UTF-8.
+
+#### Biblioteca rich
+
+- A biblioteca `rich` também permite construir uma TUI, que o usuário possa interagir.
+
+#### Biblioteca textual
+
+- Biblioteca que é uma abstração em cima da biblioteca rich, permitindo que as interfaces TUI sejam mais ricas e interativas.
+- Também implementa o paradigma orientado a eventos, é uma biblioteca de aplicativos reativos.
+- Ela utiliza métodos assíncronos. Por ser assíncrona, permite que vários eventos sejam executados ao mesmo tempo.
+- Métodos estáticos são métodos que não precisam de uma instância da classe para serem executados, eles podem ser executados a partir da própria classe.
+- Também existe a biblioteca `blessed`.
