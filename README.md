@@ -2896,3 +2896,17 @@ Além do servidor web, para usar uma linguagem de programação para realizar a 
 
 Na Web moderna não se gera mais templates, a maioria atual utiliza APIs e retornam JSON e são gerados no navegador.
 
+### API - Rest
+
+#### Framework FastAPI
+
+- Principais frameworks para desenvolvimento de APIs de alta escalabilidade.
+- Segue a mesma linha do Flask, o estilo de escrito do código, porém é mais rápido que o Flask, pois ele utiliza programação assíncrona.
+- Também há diversas otimizações baseadas no conceito de Python Moderno, com anotações de tipos.
+- Utiliza as anotações de tipo como principal meio para tomar atitudes e ações.
+- A principal função desse framework é entregar objetos no formato JSON.
+- Criado em cima do framework Starlete e Pydantic. Sendo compatível com o Pydantic e o SQLModel.
+- É necessário utilizar um servidor asgi, que é um servidor que consegue se comunicar com o padrão de comunicação assíncrona, nesse caso, será usado o uvicorn, já que o fastapi não possui um servidor embutido.
+- Tem uma documentação automática com o Swagger.
+
+Também é possível acessar APIs utilizando o curl a partir do terminal e utilizando a jq para formatar o retorno.
