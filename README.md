@@ -2910,3 +2910,11 @@ Na Web moderna não se gera mais templates, a maioria atual utiliza APIs e retor
 - Tem uma documentação automática com o Swagger.
 
 Também é possível acessar APIs utilizando o curl a partir do terminal e utilizando a jq para formatar o retorno.
+
+## Extras
+
+### Perguntas
+
+- É possível utilizar pastas como módulo, basta ter o `__init__.py` nela. Funciona da mesma forma de um arquivo que é um módulo. É só uma questão de organização.
+- A organização Pallets é uma ótima base para repositórios no GitHub em Python. Também tem o repositório do Tiangolo.
+
