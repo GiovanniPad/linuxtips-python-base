@@ -2918,3 +2918,29 @@ Também é possível acessar APIs utilizando o curl a partir do terminal e utili
 - É possível utilizar pastas como módulo, basta ter o `__init__.py` nela. Funciona da mesma forma de um arquivo que é um módulo. É só uma questão de organização.
 - A organização Pallets é uma ótima base para repositórios no GitHub em Python. Também tem o repositório do Tiangolo.
 
+### Code coverage
+
+- Code coverage representa a porcentagem de código testado dentro de um projeto, indica a cobertura de testes de um projeto.
+- **Tracing** -> técnica para restrear quais linhas o interpretador do Python passou e executou. É possível ver, dessa forma, a visão do caminho do interpretador no código.
+
+#### Módulo trace
+
+- Para realizar o tracing existe o módulo `trace`, que já é embutida no Python.
+- Gera um arquivo de coverage mostrando as linhas que foram executadas e quantas vezes o interpretador executou elas e também os possíveis códigos mortos (linhas de código não executado).
+- É uma ferramente runtime, ou seja, ela funciona quando o código é executado.
+- Escrita em C, diminuindo o overhead ao executá-la.
+
+#### Biblioteca coverage
+
+- Baseada no trace para gerar relatórios a cobertura de código no projeto.
+- É uma abstração de mais alto nível do trace.
+- É possível criar arquivos `xml` e `html` a partir do banco de dados *SQLite* do pytest-cov para o arquivo `xml` serve para ferramentas online e do editor e o `html` mostra local.
+- Caso não seja necessário testar é possível inserir um comando para que a ferramenta ignore aquela linha.
+
+### Plugin/Biblioteca pytest-cov
+
+- Plugin do pytest para gerar relatórios de code coverage dos testes do projeto.
+- Ela utiliza a biblioteca coverage para fazer isso.
+- Recomendado manter a cobertura do código (code coverage) sempre acima de 60%.
+- Ele cria um banco de dados *SQLite* na pasta do projeto que acumula vários relatórios de code coverage para realizar o cálculo caso haja mais de uma pipeline.
+

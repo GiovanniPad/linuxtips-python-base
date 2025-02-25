@@ -1,0 +1,14 @@
+    1: name = "Giovanni"
+       
+       
+    1: def sum(x, y):
+    2:     return x + y
+       
+       
+    1: def hello(n):
+           return f"Hello {name}"
+       
+       
+    1: if __name__ == "__main__":
+    1:     print(sum(3, 5))
+    1:     print(sum(3, 9))
