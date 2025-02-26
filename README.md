@@ -2937,10 +2937,41 @@ Também é possível acessar APIs utilizando o curl a partir do terminal e utili
 - É possível criar arquivos `xml` e `html` a partir do banco de dados *SQLite* do pytest-cov para o arquivo `xml` serve para ferramentas online e do editor e o `html` mostra local.
 - Caso não seja necessário testar é possível inserir um comando para que a ferramenta ignore aquela linha.
 
-### Plugin/Biblioteca pytest-cov
+#### Plugin/Biblioteca pytest-cov
 
 - Plugin do pytest para gerar relatórios de code coverage dos testes do projeto.
 - Ela utiliza a biblioteca coverage para fazer isso.
 - Recomendado manter a cobertura do código (code coverage) sempre acima de 60%.
 - Ele cria um banco de dados *SQLite* na pasta do projeto que acumula vários relatórios de code coverage para realizar o cálculo caso haja mais de uma pipeline.
 
+### Poetry e Pyproject
+
+#### PEP 621
+
+- A PEP 621 é uma especificação que introduz no Python o formato `pyproject.toml` e um novo padrão para configuração de projetos no Python.
+- Apenas no Python 3.11 que implementaram de forma nativa o suporte ao `pyproject.toml`.
+- O Python disponibiliza uma interface para fazer build de projetos, mas ao mesmo tempo, o Python não realiza a build de forma automática, dessa forma, o desenvolvedor que escolhe sua ferramenta de build.
+- O padrão e mais simples é o `setuptools`.
+- Essa especificação é bem aberta, pois as configurações não necessitam ser apenas de build. Mas também pode conter configurações de outras ferramentas.
+  
+#### Poetry
+
+É uma ferramenta de sistema de build e também permite realizar o gerenciamento de dependências e inclusive publicar no PyPi.
+
+- Além do poetry, existe o flit também, para realizar build e também permite publicar.
+- O Poetry tem seu próprio paradigma.
+- O Poetry não pode ser instalado dentro do Python. Ele deve ser instalado externamente, de uma maneira global. O Poetry não deve ser instalado dentro de uma virtualenv.
+- Possui internamente o próprio sistema de build, utiliza o setuptools apenas para ser instalado pela primeira vez.
+- É possível utilizar mais de um build system.
+
+<hr>
+
+É possível utilizar tags do Git para servirem de versionamento para o aplicativo.
+
+O versionamento e a descrição longa utilizando o `pyproject` é dinâmico.
+
+Tudo colocado no `pyproject.toml` é apenas metadado, já a ferramenta de build é outra.
+
+Tem ferramentas que ainda utilizam o arquivo `requirements.txt`, então é legal manter esse arquivo junto do `pyproject.toml`.
+
+Setuptools utiliza o Semantic Versioning para realizar o versionamento.
