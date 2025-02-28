@@ -2975,3 +2975,15 @@ Tudo colocado no `pyproject.toml` é apenas metadado, já a ferramenta de build 
 Tem ferramentas que ainda utilizam o arquivo `requirements.txt`, então é legal manter esse arquivo junto do `pyproject.toml`.
 
 Setuptools utiliza o Semantic Versioning para realizar o versionamento.
+
+### Injeção de Dependências
+
+- A injeção de dependências é feito através de um *Decorator*, que é um padrão de projeto. Também é uma função/procedimento.
+- Ao realizar a chamada de uma função que possui um *decorator*, em vez de executar primeiro a função chamada, o *decorator* vai tomar o seu lugar e seu executado antes e com isso é possível realizar a injeção de dependência.
+- Esse padrão de utilizando *decorator* é muito útil para projetos legados, pois a mudança é mínima.
+- O *decorator* também pode ser utilizado para realizar injeção de dependências em classes.
+
+De dentro desse *decorator* é criado um *wrapper* em volta da função original para realizar as alterações e então devolve o *wrapper*.
+
+- Uma boa prática é utilizar o `wraps` do `functools` e indicar que o *decorator* é um *wrapper*. Através desse `wraps` algumas características e informações da função que está chamando o *decorator* ficam disponíveis dentro do *decorator*
+- O *wrapper* é criado em tempo de execução.
