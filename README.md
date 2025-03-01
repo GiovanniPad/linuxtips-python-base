@@ -2987,3 +2987,34 @@ De dentro desse *decorator* é criado um *wrapper* em volta da função original
 
 - Uma boa prática é utilizar o `wraps` do `functools` e indicar que o *decorator* é um *wrapper*. Através desse `wraps` algumas características e informações da função que está chamando o *decorator* ficam disponíveis dentro do *decorator*
 - O *wrapper* é criado em tempo de execução.
+
+### Criptografias e senhas
+
+- Senhas não devem ser armazenadas em texto puro (*plain text*) e sim armazenadas utilizando uma técnica de *Hashing*, que é um tipo de criptografia, mas ela é diferente da criptografia utilizada para a troca de mensagens.
+- A mensagem ao trafegar na rede está encriptada e só quem tem a chave consegue ver a mensagem original. A mensagem entra como texto puro, e então é criptografada no tráfego até chegar no destinatário e então é descriptografa e aparece para o destinatário em texto puro. É um algoritmo de duas vias.
+- Já o *Hashing*, vai transformar um texto puro em um texto completamente embaralhado e aleatório e não é possível fazer com que ela seja descriptografada. Uma vez que o *hash* é criado ele não pode voltar ao estado original.
+- Ao gerar vários *hashs* a partir de um único texto plano, eles serão diferentes entre si, pois os algoritmos utilizam questões temporais também. Porém, o algoritmo consegue identificar que ambos os *hashs* diferentes são do mesmo texto plano.
+- *Salt* -> "colocar um temperinho a mais" é uma técnica de adicionar caracteres adicionais ao realizar o *hashing*, dessa forma a segurança é melhorada. O *salt* pode ser uma string contendo caracteres aleatórios.
+
+#### Biblioteca secrets
+
+- A boa prática de se criar uma *salt key* é utilizar um *token* aleatório. Isso pode ser feito através da biblioteca `secrets`.
+- Ao gerar a *salt key* não se pode perder ela, pois se não perde o acesso a todos os usuários.
+- Atualmente, alguns algoritmos como o *argon2d* não necessitam de *salt key*.
+- Jamais colocar o *salt key* em um arquivo de configurações de forma aberta, sempre armazenar em um local privado.
+- A *salt key* deve ser passada após realizar um *encode*.
+
+Caso a *salt key* seja perdida ou por algum motivo o *hash* de todos os usuários necessitam serem alterados. Pensando do lado ético, o melhor é avisar e pedir para o usuário definir uma nova senha, já pelo lado do negócio, seria realizar o *hash* novamente de todas as senhas no banco de dados, neste caso é possível utilizar o `alembic` com as *migrations* para se evitar problemas ao realizar o novo *hash* e não correr o perigo de se perder as senhas dos usuários e caso seja necessário realizar o *rollback*. E também caso o *deploy* seja feito em inúmeros servidores, o `alembic` cuida que isso seja executado em todos de uma forma igual e segura, não necessitando refazer o processo servidor por servidor.
+
+#### Biblioteca pwdlib (preferível bcrypt ou argon2)
+
+- Biblioteca para realizar *hashing* de senhas.
+- É possível, ao incluir a biblioteca no projeto, especificar qual o algoritmo que vai ser utilizado. E o melhor algoritmo atualmente é o *argon2d*.
+
+Também é possível realizar o *hash* a partir de uma chave física (pendrive).
+
+#### Extra de testes (mover para sessão testes)
+
+- Quando uma *fixture* é criada dentro de um módulo específico ela só vai ser aplicada para os testes presentes naquele módulo apenas.
+- O *monkeypatch* é uma *fixture* que permite criar contextos e alterar os valores de certas chamadas de funções, variáveis de ambiente etc., apenas para os teste. É um *Mock*.
+- Reentrância de *Context Manager* -> habilidade de definir mais de um contexto ao mesmo tempo com o `with`.
