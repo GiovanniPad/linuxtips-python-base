@@ -3018,3 +3018,34 @@ Também é possível realizar o *hash* a partir de uma chave física (pendrive).
 - Quando uma *fixture* é criada dentro de um módulo específico ela só vai ser aplicada para os testes presentes naquele módulo apenas.
 - O *monkeypatch* é uma *fixture* que permite criar contextos e alterar os valores de certas chamadas de funções, variáveis de ambiente etc., apenas para os teste. É um *Mock*.
 - Reentrância de *Context Manager* -> habilidade de definir mais de um contexto ao mesmo tempo com o `with`.
+
+### Modernizando a gestão de projetos
+
+- Enquanto o `git` versiona o código, o `alembic` versiona o banco de dados.
+- Biblioteca `smtpd` removida do Python 3.12. Que é uma biblioteca utilizada para criar um servidor de email de testes. Uma alternativa é a biblioteca `aiosmtpd`.
+
+#### Modernização do projeto
+
+- Ferramenta `uv`: vem dos criadores do ruff, implementa a maioria das pep a respeito de pacotes e ela é extremamente rápida. A resolução de dependências dela é muito melhor. É possível especificar exceções de bibliotecas e também é possível ter várias versões de uma única biblioteca, sendo possível atribuir versões específicas para partes separadas de código. Não há a necessidade de se preocupar com ambientes virtuais, desde que o `uv` seja usado como ponto de entrada para os comandos. Criação de uma "virtual env universal". É necessário ter o `pyproject`. Ele também permite a criação de projeto. Faz o download automático de uma versão do Python para o projeto. É uma ferramenta para substituir todas as ferramentas de gerenciamento de dependências, publicar projetos etc.
+- Desuso do `Makefile` em aplicações modernas.
+- Desuso do `setup.py` e manter tudo no `pyproject.toml`.
+- Não incluir o arquivo de `lock` para projetos que serão utilizados como dependências ou bibliotecas para outros programas. Já no caso de ser uma aplicação final, é necessário mandar o arquivo `lock` para que a aplicação funcione corretamente.
+- Caso adotar totalmente o `uv`, não se preocupar com o ambiente virtual.
+- O `uv` não suporta dependências dinâmicas.
+- O `uv` é relacionado com configurações e dependências do projeto (tudo que tem haver com o `pyproject`) e também tem a ferramenta `uvx` que é utilizada para executar algo, sem a necessidade de utilizar um arquivo `pyproject`.
+- Se é uma ferramenta mais específica, pode ficar dentro do `pyproject`, caso seja uma ferramenta mais global, ela pode ficar fora do arquivo de dependências do projeto.
+- O `uv` segue o que está no git, podendo incluir arquivos também, substituindo o `MANIFEST.in`.
+
+#### Biblioteca `ruff`
+
+- Biblioteca para formatar o código de acordo com a pep8.
+- Possui embutido o `black`, `isort`, `mypy` e `flake8`.
+- Serve tanto como um formatter quanto um linter.
+- Possui muito plugins.
+- Considerar o plugin `mccabe`, para melhorar a complexidade do código.
+
+#### Biblioteca `taskipy`
+
+- Biblioteca para substituir o `Makefile` em projetos Python.
+- As tarefas também ficam no arquivo `pyproject`.
+- Devem ser comandos compatíveis com o terminal.
